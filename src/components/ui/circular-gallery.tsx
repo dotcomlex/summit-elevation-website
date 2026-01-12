@@ -230,7 +230,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
                 }}
               >
                 <div
-                  className="relative w-[clamp(200px,26vw,320px)] h-[clamp(200px,26vw,320px)] rounded-2xl overflow-hidden border border-white/10 shadow-[0_22px_70px_rgba(0,0,0,0.45)] bg-black/10"
+                  className="relative w-[clamp(240px,32vw,380px)] h-[clamp(240px,32vw,380px)] rounded-2xl overflow-hidden border border-white/10 shadow-[0_22px_70px_rgba(0,0,0,0.45)] bg-black/10"
                   style={{
                     backfaceVisibility: "hidden",
                     WebkitBackfaceVisibility: "hidden",

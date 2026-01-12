@@ -4,33 +4,31 @@ import { cn } from "@/lib/utils";
 
 type ProgressiveBlurProps = {
   direction?: "left" | "right" | "top" | "bottom";
-  blurLayers?: number;
-  blurIntensity?: number;
   className?: string;
+  bgColor?: string;
 };
 
 export function ProgressiveBlur({
   direction = "right",
-  blurLayers = 8,
-  blurIntensity = 0.25,
   className,
+  bgColor = "hsl(var(--section-dark))",
 }: ProgressiveBlurProps) {
   const isHorizontal = direction === "left" || direction === "right";
-  const isReverse = direction === "right" || direction === "bottom";
 
-  const gradientDirection = isHorizontal
-    ? isReverse
+  const gradientDirection =
+    direction === "left"
       ? "to right"
-      : "to left"
-    : isReverse
-    ? "to bottom"
-    : "to top";
+      : direction === "right"
+      ? "to left"
+      : direction === "top"
+      ? "to bottom"
+      : "to top";
 
   return (
     <div
       className={cn(
-        "pointer-events-none absolute",
-        isHorizontal ? "inset-y-0 w-1/6" : "inset-x-0 h-1/6",
+        "pointer-events-none absolute z-20",
+        isHorizontal ? "inset-y-0 w-24 sm:w-32" : "inset-x-0 h-24",
         direction === "left" && "left-0",
         direction === "right" && "right-0",
         direction === "top" && "top-0",
@@ -38,28 +36,8 @@ export function ProgressiveBlur({
         className
       )}
       style={{
-        maskImage: `linear-gradient(${gradientDirection}, black, transparent)`,
-        WebkitMaskImage: `linear-gradient(${gradientDirection}, black, transparent)`,
+        background: `linear-gradient(${gradientDirection}, transparent, ${bgColor})`,
       }}
-    >
-      {Array.from({ length: blurLayers }).map((_, i) => {
-        const blur = ((i + 1) / blurLayers) * blurIntensity * 20;
-        const start = (i / blurLayers) * 100;
-        const end = ((i + 1) / blurLayers) * 100;
-
-        return (
-          <div
-            key={i}
-            className="absolute inset-0"
-            style={{
-              backdropFilter: `blur(${blur}px)`,
-              WebkitBackdropFilter: `blur(${blur}px)`,
-              maskImage: `linear-gradient(${gradientDirection}, transparent ${start}%, black ${end}%)`,
-              WebkitMaskImage: `linear-gradient(${gradientDirection}, transparent ${start}%, black ${end}%)`,
-            }}
-          />
-        );
-      })}
-    </div>
+    />
   );
 }

@@ -1,7 +1,7 @@
-import { Shield, ClipboardCheck, CalendarCheck, ClipboardList, FileText, Hammer, Award, ArrowRight, ChevronRight } from "lucide-react";
+import { Shield, ClipboardCheck, CalendarCheck, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import teamImage from "@/assets/team-work.jpg";
-import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/ui/animated-section";
+import { AnimatedSection } from "@/components/ui/animated-section";
 import { Button } from "@/components/ui/button";
 
 const proofCards = [
@@ -24,16 +24,19 @@ const proofCards = [
 
 const processSteps = [
   {
-    icon: ClipboardList,
-    label: "Walkthrough",
+    number: "1",
+    title: "Project Walkthrough",
+    description: "On-site review of your project and goals.",
   },
   {
-    icon: FileText,
-    label: "Written Estimate",
+    number: "2",
+    title: "Free Estimate",
+    description: "Clear scope, timeline, and pricing.",
   },
   {
-    icon: Hammer,
-    label: "Build & Final Walk",
+    number: "3",
+    title: "Start Building",
+    description: "Professional construction with clear communication.",
   },
 ];
 
@@ -41,129 +44,159 @@ export function WhyChooseUs() {
   return (
     <section className="relative py-16 md:py-24 bg-sand overflow-hidden">
       {/* Subtle texture */}
-      <div className="absolute inset-0 texture-paper" />
+      <div className="absolute inset-0 texture-paper opacity-30" />
 
       <div className="container relative z-10 px-4 md:px-6">
-        {/* Section Header */}
-        <AnimatedSection className="text-center mb-10 md:mb-14">
-          <div className="inline-flex items-center gap-2 bg-navy/10 text-navy px-4 py-2 rounded-full text-sm font-medium mb-5">
-            <Award className="w-4 h-4" />
-            <span>Why Choose Us</span>
-          </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-mountain-charcoal mb-4">
-            Why Homeowners Trust 14er
-          </h2>
-          <p className="text-base md:text-lg text-mountain-slate max-w-2xl mx-auto">
-            Trusted expertise, clear estimates, and professional build-outs.
-          </p>
-        </AnimatedSection>
-
         <div className="max-w-6xl mx-auto">
-          {/* Mobile: Image first */}
-          <AnimatedSection delay={0.2} className="mb-8 md:hidden">
-            <div className="relative">
-              <div className="rounded-2xl overflow-hidden shadow-elevated">
-                <img
-                  src={teamImage}
-                  alt="Active jobsite in the Colorado Rockies"
-                  className="w-full h-64 object-cover"
-                />
-              </div>
-              {/* Circular badge */}
-              <div className="absolute -top-3 -right-3 w-20 h-20 bg-gradient-to-br from-primary to-primary/80 rounded-full flex flex-col items-center justify-center text-white shadow-lg">
-                <span className="text-xl font-bold leading-none">15+</span>
-                <span className="text-[10px] font-medium leading-tight">Years</span>
-                <span className="text-[10px] font-medium leading-tight">Experience</span>
-              </div>
+          {/* Desktop: 2-column layout */}
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            
+            {/* Left Column: Header + Proof Cards (on desktop) */}
+            <div className="order-1">
+              {/* Section Header */}
+              <AnimatedSection className="text-center lg:text-left mb-8">
+                {/* Pill */}
+                <div className="inline-flex items-center gap-2 bg-mountain-navy/10 text-mountain-navy px-4 py-2 rounded-full text-sm font-medium mb-4 uppercase tracking-wide">
+                  Why Homeowners Trust Us
+                </div>
+                
+                {/* Headline */}
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-charcoal mb-4 leading-tight">
+                  Why Homeowners Trust 14er Renovations
+                </h2>
+                
+                {/* Subheadline */}
+                <p className="text-mountain-slate text-lg max-w-xl mx-auto lg:mx-0">
+                  Trusted craftsmanship, clear estimates, and professional builds across Colorado.
+                </p>
+              </AnimatedSection>
+
+              {/* Proof Cards - Desktop only in left column */}
+              <AnimatedSection delay={0.3} className="hidden lg:block">
+                <div className="bg-sand-dark/40 rounded-2xl p-5 space-y-3">
+                  {proofCards.map((card, index) => {
+                    const Icon = card.icon;
+                    return (
+                      <div
+                        key={index}
+                        className="flex items-start gap-4 p-4 bg-white rounded-xl shadow-soft"
+                      >
+                        <div className="flex-shrink-0 w-11 h-11 rounded-lg bg-sand border border-sand-dark/30 flex items-center justify-center">
+                          <Icon className="w-5 h-5 text-primary" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-charcoal text-base">
+                            {card.title}
+                          </h3>
+                          <p className="text-mountain-slate text-sm">
+                            {card.description}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </AnimatedSection>
             </div>
-            <p className="text-sm text-mountain-slate italic text-center mt-3">
-              Active jobsite in the Colorado Rockies
-            </p>
-          </AnimatedSection>
 
-          {/* Two-column layout */}
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
-            {/* Left: Proof Cards */}
-            <StaggerContainer className="space-y-4 order-2 md:order-1">
-              {proofCards.map((card, index) => {
-                const Icon = card.icon;
-                return (
-                  <StaggerItem key={index}>
-                    <div className="bg-white rounded-xl p-5 shadow-soft hover:shadow-elevated transition-all duration-300 flex items-start gap-4">
-                      <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                        <Icon className="w-6 h-6 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="text-base md:text-lg font-bold text-mountain-charcoal mb-1">
-                          {card.title}
-                        </h3>
-                        <p className="text-sm text-mountain-slate">
-                          {card.description}
-                        </p>
-                      </div>
+            {/* Right Column: Image with Badge */}
+            <div className="order-2">
+              <AnimatedSection delay={0.15} direction="right">
+                <div className="relative">
+                  {/* Main Image */}
+                  <div className="relative rounded-2xl overflow-hidden shadow-elevated">
+                    <img
+                      src={teamImage}
+                      alt="Active Colorado jobsite with mountains in the background"
+                      className="w-full h-56 sm:h-64 md:h-72 lg:h-80 object-cover"
+                    />
+                    
+                    {/* Experience Badge - Inside image top-right */}
+                    <div className="absolute top-3 right-3 sm:top-4 sm:right-4 w-[70px] h-[70px] sm:w-20 sm:h-20 md:w-[88px] md:h-[88px] rounded-full bg-sand/95 backdrop-blur-sm shadow-lg flex flex-col items-center justify-center border-2 border-white/60">
+                      <span className="text-xl sm:text-2xl md:text-[26px] font-bold text-primary leading-none">15+</span>
+                      <span className="text-[10px] sm:text-xs text-charcoal font-medium leading-tight text-center mt-0.5">Years<br/>Experience</span>
                     </div>
-                  </StaggerItem>
-                );
-              })}
-            </StaggerContainer>
+                  </div>
+                  
+                  {/* Caption */}
+                  <p className="text-center text-mountain-slate text-sm italic mt-3">
+                    Active Colorado jobsite
+                  </p>
+                </div>
+              </AnimatedSection>
+            </div>
 
-            {/* Right: Image with badge (Desktop only) */}
-            <AnimatedSection delay={0.3} direction="right" className="hidden md:block order-1 md:order-2">
-              <div className="relative">
-                <div className="rounded-2xl overflow-hidden shadow-elevated">
-                  <img
-                    src={teamImage}
-                    alt="Active jobsite in the Colorado Rockies"
-                    className="w-full h-[400px] lg:h-[380px] object-cover"
-                  />
+            {/* Mobile Only: Proof Cards (after image) */}
+            <div className="order-3 lg:hidden">
+              <AnimatedSection delay={0.25}>
+                <div className="bg-sand-dark/40 rounded-2xl p-4 space-y-3">
+                  {proofCards.map((card, index) => {
+                    const Icon = card.icon;
+                    return (
+                      <div
+                        key={index}
+                        className="flex items-start gap-3 p-3 bg-white rounded-xl shadow-soft"
+                      >
+                        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-sand border border-sand-dark/30 flex items-center justify-center">
+                          <Icon className="w-5 h-5 text-primary" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-charcoal text-[15px]">
+                            {card.title}
+                          </h3>
+                          <p className="text-mountain-slate text-sm">
+                            {card.description}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-                {/* Circular badge */}
-                <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-primary to-primary/80 rounded-full flex flex-col items-center justify-center text-white shadow-lg border-4 border-white">
-                  <span className="text-2xl font-bold leading-none">15+</span>
-                  <span className="text-xs font-medium leading-tight">Years</span>
-                  <span className="text-xs font-medium leading-tight">Experience</span>
-                </div>
-              </div>
-              <p className="text-sm text-mountain-slate italic text-center mt-4">
-                Active jobsite in the Colorado Rockies
-              </p>
-            </AnimatedSection>
+              </AnimatedSection>
+            </div>
           </div>
 
-          {/* Process Strip */}
-          <AnimatedSection delay={0.4} className="mt-10 md:mt-14">
-            <div className="bg-white rounded-xl p-5 md:p-6 shadow-soft">
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-10">
-                {processSteps.map((step, index) => {
-                  const Icon = step.icon;
-                  const isLast = index === processSteps.length - 1;
-                  return (
-                    <div key={index} className="flex items-center gap-4 sm:gap-6 md:gap-10">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                          <Icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-                        </div>
-                        <span className="text-sm md:text-base font-medium text-mountain-charcoal whitespace-nowrap">
-                          {step.label}
-                        </span>
-                      </div>
-                      {!isLast && (
-                        <ChevronRight className="hidden sm:block w-5 h-5 text-mountain-slate/50" />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+          {/* How It Works Section */}
+          <AnimatedSection delay={0.35} className="mt-10 md:mt-14">
+            {/* Section Header with Lines */}
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="flex-1 h-px bg-charcoal/15 max-w-[60px] sm:max-w-[100px]" />
+              <span className="text-xs sm:text-sm font-semibold text-charcoal uppercase tracking-widest">
+                How It Works
+              </span>
+              <div className="flex-1 h-px bg-charcoal/15 max-w-[60px] sm:max-w-[100px]" />
+            </div>
+
+            {/* Process Steps */}
+            <div className="grid sm:grid-cols-3 gap-3 sm:gap-4 max-w-3xl mx-auto">
+              {processSteps.map((step, index) => (
+                <div
+                  key={index}
+                  className="flex items-start gap-3 p-3 sm:p-4 bg-white rounded-xl shadow-soft"
+                >
+                  <div className="flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-sand border border-sand-dark/30 flex items-center justify-center">
+                    <span className="text-base sm:text-lg font-bold text-charcoal">{step.number}</span>
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="font-semibold text-charcoal text-sm sm:text-[15px]">
+                      {step.title}
+                    </h4>
+                    <p className="text-mountain-slate text-xs sm:text-sm leading-snug">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </AnimatedSection>
 
           {/* CTA Buttons */}
-          <AnimatedSection delay={0.5} className="mt-8 md:mt-10">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <AnimatedSection delay={0.45} className="mt-8 md:mt-10">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <Button
                 asChild
                 size="lg"
-                className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 text-base shadow-lg hover:shadow-xl transition-all duration-300"
+                className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white font-semibold px-7 py-5 text-base rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <Link to="/contact">
                   Get a Free Estimate
@@ -174,7 +207,7 @@ export function WhyChooseUs() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="w-full sm:w-auto bg-charcoal hover:bg-charcoal/90 text-white border-charcoal font-semibold px-8 py-6 text-base transition-all duration-300"
+                className="w-full sm:w-auto bg-charcoal hover:bg-charcoal/90 text-white border-charcoal font-semibold px-7 py-5 text-base rounded-xl transition-all duration-300"
               >
                 <Link to="/services">
                   View Our Work

@@ -129,7 +129,7 @@ export function GallerySection() {
           <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
             Work That Speaks For Itself
           </h2>
-          <p className="text-white/50 text-sm md:text-base mt-2 max-w-md mx-auto">
+          <p className="text-white/70 text-sm md:text-base mt-2 max-w-md mx-auto">
             A quick look at recent projects across Colorado.
           </p>
         </AnimatedSection>

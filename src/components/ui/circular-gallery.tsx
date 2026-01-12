@@ -114,7 +114,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       if (dragDistanceRef.current > 10) didDragRef.current = true;
 
       // Rotate based on horizontal delta
-      setRotation((prev) => prev + deltaX * 0.28);
+      setRotation((prev) => prev + deltaX * 0.5);
       e.preventDefault();
     };
 
@@ -122,7 +122,13 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       if (pointerIdRef.current !== e.pointerId) return;
       pointerIdRef.current = null;
       dragEngagedRef.current = false;
-      isInteractingRef.current = false;
+      
+      // Add delay before resuming auto-rotate (same as wheel)
+      if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
+      wheelTimeoutRef.current = setTimeout(() => {
+        isInteractingRef.current = false;
+      }, 400);
+      
       try {
         (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
       } catch {}

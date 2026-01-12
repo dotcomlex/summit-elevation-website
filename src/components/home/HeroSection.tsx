@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Phone, Shield, Clock } from "lucide-react";
+import { ArrowRight, Phone, Shield, Star, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/hero-home-new.jpg";
+import heroImage from "@/assets/hero-home-premium.jpg";
 
 export function HeroSection() {
   return (
@@ -10,12 +10,15 @@ export function HeroSection() {
       <div className="absolute inset-0">
         <img
           src={heroImage}
-          alt="Beautiful Colorado home renovation with mountain views"
+          alt="Luxury Colorado mountain home with Rocky Mountain views"
           className="w-full h-full object-cover"
         />
-        {/* Neutral Dark Overlay - Reduced Orange */}
-        <div className="absolute inset-0 bg-gradient-to-r from-mountain-charcoal/85 via-mountain-charcoal/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-mountain-charcoal/70 via-transparent to-mountain-charcoal/20" />
+        {/* Lighter Neutral Dark Overlay - Reduced heaviness */}
+        <div className="absolute inset-0 bg-gradient-to-r from-mountain-charcoal/75 via-mountain-charcoal/45 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-mountain-charcoal/50 via-transparent to-mountain-charcoal/15" />
+        
+        {/* Subtle Topographic Texture Overlay */}
+        <div className="absolute inset-0 texture-topo pointer-events-none" />
       </div>
 
       {/* Content */}
@@ -29,21 +32,31 @@ export function HeroSection() {
             </span>
           </div>
 
-          {/* Headline */}
-          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-snow-white leading-[1.1] mb-8 animate-fade-up" style={{ animationDelay: "100ms" }}>
+          {/* Headline with text shadow for readability */}
+          <h1 
+            className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-snow-white leading-[1.08] mb-8 animate-fade-up text-shadow-hero" 
+            style={{ animationDelay: "100ms" }}
+          >
             Colorado's Trusted
             <span className="block text-primary mt-2">General Contractor</span>
           </h1>
 
-          {/* Subheadline */}
-          <p className="text-lg md:text-xl text-snow-white/80 leading-relaxed mb-10 max-w-xl animate-fade-up" style={{ animationDelay: "200ms" }}>
+          {/* Subheadline with subtle text shadow */}
+          <p 
+            className="text-lg md:text-xl text-snow-white/85 leading-relaxed mb-10 max-w-xl animate-fade-up text-shadow-subtle" 
+            style={{ animationDelay: "200ms" }}
+          >
             From stunning kitchen remodels to durable concrete work, we bring 
             mountain-level precision to every project across the Denver Metro area.
           </p>
 
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-14 animate-fade-up" style={{ animationDelay: "300ms" }}>
-            <Button asChild size="lg" className="text-base font-semibold h-14 px-8 group shadow-warm hover:shadow-lg transition-shadow">
+          {/* CTAs with Premium Button Styling */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-10 animate-fade-up" style={{ animationDelay: "300ms" }}>
+            <Button 
+              asChild 
+              size="lg" 
+              className="text-base font-semibold h-14 px-8 group btn-shine shadow-[0_4px_14px_rgba(234,88,12,0.35)] hover:shadow-[0_6px_20px_rgba(234,88,12,0.45)] hover:-translate-y-0.5 transition-all duration-300"
+            >
               <Link to="/contact">
                 Get Free Quote
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -53,13 +66,31 @@ export function HeroSection() {
               asChild 
               variant="outline" 
               size="lg" 
-              className="text-base font-semibold h-14 px-8 border-snow-white/40 bg-snow-white/5 text-snow-white hover:bg-snow-white/15 hover:text-snow-white hover:border-snow-white/60 transition-all"
+              className="text-base font-semibold h-14 px-8 border-snow-white/40 bg-snow-white/5 text-snow-white hover:bg-snow-white/15 hover:text-snow-white hover:border-snow-white/60 hover:-translate-y-0.5 transition-all duration-300"
             >
               <Link to="/services">View Our Work</Link>
             </Button>
           </div>
 
-          {/* Trust Indicators */}
+          {/* Compact Trust Mini-Row - 3 Items */}
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-10 animate-fade-up" style={{ animationDelay: "350ms" }}>
+            <div className="flex items-center gap-2">
+              <Shield className="h-4 w-4 text-primary" />
+              <span className="text-sm text-snow-white/70">Licensed & Bonded</span>
+            </div>
+            <div className="hidden sm:block w-px h-4 bg-snow-white/20" />
+            <div className="flex items-center gap-2">
+              <Star className="h-4 w-4 text-primary fill-primary" />
+              <span className="text-sm text-snow-white/70">5.0 Google Rating</span>
+            </div>
+            <div className="hidden sm:block w-px h-4 bg-snow-white/20" />
+            <div className="flex items-center gap-2">
+              <Award className="h-4 w-4 text-primary" />
+              <span className="text-sm text-snow-white/70">BBB A+ Rated</span>
+            </div>
+          </div>
+
+          {/* Contact Info Row */}
           <div className="flex flex-col sm:flex-row gap-6 animate-fade-up" style={{ animationDelay: "400ms" }}>
             <a 
               href="tel:+17201234567"
@@ -75,15 +106,6 @@ export function HeroSection() {
                 </span>
               </div>
             </a>
-            <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-alpine/30 border border-alpine-light/30">
-                <Clock className="h-5 w-5 text-snow-white" />
-              </div>
-              <div>
-                <p className="text-xs text-snow-white/60">Quick Response</p>
-                <p className="text-snow-white font-semibold">Free Estimates</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>

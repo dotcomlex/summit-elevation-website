@@ -46,40 +46,27 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
     const dragEngagedRef = useRef(false);
     const isInteractingRef = useRef(false);
     const wheelTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const pointerResumeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const isCoarsePointerRef = useRef(false);
 
     // IMPORTANT: prevent tap while dragging
     const dragDistanceRef = useRef(0);
     const didDragRef = useRef(false);
 
-    // Detect reduced motion preference and pointer type
+    // Detect reduced motion preference
     useEffect(() => {
       if (typeof window === "undefined") return;
       const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-      const coarseMq = window.matchMedia("(pointer: coarse)");
       prefersReducedMotionRef.current = mq.matches;
-      isCoarsePointerRef.current = coarseMq.matches;
       const handler = () => {
         prefersReducedMotionRef.current = mq.matches;
       };
-      const coarseHandler = () => {
-        isCoarsePointerRef.current = coarseMq.matches;
-      };
       mq.addEventListener?.("change", handler);
-      coarseMq.addEventListener?.("change", coarseHandler);
-      return () => {
-        mq.removeEventListener?.("change", handler);
-        coarseMq.removeEventListener?.("change", coarseHandler);
-      };
+      return () => mq.removeEventListener?.("change", handler);
     }, []);
 
-    // Auto-rotate only when active, not interacting, and finger not down
+    // Auto-rotate only when active and not interacting
     useEffect(() => {
       const tick = () => {
-        // Extra safety: never auto-rotate while pointer is down
-        const fingerDown = pointerIdRef.current !== null;
-        if (isActive && !prefersReducedMotionRef.current && !isInteractingRef.current && !fingerDown) {
+        if (isActive && !prefersReducedMotionRef.current && !isInteractingRef.current) {
           setRotation((prev) => prev + autoRotateSpeed);
         }
         rafRef.current = requestAnimationFrame(tick);
@@ -92,10 +79,6 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
     }, [autoRotateSpeed, isActive]);
 
     const onPointerDown = (e: React.PointerEvent) => {
-      // Clear any pending resume timers immediately
-      if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
-      if (pointerResumeTimeoutRef.current) clearTimeout(pointerResumeTimeoutRef.current);
-      
       pointerIdRef.current = e.pointerId;
       startXRef.current = e.clientX;
       startYRef.current = e.clientY;
@@ -112,12 +95,9 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       const dxTotal = e.clientX - startXRef.current;
       const dyTotal = e.clientY - startYRef.current;
 
-      // Engage drag threshold - lower on mobile for easier left/right swipe
-      const threshold = isCoarsePointerRef.current ? 3 : 6;
-
       // Only engage drag when horizontal intent is clear (keeps vertical scroll working)
       if (!dragEngagedRef.current) {
-        if (Math.abs(dxTotal) > Math.abs(dyTotal) + threshold) {
+        if (Math.abs(dxTotal) > Math.abs(dyTotal) + 6) {
           dragEngagedRef.current = true;
           try {
             (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
@@ -127,18 +107,14 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
         }
       }
 
-      // Keep interaction flag true during active drag
-      isInteractingRef.current = true;
-
       const deltaX = e.clientX - lastXRef.current;
       lastXRef.current = e.clientX;
 
       dragDistanceRef.current += Math.abs(deltaX);
       if (dragDistanceRef.current > 10) didDragRef.current = true;
 
-      // Rotate based on horizontal delta - higher sensitivity on mobile
-      const sensitivity = isCoarsePointerRef.current ? 0.65 : 0.5;
-      setRotation((prev) => prev + deltaX * sensitivity);
+      // Rotate based on horizontal delta
+      setRotation((prev) => prev + deltaX * 0.5);
       e.preventDefault();
     };
 
@@ -147,12 +123,11 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       pointerIdRef.current = null;
       dragEngagedRef.current = false;
       
-      // Add delay before resuming auto-rotate - longer on mobile
-      if (pointerResumeTimeoutRef.current) clearTimeout(pointerResumeTimeoutRef.current);
-      const resumeDelay = isCoarsePointerRef.current ? 900 : 500;
-      pointerResumeTimeoutRef.current = setTimeout(() => {
+      // Add delay before resuming auto-rotate (same as wheel)
+      if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
+      wheelTimeoutRef.current = setTimeout(() => {
         isInteractingRef.current = false;
-      }, resumeDelay);
+      }, 400);
       
       try {
         (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
@@ -181,11 +156,10 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       }, 400);
     };
 
-    // Cleanup timeouts on unmount
+    // Cleanup wheel timeout on unmount
     useEffect(() => {
       return () => {
         if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
-        if (pointerResumeTimeoutRef.current) clearTimeout(pointerResumeTimeoutRef.current);
       };
     }, []);
 

@@ -1,99 +1,124 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Bath, HardHat, Building2 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import kitchenImage from "@/assets/kitchen-remodel.jpg";
-import concreteImage from "@/assets/concrete-patio.jpg";
-import constructionImage from "@/assets/construction-site.jpg";
+import { ChefHat, Bath, HardHat, Hammer, ArrowRight, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const services = [
   {
-    icon: Bath,
-    title: "Kitchen & Bath Remodeling",
-    description: "Transform your home with stunning kitchen and bathroom renovations designed for Colorado living. Custom cabinetry, modern fixtures, and mountain-inspired design.",
-    image: kitchenImage,
+    icon: ChefHat,
+    title: "Kitchen Remodeling",
+    description:
+      "Transform your kitchen into a modern, functional space with custom cabinetry, countertops, and premium finishes.",
     link: "/services/kitchen-bath",
+    color: "alpine",
+  },
+  {
+    icon: Bath,
+    title: "Bathroom Renovation",
+    description:
+      "Create your personal spa retreat with luxury fixtures, tile work, and thoughtful design that maximizes space.",
+    link: "/services/kitchen-bath",
+    color: "evergreen",
   },
   {
     icon: HardHat,
-    title: "Concrete & Flatwork",
-    description: "Durable driveways, patios, and foundations built to withstand Colorado's demanding weather. Decorative stamped concrete that elevates your outdoor space.",
-    image: concreteImage,
+    title: "Concrete & Outdoor",
+    description:
+      "Enhance your outdoor living with stamped patios, driveways, and durable concrete solutions built for Colorado weather.",
     link: "/services/concrete",
+    color: "alpine",
   },
   {
-    icon: Building2,
+    icon: Hammer,
     title: "General Contracting",
-    description: "Full-service construction and renovation projects from concept to completion. New builds, additions, and commercial projects with precision craftsmanship.",
-    image: constructionImage,
+    description:
+      "Full-service contracting for additions, structural work, and whole-home renovations managed from start to finish.",
     link: "/services/general-contracting",
+    color: "evergreen",
   },
 ];
 
 export function ServicesPreview() {
   return (
-    <section className="py-20 md:py-28 bg-background relative overflow-hidden">
-      {/* Subtle background texture */}
+    <section id="services" className="relative py-20 md:py-28 bg-cream overflow-hidden scroll-mt-20">
+      {/* Subtle topo lines background */}
       <div className="absolute inset-0 topo-lines opacity-30" />
       
-      <div className="container mx-auto px-4 lg:px-8 relative">
+      {/* Subtle warm gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cream to-snow-soft/50" />
+
+      <div className="container relative z-10 px-4 md:px-6">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
-          <span className="inline-block text-primary font-semibold text-sm tracking-wider uppercase mb-3">
-            Our Services
-          </span>
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Expertise You Can Trust
+        <div className="text-center mb-14 md:mb-16">
+          <div className="inline-flex items-center gap-2 bg-evergreen/10 text-evergreen px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <Sparkles className="w-4 h-4" />
+            <span>Our Services</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-mountain-charcoal mb-4">
+            Expert Renovation Services
           </h2>
-          <p className="text-muted-foreground text-lg">
-            From detailed remodels to large-scale construction, we deliver quality 
-            craftsmanship across every project.
+          <p className="text-lg text-mountain-slate max-w-2xl mx-auto">
+            From kitchens to concrete, we deliver quality craftsmanship tailored to Colorado homes
           </p>
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-          {services.map((service, index) => (
-            <Link
-              key={service.title}
-              to={service.link}
-              className={cn(
-                "group relative rounded-2xl overflow-hidden bg-card border border-border",
-                "hover-lift hover:border-primary/30 transition-all duration-500"
-              )}
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              {/* Image */}
-              <div className="aspect-[4/3] relative overflow-hidden">
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
-                
-                {/* Icon Badge */}
-                <div className="absolute top-4 left-4 flex items-center justify-center w-12 h-12 rounded-xl bg-primary text-primary-foreground shadow-warm">
-                  <service.icon className="h-6 w-6" />
-                </div>
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
+          {services.map((service, index) => {
+            const Icon = service.icon;
+            const isAlpine = service.color === "alpine";
 
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+            return (
+              <Link
+                key={index}
+                to={service.link}
+                className="group relative bg-white rounded-2xl p-6 md:p-8 shadow-soft hover:shadow-elevated transition-all duration-300 hover:-translate-y-1 border border-border/50"
+              >
+                {/* Icon */}
+                <div
+                  className={`inline-flex items-center justify-center w-14 h-14 rounded-xl mb-6 transition-colors duration-300 ${
+                    isAlpine
+                      ? "bg-alpine/10 text-alpine group-hover:bg-alpine group-hover:text-white"
+                      : "bg-evergreen/10 text-evergreen group-hover:bg-evergreen group-hover:text-white"
+                  }`}
+                >
+                  <Icon className="w-7 h-7" />
+                </div>
+
+                {/* Content */}
+                <h3 className="text-xl font-bold text-mountain-charcoal mb-3 group-hover:text-alpine transition-colors">
                   {service.title}
                 </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                <p className="text-mountain-slate leading-relaxed mb-6">
                   {service.description}
                 </p>
-                <span className="inline-flex items-center text-primary font-semibold text-sm group-hover:gap-3 gap-2 transition-all">
-                  Learn More
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </div>
+
+                {/* Link */}
+                <div className="inline-flex items-center gap-2 text-alpine font-medium">
+                  <span>Learn More</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="text-center mt-14">
+          <Button
+            asChild
+            size="lg"
+            className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg shadow-warm"
+          >
+            <Link to="/services">
+              View All Services
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
-          ))}
+          </Button>
         </div>
       </div>
+
+      {/* Bottom wave divider to gallery section */}
+      <div className="absolute bottom-0 left-0 right-0 h-16 wave-divider" />
     </section>
   );
 }

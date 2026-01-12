@@ -41,7 +41,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
     // Smoothing refs for buttery rotation
     const targetRotationRef = useRef(0);
     const currentRotationRef = useRef(0);
-    const smoothingFactor = 0.15; // Higher = snappier, lower = smoother
+    const smoothingFactor = 0.25; // Higher = snappier, lower = smoother
 
     // Interaction state
     const pointerIdRef = useRef<number | null>(null);
@@ -119,7 +119,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
 
       // Lower threshold for touch/pen (easier to engage), higher for mouse (preserve scroll)
       const isTouch = pointerTypeRef.current === "touch" || pointerTypeRef.current === "pen";
-      const threshold = isTouch ? 3 : 6;
+      const threshold = isTouch ? 2 : 6;
 
       // Only engage drag when horizontal intent is clear
       if (!dragEngagedRef.current) {
@@ -140,7 +140,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       if (dragDistanceRef.current > 10) didDragRef.current = true;
 
       // Different sensitivity for touch vs mouse
-      const sensitivity = isTouch ? 0.75 : 0.5;
+      const sensitivity = isTouch ? 1.0 : 0.6;
       
       // Update target rotation (will be smoothed by RAF loop)
       targetRotationRef.current += deltaX * sensitivity;
@@ -155,8 +155,8 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       pointerIdRef.current = null;
       dragEngagedRef.current = false;
       
-      // Longer cooldown for touch (1000ms) vs mouse (400ms)
-      const cooldown = isTouch ? 1000 : 400;
+      // Longer cooldown for touch (1500ms) vs mouse (500ms)
+      const cooldown = isTouch ? 1500 : 500;
       
       if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
       wheelTimeoutRef.current = setTimeout(() => {
@@ -270,7 +270,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
                 }}
               >
               <div
-                  className="relative w-[clamp(260px,38vw,420px)] h-[clamp(260px,38vw,420px)] rounded-2xl overflow-hidden border border-white/10 shadow-[0_22px_70px_rgba(0,0,0,0.45)] bg-black/10"
+                  className="relative w-[clamp(200px,40vw,420px)] h-[clamp(200px,40vw,420px)] rounded-2xl overflow-hidden border border-white/10 shadow-[0_22px_70px_rgba(0,0,0,0.45)] bg-black/10"
                   style={{
                     backfaceVisibility: "hidden",
                     WebkitBackfaceVisibility: "hidden",

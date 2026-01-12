@@ -120,9 +120,9 @@ export function GallerySection() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.6)_100%)]" />
 
       {/* Content */}
-      <div className="relative flex flex-col items-center pt-16 pb-12 px-4 md:h-screen md:justify-center md:py-12">
+      <div className="relative flex flex-col items-center pt-16 pb-12 px-4 md:min-h-screen md:py-16">
         {/* Header */}
-        <AnimatedSection className="text-center mb-2 md:mb-16 z-10">
+        <AnimatedSection className="text-center mb-2 md:mb-16 relative z-40">
           <span className="inline-block text-primary font-semibold text-xs md:text-sm tracking-widest uppercase mb-2">
             Our Work
           </span>
@@ -145,14 +145,14 @@ export function GallerySection() {
         />
 
         {/* Instruction */}
-        <AnimatedSection delay={0.2} className="text-center mt-2 md:mt-16 z-10">
+        <AnimatedSection delay={0.2} className="text-center mt-2 md:mt-16 relative z-40">
           <p className="text-white/40 text-xs md:text-sm tracking-wide">
             Auto-rotates • Swipe left or right to explore • Tap any photo to view
           </p>
         </AnimatedSection>
 
         {/* CTA */}
-        <AnimatedSection delay={0.3} className="mt-6 z-10">
+        <AnimatedSection delay={0.3} className="mt-6 relative z-40">
           <Button 
             asChild 
             size="lg" 

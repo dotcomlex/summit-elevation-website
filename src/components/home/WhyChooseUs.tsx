@@ -1,31 +1,39 @@
-import { Shield, Clock, Award, Users, Wrench } from "lucide-react";
+import { Shield, ClipboardCheck, CalendarCheck, ClipboardList, FileText, Hammer, Award, ArrowRight, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import teamImage from "@/assets/team-work.jpg";
 import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/ui/animated-section";
+import { Button } from "@/components/ui/button";
 
-const features = [
+const proofCards = [
   {
     icon: Shield,
     title: "Licensed & Insured",
-    description: "Fully licensed Colorado contractor with comprehensive insurance coverage.",
-    accent: "navy",
+    description: "Fully covered, code-compliant work.",
   },
   {
-    icon: Clock,
-    title: "On-Time Delivery",
-    description: "We respect your timeline with efficient project management.",
-    accent: "primary",
+    icon: ClipboardCheck,
+    title: "Clear Scope, No Surprises",
+    description: "Detailed estimates, transparent line items.",
   },
   {
-    icon: Award,
-    title: "Quality Craftsmanship",
-    description: "Attention to detail and premium materials ensure lasting results.",
-    accent: "navy",
+    icon: CalendarCheck,
+    title: "Clean, On-Schedule Builds",
+    description: "Professional timelines and communication.",
+  },
+];
+
+const processSteps = [
+  {
+    icon: ClipboardList,
+    label: "Walkthrough",
   },
   {
-    icon: Users,
-    title: "Client-Focused",
-    description: "Your vision drives our work. We deliver beyond expectations.",
-    accent: "primary",
+    icon: FileText,
+    label: "Written Estimate",
+  },
+  {
+    icon: Hammer,
+    label: "Build & Final Walk",
   },
 ];
 
@@ -43,98 +51,136 @@ export function WhyChooseUs() {
             <span>Why Choose Us</span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-mountain-charcoal mb-4">
-            Colorado's Trusted Renovators
+            Why Homeowners Trust 14er
           </h2>
           <p className="text-base md:text-lg text-mountain-slate max-w-2xl mx-auto">
-            15+ years of transforming Colorado homes with integrity and excellence
+            Trusted expertise, clear estimates, and professional build-outs.
           </p>
         </AnimatedSection>
 
         <div className="max-w-6xl mx-auto">
-          {/* Image - Shows FIRST on mobile */}
+          {/* Mobile: Image first */}
           <AnimatedSection delay={0.2} className="mb-8 md:hidden">
-            <div className="relative rounded-2xl overflow-hidden shadow-elevated">
-              <img
-                src={teamImage}
-                alt="14er Renovations team at work"
-                className="w-full h-64 object-cover"
-              />
-              {/* Badge overlay */}
-              <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm rounded-xl px-4 py-3 shadow-lg">
-                <div className="text-2xl font-bold text-primary">15+</div>
-                <div className="text-xs font-medium text-mountain-charcoal">Years Experience</div>
+            <div className="relative">
+              <div className="rounded-2xl overflow-hidden shadow-elevated">
+                <img
+                  src={teamImage}
+                  alt="Active jobsite in the Colorado Rockies"
+                  className="w-full h-64 object-cover"
+                />
+              </div>
+              {/* Circular badge */}
+              <div className="absolute -top-3 -right-3 w-20 h-20 bg-gradient-to-br from-primary to-primary/80 rounded-full flex flex-col items-center justify-center text-white shadow-lg">
+                <span className="text-xl font-bold leading-none">15+</span>
+                <span className="text-[10px] font-medium leading-tight">Years</span>
+                <span className="text-[10px] font-medium leading-tight">Experience</span>
               </div>
             </div>
+            <p className="text-sm text-mountain-slate italic text-center mt-3">
+              Active jobsite in the Colorado Rockies
+            </p>
           </AnimatedSection>
 
-          {/* Desktop: Two columns */}
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Features Grid */}
-            <StaggerContainer className="grid grid-cols-2 gap-3 md:gap-4 order-2 md:order-1">
-              {features.map((feature, index) => {
-                const Icon = feature.icon;
-                const isPrimary = feature.accent === "primary";
-
+          {/* Two-column layout */}
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
+            {/* Left: Proof Cards */}
+            <StaggerContainer className="space-y-4 order-2 md:order-1">
+              {proofCards.map((card, index) => {
+                const Icon = card.icon;
                 return (
                   <StaggerItem key={index}>
-                    <div className="bg-white rounded-xl p-4 md:p-5 shadow-soft hover:shadow-elevated transition-all duration-300 h-full">
-                      <div
-                        className={`inline-flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-lg mb-3 ${
-                          isPrimary
-                            ? "bg-primary/10 text-primary"
-                            : "bg-navy/10 text-navy"
-                        }`}
-                      >
-                        <Icon className="w-5 h-5 md:w-6 md:h-6" />
+                    <div className="bg-white rounded-xl p-5 shadow-soft hover:shadow-elevated transition-all duration-300 flex items-start gap-4">
+                      <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                        <Icon className="w-6 h-6 text-primary" />
                       </div>
-                      <h3 className="text-sm md:text-base font-bold text-mountain-charcoal mb-1 md:mb-2">
-                        {feature.title}
-                      </h3>
-                      <p className="text-xs md:text-sm text-mountain-slate leading-relaxed">
-                        {feature.description}
-                      </p>
+                      <div>
+                        <h3 className="text-base md:text-lg font-bold text-mountain-charcoal mb-1">
+                          {card.title}
+                        </h3>
+                        <p className="text-sm text-mountain-slate">
+                          {card.description}
+                        </p>
+                      </div>
                     </div>
                   </StaggerItem>
                 );
               })}
             </StaggerContainer>
 
-            {/* Image - Desktop only */}
+            {/* Right: Image with badge (Desktop only) */}
             <AnimatedSection delay={0.3} direction="right" className="hidden md:block order-1 md:order-2">
               <div className="relative">
                 <div className="rounded-2xl overflow-hidden shadow-elevated">
                   <img
                     src={teamImage}
-                    alt="14er Renovations team at work"
-                    className="w-full h-[400px] lg:h-[480px] object-cover"
+                    alt="Active jobsite in the Colorado Rockies"
+                    className="w-full h-[400px] lg:h-[380px] object-cover"
                   />
                 </div>
-                {/* Floating badge */}
-                <div className="absolute -bottom-4 -left-4 bg-white rounded-xl px-5 py-4 shadow-elevated">
-                  <div className="text-3xl font-bold text-primary">15+</div>
-                  <div className="text-sm font-medium text-mountain-charcoal">Years Experience</div>
+                {/* Circular badge */}
+                <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-primary to-primary/80 rounded-full flex flex-col items-center justify-center text-white shadow-lg border-4 border-white">
+                  <span className="text-2xl font-bold leading-none">15+</span>
+                  <span className="text-xs font-medium leading-tight">Years</span>
+                  <span className="text-xs font-medium leading-tight">Experience</span>
                 </div>
-                {/* Decorative element */}
-                <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 rounded-full -z-10" />
               </div>
+              <p className="text-sm text-mountain-slate italic text-center mt-4">
+                Active jobsite in the Colorado Rockies
+              </p>
             </AnimatedSection>
           </div>
 
-          {/* Colorado Pride - Full width */}
-          <AnimatedSection delay={0.4} className="mt-8 md:mt-12">
-            <div className="bg-white rounded-xl p-5 md:p-6 shadow-soft flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-              <div className="flex-shrink-0 bg-navy/10 p-3 rounded-full">
-                <Wrench className="w-6 h-6 text-navy" />
+          {/* Process Strip */}
+          <AnimatedSection delay={0.4} className="mt-10 md:mt-14">
+            <div className="bg-white rounded-xl p-5 md:p-6 shadow-soft">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-10">
+                {processSteps.map((step, index) => {
+                  const Icon = step.icon;
+                  const isLast = index === processSteps.length - 1;
+                  return (
+                    <div key={index} className="flex items-center gap-4 sm:gap-6 md:gap-10">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                          <Icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                        </div>
+                        <span className="text-sm md:text-base font-medium text-mountain-charcoal whitespace-nowrap">
+                          {step.label}
+                        </span>
+                      </div>
+                      {!isLast && (
+                        <ChevronRight className="hidden sm:block w-5 h-5 text-mountain-slate/50" />
+                      )}
+                    </div>
+                  );
+                })}
               </div>
-              <div>
-                <h3 className="text-base md:text-lg font-bold text-mountain-charcoal mb-1">
-                  Colorado Built, Colorado Proud
-                </h3>
-                <p className="text-sm text-mountain-slate">
-                  We understand local building codes, weather challenges, and what makes Colorado homes special. 
-                  Our team lives and works here—your neighbors trust us with their homes.
-                </p>
-              </div>
+            </div>
+          </AnimatedSection>
+
+          {/* CTA Buttons */}
+          <AnimatedSection delay={0.5} className="mt-8 md:mt-10">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button
+                asChild
+                size="lg"
+                className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 text-base shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <Link to="/contact">
+                  Get a Free Estimate
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="w-full sm:w-auto bg-charcoal hover:bg-charcoal/90 text-white border-charcoal font-semibold px-8 py-6 text-base transition-all duration-300"
+              >
+                <Link to="/services">
+                  View Our Work
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Link>
+              </Button>
             </div>
           </AnimatedSection>
         </div>

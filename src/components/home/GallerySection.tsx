@@ -141,7 +141,7 @@ export function GallerySection() {
           autoRotateSpeed={-0.035}
           isActive={isActive}
           onItemClick={openLightbox}
-          className="relative z-10"
+          className="relative z-10 h-[340px] sm:h-[420px] md:h-[480px]"
         />
 
         {/* Instruction */}

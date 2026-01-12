@@ -69,12 +69,18 @@
     --alpine-blue: 210 50% 25%;
     --alpine-light: 210 45% 40%;
     
-    /* Evergreen - Third Accent Color */
-    --evergreen: 160 35% 30%;
-    --evergreen-light: 160 30% 45%;
+    /* Navy Blue - Third Accent (luxury, pairs with orange) */
+    --navy: 215 50% 23%;
+    --navy-light: 215 45% 35%;
+    --navy-dark: 215 55% 18%;
     
     /* Gold for stars/ratings */
     --gold: 45 93% 47%;
+    
+    /* Section backgrounds */
+    --sand: 38 40% 95%;
+    --charcoal: 225 25% 15%;
+    --charcoal-dark: 225 30% 10%;
 
     /* Sidebar colors */
     --sidebar-background: 220 15% 18%;
@@ -120,12 +126,18 @@
     --alpine-blue: 210 45% 45%;
     --alpine-light: 210 40% 55%;
     
-    /* Evergreen for dark mode */
-    --evergreen: 160 30% 40%;
-    --evergreen-light: 160 25% 55%;
+    /* Navy Blue for dark mode */
+    --navy: 215 45% 35%;
+    --navy-light: 215 40% 45%;
+    --navy-dark: 215 50% 25%;
     
     /* Gold for stars/ratings */
     --gold: 45 93% 50%;
+    
+    /* Section backgrounds */
+    --sand: 38 35% 92%;
+    --charcoal: 225 25% 18%;
+    --charcoal-dark: 225 30% 12%;
 
     --sidebar-background: 220 20% 8%;
     --sidebar-foreground: 220 10% 90%;

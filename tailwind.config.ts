@@ -92,13 +92,20 @@ export default {
           blue: "hsl(var(--alpine-blue))",
           light: "hsl(var(--alpine-light))",
         },
-        // Evergreen - Third Accent
-        evergreen: {
-          DEFAULT: "hsl(var(--evergreen))",
-          light: "hsl(var(--evergreen-light))",
+        // Navy Blue - Third Accent (replaces evergreen)
+        navy: {
+          DEFAULT: "hsl(var(--navy))",
+          light: "hsl(var(--navy-light))",
+          dark: "hsl(var(--navy-dark))",
         },
         // Gold for ratings
         gold: "hsl(var(--gold))",
+        // Section backgrounds
+        sand: "hsl(var(--sand))",
+        charcoal: {
+          DEFAULT: "hsl(var(--charcoal))",
+          dark: "hsl(var(--charcoal-dark))",
+        },
       },
       fontFamily: {
         heading: ['Montserrat', 'system-ui', 'sans-serif'],

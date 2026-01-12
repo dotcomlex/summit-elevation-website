@@ -205,7 +205,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
         role="region"
         aria-label="Our Work Gallery"
         className={cn(
-          "relative w-full h-full flex items-center justify-center",
+          "relative w-full flex items-center justify-center",
           "cursor-grab active:cursor-grabbing",
           className
         )}

@@ -92,6 +92,13 @@ export default {
           blue: "hsl(var(--alpine-blue))",
           light: "hsl(var(--alpine-light))",
         },
+        // Evergreen - Third Accent
+        evergreen: {
+          DEFAULT: "hsl(var(--evergreen))",
+          light: "hsl(var(--evergreen-light))",
+        },
+        // Gold for ratings
+        gold: "hsl(var(--gold))",
       },
       fontFamily: {
         heading: ['Montserrat', 'system-ui', 'sans-serif'],

@@ -1,8 +1,6 @@
-import { Shield, ClipboardCheck, CalendarCheck, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Shield, ClipboardCheck, CalendarCheck } from "lucide-react";
 import teamImage from "@/assets/team-work.jpg";
 import { AnimatedSection } from "@/components/ui/animated-section";
-import { Button } from "@/components/ui/button";
 
 const proofCards = [
   {
@@ -42,38 +40,38 @@ const processSteps = [
 
 export function WhyChooseUs() {
   return (
-    <section className="relative py-16 md:py-24 bg-sand overflow-hidden">
+    <section className="relative py-12 md:py-20 lg:py-24 bg-sand overflow-hidden">
       {/* Subtle texture */}
       <div className="absolute inset-0 texture-paper opacity-30" />
 
       <div className="container relative z-10 px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
           {/* Desktop: 2-column layout */}
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-16 items-center">
             
             {/* Left Column: Header + Proof Cards (on desktop) */}
             <div className="order-1">
               {/* Section Header */}
-              <AnimatedSection className="text-center lg:text-left mb-8">
+              <AnimatedSection className="text-center lg:text-left mb-6 lg:mb-8">
                 {/* Pill */}
                 <div className="inline-flex items-center gap-2 bg-mountain-navy/10 text-mountain-navy px-4 py-2 rounded-full text-sm font-medium mb-4 uppercase tracking-wide">
                   Why Homeowners Trust Us
                 </div>
                 
                 {/* Headline */}
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-charcoal mb-4 leading-tight">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] xl:text-5xl font-bold text-charcoal mb-3 lg:mb-4 leading-tight">
                   Why Homeowners Trust 14er Renovations
                 </h2>
                 
                 {/* Subheadline */}
-                <p className="text-mountain-slate text-lg max-w-xl mx-auto lg:mx-0">
+                <p className="text-mountain-slate text-base sm:text-lg max-w-xl mx-auto lg:mx-0">
                   Trusted craftsmanship, clear estimates, and professional builds across Colorado.
                 </p>
               </AnimatedSection>
 
               {/* Proof Cards - Desktop only in left column */}
               <AnimatedSection delay={0.3} className="hidden lg:block">
-                <div className="bg-sand-dark/40 rounded-2xl p-5 space-y-3">
+                <div className="bg-sand-dark/40 rounded-2xl p-4 space-y-2.5">
                   {proofCards.map((card, index) => {
                     const Icon = card.icon;
                     return (
@@ -108,18 +106,18 @@ export function WhyChooseUs() {
                     <img
                       src={teamImage}
                       alt="Active Colorado jobsite with mountains in the background"
-                      className="w-full h-56 sm:h-64 md:h-72 lg:h-80 object-cover"
+                      className="w-full h-52 sm:h-60 md:h-72 lg:h-[380px] object-cover"
                     />
                     
                     {/* Experience Badge - Inside image top-right */}
-                    <div className="absolute top-3 right-3 sm:top-4 sm:right-4 w-[70px] h-[70px] sm:w-20 sm:h-20 md:w-[88px] md:h-[88px] rounded-full bg-sand/95 backdrop-blur-sm shadow-lg flex flex-col items-center justify-center border-2 border-white/60">
-                      <span className="text-xl sm:text-2xl md:text-[26px] font-bold text-primary leading-none">15+</span>
-                      <span className="text-[10px] sm:text-xs text-charcoal font-medium leading-tight text-center mt-0.5">Years<br/>Experience</span>
+                    <div className="absolute top-3 right-3 sm:top-4 sm:right-4 w-16 h-16 sm:w-[72px] sm:h-[72px] md:w-20 md:h-20 lg:w-[88px] lg:h-[88px] rounded-full bg-sand/95 backdrop-blur-sm shadow-lg flex flex-col items-center justify-center border-2 border-white/60">
+                      <span className="text-lg sm:text-xl md:text-2xl lg:text-[26px] font-bold text-primary leading-none">15+</span>
+                      <span className="text-[9px] sm:text-[10px] md:text-xs text-charcoal font-medium leading-tight text-center mt-0.5">Years<br/>Experience</span>
                     </div>
                   </div>
                   
                   {/* Caption */}
-                  <p className="text-center text-mountain-slate text-sm italic mt-3">
+                  <p className="text-center text-mountain-slate text-sm italic mt-2.5">
                     Active Colorado jobsite
                   </p>
                 </div>
@@ -129,7 +127,7 @@ export function WhyChooseUs() {
             {/* Mobile Only: Proof Cards (after image) */}
             <div className="order-3 lg:hidden">
               <AnimatedSection delay={0.25}>
-                <div className="bg-sand-dark/40 rounded-2xl p-4 space-y-3">
+                <div className="bg-sand-dark/40 rounded-2xl p-3 space-y-2.5">
                   {proofCards.map((card, index) => {
                     const Icon = card.icon;
                     return (
@@ -157,9 +155,9 @@ export function WhyChooseUs() {
           </div>
 
           {/* How It Works Section */}
-          <AnimatedSection delay={0.35} className="mt-10 md:mt-14">
+          <AnimatedSection delay={0.35} className="mt-8 md:mt-12 lg:mt-14">
             {/* Section Header with Lines */}
-            <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="flex items-center justify-center gap-3 mb-5 md:mb-6">
               <div className="flex-1 h-px bg-charcoal/15 max-w-[60px] sm:max-w-[100px]" />
               <span className="text-xs sm:text-sm font-semibold text-charcoal uppercase tracking-widest">
                 How It Works
@@ -168,7 +166,7 @@ export function WhyChooseUs() {
             </div>
 
             {/* Process Steps */}
-            <div className="grid sm:grid-cols-3 gap-3 sm:gap-4 max-w-3xl mx-auto">
+            <div className="grid sm:grid-cols-3 gap-2.5 sm:gap-4 md:gap-5 max-w-4xl mx-auto">
               {processSteps.map((step, index) => (
                 <div
                   key={index}
@@ -187,33 +185,6 @@ export function WhyChooseUs() {
                   </div>
                 </div>
               ))}
-            </div>
-          </AnimatedSection>
-
-          {/* CTA Buttons */}
-          <AnimatedSection delay={0.45} className="mt-8 md:mt-10">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-              <Button
-                asChild
-                size="lg"
-                className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white font-semibold px-7 py-5 text-base rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <Link to="/contact">
-                  Get a Free Estimate
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="w-full sm:w-auto bg-charcoal hover:bg-charcoal/90 text-white border-charcoal font-semibold px-7 py-5 text-base rounded-xl transition-all duration-300"
-              >
-                <Link to="/services">
-                  View Our Work
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Link>
-              </Button>
             </div>
           </AnimatedSection>
         </div>

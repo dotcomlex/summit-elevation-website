@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { ArrowRight, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -15,16 +15,34 @@ import galleryPatio1 from "@/assets/gallery-patio-1.jpg";
 import galleryExterior1 from "@/assets/gallery-exterior-1.jpg";
 
 export function GallerySection() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [isActive, setIsActive] = useState(false);
   const [radius, setRadius] = useState(600);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
   // Responsive radius
   useEffect(() => {
-    const update = () => setRadius(window.innerWidth < 640 ? 280 : 520);
+    const update = () => setRadius(window.innerWidth < 640 ? 320 : 600);
     update();
     window.addEventListener("resize", update, { passive: true });
     return () => window.removeEventListener("resize", update);
+  }, []);
+
+  // IntersectionObserver to detect when section is in view
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        setIsActive(entry.isIntersecting && entry.intersectionRatio > 0.25);
+      },
+      { threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
   const items: GalleryItem[] = useMemo(
@@ -75,22 +93,36 @@ export function GallerySection() {
   }, [lightboxOpen]);
 
   return (
-    <section className="relative h-[260vh] overflow-x-hidden">
-      {/* Sticky gallery container */}
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center bg-section-dark overflow-hidden">
-        {/* Subtle texture */}
-        <div className="absolute inset-0 texture-grain opacity-30" />
-        
-        {/* Vignette effect for depth */}
-        <div 
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: "radial-gradient(ellipse at center, transparent 40%, hsl(var(--section-dark)) 100%)",
-          }}
-        />
+    <section
+      ref={sectionRef}
+      className="relative min-h-screen w-full overflow-hidden"
+    >
+      {/* Premium multi-layer background */}
+      {/* Base gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628] via-[#0d1f3c] to-[#0a0f1a]" />
+      
+      {/* Radial glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.08)_0%,transparent_70%)]" />
+      
+      {/* Mesh gradient overlay */}
+      <div 
+        className="absolute inset-0 opacity-30"
+        style={{
+          backgroundImage: `
+            radial-gradient(at 20% 80%, rgba(251,146,60,0.15) 0%, transparent 50%),
+            radial-gradient(at 80% 20%, rgba(59,130,246,0.1) 0%, transparent 50%),
+            radial-gradient(at 50% 50%, rgba(139,92,246,0.08) 0%, transparent 60%)
+          `,
+        }}
+      />
+      
+      {/* Vignette */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.6)_100%)]" />
 
+      {/* Content */}
+      <div className="relative h-screen flex flex-col items-center justify-center py-12 px-4">
         {/* Header */}
-        <AnimatedSection className="relative z-10 text-center px-4 mb-6 md:mb-10">
+        <AnimatedSection className="text-center mb-6 md:mb-10 z-10">
           <span className="inline-block text-primary font-semibold text-xs md:text-sm tracking-widest uppercase mb-2">
             Our Work
           </span>
@@ -106,20 +138,21 @@ export function GallerySection() {
         <CircularGallery
           items={items}
           radius={radius}
-          autoRotateSpeed={0.008}
+          autoRotateSpeed={-0.014}
+          isActive={isActive}
           onItemClick={openLightbox}
           className="relative z-10"
         />
 
-        {/* Scroll instruction */}
-        <AnimatedSection delay={0.2} className="relative z-10 mt-6 md:mt-10">
+        {/* Instruction */}
+        <AnimatedSection delay={0.2} className="text-center mt-6 md:mt-10 z-10">
           <p className="text-white/40 text-xs md:text-sm tracking-wide">
-            Scroll to rotate • Tap any photo to view
+            Auto-rotates • Swipe left or right to explore • Tap any photo to view
           </p>
         </AnimatedSection>
 
         {/* CTA */}
-        <AnimatedSection delay={0.3} className="relative z-10 mt-8">
+        <AnimatedSection delay={0.3} className="mt-8 z-10">
           <Button 
             asChild 
             size="lg" 

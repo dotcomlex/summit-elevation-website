@@ -14,7 +14,18 @@ type LogoCloudProps = React.ComponentProps<"div"> & {
 
 export function LogoCloud({ logos }: LogoCloudProps) {
   return (
-    <div className="relative bg-muted/30 py-6 sm:py-8">
+    <section className="relative bg-muted/30 py-12 sm:py-16">
+      {/* Headline Section */}
+      <div className="text-center pb-8">
+        <p className="text-sm text-muted-foreground italic">
+          Trusted by Industry Leaders
+        </p>
+        <h2 className="text-2xl sm:text-3xl font-bold text-foreground mt-2">
+          Colorado's Premier Partners
+        </h2>
+      </div>
+
+      {/* Logo Slider */}
       <div className="relative">
         <ProgressiveBlur
           direction="left"
@@ -23,7 +34,7 @@ export function LogoCloud({ logos }: LogoCloudProps) {
           className="z-10"
         />
 
-        <InfiniteSlider gap={48} speed={40} className="py-2">
+        <InfiniteSlider duration={25} gap={80} className="py-2">
           {logos.map((logo) => (
             <img
               key={logo.alt}
@@ -43,6 +54,6 @@ export function LogoCloud({ logos }: LogoCloudProps) {
           className="z-10"
         />
       </div>
-    </div>
+    </section>
   );
 }

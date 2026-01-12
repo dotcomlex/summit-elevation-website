@@ -23,7 +23,7 @@ export function GallerySection() {
 
   // Responsive radius (smaller values for square cards)
   useEffect(() => {
-    const update = () => setRadius(window.innerWidth < 640 ? 220 : 520);
+    const update = () => setRadius(window.innerWidth < 640 ? 320 : 520);
     update();
     window.addEventListener("resize", update, { passive: true });
     return () => window.removeEventListener("resize", update);
@@ -120,9 +120,9 @@ export function GallerySection() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.6)_100%)]" />
 
       {/* Content */}
-      <div className="relative h-[80vh] sm:h-screen flex flex-col items-center justify-center py-6 sm:py-12 px-4">
+      <div className="relative h-screen flex flex-col items-center justify-center py-12 px-4">
         {/* Header */}
-        <AnimatedSection className="text-center mb-2 md:mb-6 z-10">
+        <AnimatedSection className="text-center mb-4 md:mb-6 z-10">
           <span className="inline-block text-primary font-semibold text-xs md:text-sm tracking-widest uppercase mb-2">
             Our Work
           </span>
@@ -145,14 +145,14 @@ export function GallerySection() {
         />
 
         {/* Instruction */}
-        <AnimatedSection delay={0.2} className="text-center mt-2 md:mt-6 z-10">
+        <AnimatedSection delay={0.2} className="text-center mt-4 md:mt-6 z-10">
           <p className="text-white/40 text-xs md:text-sm tracking-wide">
-            Let us bring your vision to life — explore our craftsmanship
+            Auto-rotates • Swipe left or right to explore • Tap any photo to view
           </p>
         </AnimatedSection>
 
         {/* CTA */}
-        <AnimatedSection delay={0.3} className="mt-4 sm:mt-6 z-10">
+        <AnimatedSection delay={0.3} className="mt-6 z-10">
           <Button 
             asChild 
             size="lg" 

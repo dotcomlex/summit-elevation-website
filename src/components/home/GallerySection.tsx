@@ -23,7 +23,7 @@ export function GallerySection() {
 
   // Responsive radius (smaller values for square cards)
   useEffect(() => {
-    const update = () => setRadius(window.innerWidth < 640 ? 260 : 480);
+    const update = () => setRadius(window.innerWidth < 640 ? 340 : 580);
     update();
     window.addEventListener("resize", update, { passive: true });
     return () => window.removeEventListener("resize", update);

@@ -1,123 +1,129 @@
-import { useState, useCallback, useEffect } from "react";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect, useMemo, useCallback } from "react";
+import { ArrowRight, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { AnimatedSection } from "@/components/ui/animated-section";
-import useEmblaCarousel from "embla-carousel-react";
+import { CircularGallery, GalleryItem } from "@/components/ui/circular-gallery";
 
 import galleryKitchen from "@/assets/gallery-kitchen.jpg";
 import galleryBathroom from "@/assets/gallery-bathroom.jpg";
 import galleryPatio from "@/assets/gallery-patio.jpg";
 import galleryExterior from "@/assets/gallery-exterior.jpg";
-
-const projects = [
-  { id: 1, image: galleryKitchen, title: "Modern Kitchen Transformation", location: "Denver, CO" },
-  { id: 2, image: galleryBathroom, title: "Luxury Spa Bathroom", location: "Boulder, CO" },
-  { id: 3, image: galleryPatio, title: "Stamped Concrete Patio", location: "Lakewood, CO" },
-  { id: 4, image: galleryExterior, title: "Complete Home Renovation", location: "Aurora, CO" },
-];
+import galleryKitchen1 from "@/assets/gallery-kitchen-1.jpg";
+import galleryBathroom1 from "@/assets/gallery-bathroom-1.jpg";
+import galleryPatio1 from "@/assets/gallery-patio-1.jpg";
+import galleryExterior1 from "@/assets/gallery-exterior-1.jpg";
 
 export function GallerySection() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [radius, setRadius] = useState(600);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-  const scrollTo = useCallback((index: number) => emblaApi?.scrollTo(index), [emblaApi]);
-
+  // Responsive radius
   useEffect(() => {
-    if (!emblaApi) return;
-    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
-    emblaApi.on("select", onSelect);
-    onSelect();
-    return () => {
-      emblaApi.off("select", onSelect);
-    };
-  }, [emblaApi]);
+    const update = () => setRadius(window.innerWidth < 640 ? 280 : 520);
+    update();
+    window.addEventListener("resize", update, { passive: true });
+    return () => window.removeEventListener("resize", update);
+  }, []);
 
-  const currentProject = projects[selectedIndex];
+  const items: GalleryItem[] = useMemo(
+    () => [
+      { common: "Kitchen Remodel", binomial: "Denver, CO", photo: { url: galleryKitchen, text: "Modern kitchen remodel", by: "14er Renovations" } },
+      { common: "Bathroom Remodel", binomial: "Boulder, CO", photo: { url: galleryBathroom, text: "Luxury bathroom renovation", by: "14er Renovations" } },
+      { common: "Stamped Patio", binomial: "Lakewood, CO", photo: { url: galleryPatio, text: "Stamped concrete patio", by: "14er Renovations" } },
+      { common: "Home Renovation", binomial: "Aurora, CO", photo: { url: galleryExterior, text: "Complete home exterior", by: "14er Renovations" } },
+      { common: "Kitchen Update", binomial: "Arvada, CO", photo: { url: galleryKitchen1, text: "Kitchen update project", by: "14er Renovations" } },
+      { common: "Spa Bathroom", binomial: "Littleton, CO", photo: { url: galleryBathroom1, text: "Spa-style bathroom", by: "14er Renovations" } },
+      { common: "Outdoor Living", binomial: "Thornton, CO", photo: { url: galleryPatio1, text: "Outdoor patio space", by: "14er Renovations" } },
+      { common: "Exterior Work", binomial: "Centennial, CO", photo: { url: galleryExterior1, text: "Exterior renovation", by: "14er Renovations" } },
+    ],
+    []
+  );
+
+  const openLightbox = useCallback((index: number) => {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  }, []);
+
+  const closeLightbox = useCallback(() => setLightboxOpen(false), []);
+  const nextImage = useCallback(() => setLightboxIndex((p) => (p + 1) % items.length), [items.length]);
+  const prevImage = useCallback(() => setLightboxIndex((p) => (p - 1 + items.length) % items.length), [items.length]);
+
+  // Keyboard navigation for lightbox
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowRight") nextImage();
+      if (e.key === "ArrowLeft") prevImage();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [lightboxOpen, closeLightbox, nextImage, prevImage]);
+
+  // Prevent body scroll when lightbox is open
+  useEffect(() => {
+    if (lightboxOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [lightboxOpen]);
 
   return (
-    <section className="relative py-20 md:py-32 bg-section-dark overflow-hidden">
-      <div className="absolute inset-0 texture-grain" />
-      <div className="container relative z-10 px-4 md:px-6">
+    <section className="relative h-[260vh] overflow-x-hidden">
+      {/* Sticky gallery container */}
+      <div className="sticky top-0 h-screen flex flex-col items-center justify-center bg-section-dark overflow-hidden">
+        {/* Subtle texture */}
+        <div className="absolute inset-0 texture-grain opacity-30" />
         
-        {/* Minimal Header */}
-        <AnimatedSection className="text-center mb-10 md:mb-16">
-          <h2 className="text-2xl md:text-4xl font-bold text-white">
-            Featured Projects
+        {/* Vignette effect for depth */}
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: "radial-gradient(ellipse at center, transparent 40%, hsl(var(--section-dark)) 100%)",
+          }}
+        />
+
+        {/* Header */}
+        <AnimatedSection className="relative z-10 text-center px-4 mb-6 md:mb-10">
+          <span className="inline-block text-primary font-semibold text-xs md:text-sm tracking-widest uppercase mb-2">
+            Our Work
+          </span>
+          <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+            Work That Speaks For Itself
           </h2>
-        </AnimatedSection>
-
-        {/* Carousel */}
-        <AnimatedSection delay={0.1} className="relative">
-          <div className="overflow-hidden rounded-2xl" ref={emblaRef}>
-            <div className="flex">
-              {projects.map((project) => (
-                <div key={project.id} className="flex-[0_0_100%] min-w-0">
-                  <div className="aspect-[16/9] md:aspect-[2/1]">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Desktop Navigation Arrows */}
-          <button
-            onClick={scrollPrev}
-            className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 rounded-full items-center justify-center transition-colors"
-            aria-label="Previous project"
-          >
-            <ChevronLeft className="w-6 h-6 text-white" />
-          </button>
-          <button
-            onClick={scrollNext}
-            className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 rounded-full items-center justify-center transition-colors"
-            aria-label="Next project"
-          >
-            <ChevronRight className="w-6 h-6 text-white" />
-          </button>
-        </AnimatedSection>
-
-        {/* Project Info */}
-        <div className="mt-8 text-center">
-          <h3 className="text-xl md:text-2xl font-semibold text-white">
-            {currentProject.title}
-          </h3>
-          <p className="text-white/50 text-sm mt-1">
-            {currentProject.location}
+          <p className="text-white/50 text-sm md:text-base mt-2 max-w-md mx-auto">
+            A quick look at recent projects across Colorado.
           </p>
-        </div>
+        </AnimatedSection>
 
-        {/* Dot Indicators */}
-        <div className="flex justify-center gap-2 mt-6">
-          {projects.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => scrollTo(index)}
-              aria-label={`Go to project ${index + 1}`}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                index === selectedIndex 
-                  ? "bg-primary w-6" 
-                  : "bg-white/30 hover:bg-white/50 w-2"
-              }`}
-            />
-          ))}
-        </div>
+        {/* Circular Gallery */}
+        <CircularGallery
+          items={items}
+          radius={radius}
+          autoRotateSpeed={0.008}
+          onItemClick={openLightbox}
+          className="relative z-10"
+        />
+
+        {/* Scroll instruction */}
+        <AnimatedSection delay={0.2} className="relative z-10 mt-6 md:mt-10">
+          <p className="text-white/40 text-xs md:text-sm tracking-wide">
+            Scroll to rotate • Tap any photo to view
+          </p>
+        </AnimatedSection>
 
         {/* CTA */}
-        <AnimatedSection delay={0.2} className="flex justify-center mt-12">
+        <AnimatedSection delay={0.3} className="relative z-10 mt-8">
           <Button 
             asChild 
             size="lg" 
-            className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-base md:text-lg shadow-lg btn-shine"
+            className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-base shadow-lg btn-shine"
           >
             <Link to="/contact">
               Get a Free Estimate
@@ -126,6 +132,70 @@ export function GallerySection() {
           </Button>
         </AnimatedSection>
       </div>
+
+      {/* Lightbox Modal */}
+      {lightboxOpen && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+          onClick={closeLightbox}
+        >
+          {/* Close button */}
+          <button
+            onClick={closeLightbox}
+            className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors z-10"
+            aria-label="Close lightbox"
+          >
+            <X className="w-5 h-5 text-white" />
+          </button>
+
+          {/* Prev button */}
+          <button
+            onClick={(e) => { e.stopPropagation(); prevImage(); }}
+            className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors z-10"
+            aria-label="Previous image"
+          >
+            <ChevronLeft className="w-6 h-6 text-white" />
+          </button>
+
+          {/* Next button */}
+          <button
+            onClick={(e) => { e.stopPropagation(); nextImage(); }}
+            className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors z-10"
+            aria-label="Next image"
+          >
+            <ChevronRight className="w-6 h-6 text-white" />
+          </button>
+
+          {/* Image container */}
+          <div 
+            className="relative max-w-5xl max-h-[80vh] mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={items[lightboxIndex].photo.url}
+              alt={items[lightboxIndex].photo.text}
+              className="max-w-full max-h-[80vh] object-contain rounded-lg"
+            />
+            
+            {/* Image info */}
+            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent rounded-b-lg">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-white font-semibold text-lg">
+                    {items[lightboxIndex].common}
+                  </p>
+                  <p className="text-white/60 text-sm">
+                    {items[lightboxIndex].binomial}
+                  </p>
+                </div>
+                <span className="text-white/50 text-sm">
+                  {lightboxIndex + 1} / {items.length}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

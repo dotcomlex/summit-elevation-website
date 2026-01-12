@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, MapPin, ArrowRight } from "lucide-react";
+import { X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { AnimatedSection } from "@/components/ui/animated-section";
@@ -31,17 +31,22 @@ const categories = ["All", "Kitchen", "Bathroom", "Concrete", "Exterior"];
 export function GallerySection() {
   const [selectedImage, setSelectedImage] = useState<typeof projects[0] | null>(null);
   const [activeCategory, setActiveCategory] = useState("All");
+  const [showAll, setShowAll] = useState(false);
 
   const filteredProjects = activeCategory === "All" 
     ? projects 
     : projects.filter(p => p.category === activeCategory);
 
+  const displayedProjects = showAll 
+    ? filteredProjects 
+    : filteredProjects.slice(0, 4);
+
   return (
-    <section className="relative py-14 md:py-20 bg-section-dark overflow-hidden">
+    <section className="relative py-16 md:py-24 bg-section-dark overflow-hidden">
       <div className="absolute inset-0 texture-grain" />
       <div className="container relative z-10 px-4 md:px-6">
         {/* Section Header */}
-        <AnimatedSection className="text-center mb-8 md:mb-10">
+        <AnimatedSection className="text-center mb-10 md:mb-14">
           <span className="inline-block text-primary font-semibold text-sm uppercase tracking-wider mb-3">
             Our Portfolio
           </span>
@@ -54,12 +59,15 @@ export function GallerySection() {
         </AnimatedSection>
 
         {/* Filter Chips */}
-        <AnimatedSection delay={0.1} className="mb-6 md:mb-8">
+        <AnimatedSection delay={0.1} className="mb-8 md:mb-12">
           <div className="flex gap-2 overflow-x-auto no-scrollbar py-1 -mx-4 px-4 md:justify-center md:mx-0 md:px-0">
             {categories.map((category) => (
               <button
                 key={category}
-                onClick={() => setActiveCategory(category)}
+                onClick={() => {
+                  setActiveCategory(category);
+                  setShowAll(false);
+                }}
                 className={cn(
                   "flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 touch-manipulation",
                   activeCategory === category
@@ -75,12 +83,12 @@ export function GallerySection() {
 
         {/* Compact Responsive Grid */}
         <AnimatedSection delay={0.15} className="mb-10">
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 md:gap-4">
-            {filteredProjects.map((project) => (
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 md:gap-6">
+            {displayedProjects.map((project) => (
               <div
                 key={project.id}
                 onClick={() => setSelectedImage(project)}
-                className="group relative rounded-xl overflow-hidden cursor-pointer ring-1 ring-white/10 hover:ring-primary/40 transition-all duration-300 shadow-md hover:shadow-xl active:scale-[0.98] touch-manipulation"
+                className="group relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 shadow-lg hover:shadow-2xl active:scale-[0.98] touch-manipulation"
               >
                 {/* Image */}
                 <div className="aspect-[4/3] overflow-hidden">
@@ -94,28 +102,29 @@ export function GallerySection() {
                 </div>
 
                 {/* Gradient overlay for text legibility */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent pointer-events-none" />
 
-                {/* Caption bar - always visible */}
-                <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
-                  <h4 className="text-white font-semibold text-sm md:text-base line-clamp-1 mb-0.5">
+                {/* Caption - title only for cleaner look */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
+                  <h4 className="text-white font-semibold text-sm md:text-lg line-clamp-2">
                     {project.title}
                   </h4>
-                  <div className="flex items-center gap-1 text-white/70 text-xs md:text-sm">
-                    <MapPin className="h-3 w-3 flex-shrink-0" />
-                    <span className="line-clamp-1">{project.location}</span>
-                  </div>
-                </div>
-
-                {/* Category badge - top corner */}
-                <div className="absolute top-2 left-2 md:top-3 md:left-3">
-                  <span className="px-2 py-0.5 bg-black/50 backdrop-blur-sm text-white/90 text-xs font-medium rounded-full ring-1 ring-white/20">
-                    {project.category}
-                  </span>
                 </div>
               </div>
             ))}
           </div>
+
+          {/* Show More Button */}
+          {!showAll && filteredProjects.length > 4 && (
+            <div className="flex justify-center mt-8">
+              <button
+                onClick={() => setShowAll(true)}
+                className="text-white/70 hover:text-white text-sm font-medium underline underline-offset-4 transition-colors"
+              >
+                Show all {filteredProjects.length} projects
+              </button>
+            </div>
+          )}
         </AnimatedSection>
 
         {/* CTAs */}
@@ -169,8 +178,7 @@ export function GallerySection() {
               <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
                 {selectedImage.title}
               </h3>
-              <p className="text-white/70 flex items-center justify-center gap-2 text-sm md:text-base">
-                <MapPin className="w-4 h-4" />
+              <p className="text-white/70 text-sm md:text-base">
                 {selectedImage.location}
               </p>
             </div>

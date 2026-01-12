@@ -38,8 +38,14 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
     const prefersReducedMotionRef = useRef(false);
     const rafRef = useRef<number | null>(null);
 
+    // Smoothing refs for buttery rotation
+    const targetRotationRef = useRef(0);
+    const currentRotationRef = useRef(0);
+    const smoothingFactor = 0.15; // Higher = snappier, lower = smoother
+
     // Interaction state
     const pointerIdRef = useRef<number | null>(null);
+    const pointerTypeRef = useRef<string>("mouse");
     const startXRef = useRef(0);
     const startYRef = useRef(0);
     const lastXRef = useRef(0);
@@ -63,12 +69,21 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       return () => mq.removeEventListener?.("change", handler);
     }, []);
 
-    // Auto-rotate only when active and not interacting
+    // Animation loop with smooth interpolation
     useEffect(() => {
       const tick = () => {
+        // Auto-rotate: add to target when not interacting
         if (isActive && !prefersReducedMotionRef.current && !isInteractingRef.current) {
-          setRotation((prev) => prev + autoRotateSpeed);
+          targetRotationRef.current += autoRotateSpeed;
         }
+
+        // Smooth interpolation: lerp current toward target
+        const diff = targetRotationRef.current - currentRotationRef.current;
+        if (Math.abs(diff) > 0.001) {
+          currentRotationRef.current += diff * smoothingFactor;
+          setRotation(currentRotationRef.current);
+        }
+
         rafRef.current = requestAnimationFrame(tick);
       };
 
@@ -79,7 +94,14 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
     }, [autoRotateSpeed, isActive]);
 
     const onPointerDown = (e: React.PointerEvent) => {
+      // Cancel any pending auto-resume timer immediately
+      if (wheelTimeoutRef.current) {
+        clearTimeout(wheelTimeoutRef.current);
+        wheelTimeoutRef.current = null;
+      }
+
       pointerIdRef.current = e.pointerId;
+      pointerTypeRef.current = e.pointerType; // "touch", "pen", or "mouse"
       startXRef.current = e.clientX;
       startYRef.current = e.clientY;
       lastXRef.current = e.clientX;
@@ -95,9 +117,13 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       const dxTotal = e.clientX - startXRef.current;
       const dyTotal = e.clientY - startYRef.current;
 
-      // Only engage drag when horizontal intent is clear (keeps vertical scroll working)
+      // Lower threshold for touch/pen (easier to engage), higher for mouse (preserve scroll)
+      const isTouch = pointerTypeRef.current === "touch" || pointerTypeRef.current === "pen";
+      const threshold = isTouch ? 3 : 6;
+
+      // Only engage drag when horizontal intent is clear
       if (!dragEngagedRef.current) {
-        if (Math.abs(dxTotal) > Math.abs(dyTotal) + 6) {
+        if (Math.abs(dxTotal) > Math.abs(dyTotal) + threshold) {
           dragEngagedRef.current = true;
           try {
             (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
@@ -113,21 +139,29 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       dragDistanceRef.current += Math.abs(deltaX);
       if (dragDistanceRef.current > 10) didDragRef.current = true;
 
-      // Rotate based on horizontal delta
-      setRotation((prev) => prev + deltaX * 0.5);
+      // Different sensitivity for touch vs mouse
+      const sensitivity = isTouch ? 0.75 : 0.5;
+      
+      // Update target rotation (will be smoothed by RAF loop)
+      targetRotationRef.current += deltaX * sensitivity;
       e.preventDefault();
     };
 
     const onPointerUp = (e: React.PointerEvent) => {
       if (pointerIdRef.current !== e.pointerId) return;
+      
+      const isTouch = pointerTypeRef.current === "touch" || pointerTypeRef.current === "pen";
+      
       pointerIdRef.current = null;
       dragEngagedRef.current = false;
       
-      // Add delay before resuming auto-rotate (same as wheel)
+      // Longer cooldown for touch (1000ms) vs mouse (400ms)
+      const cooldown = isTouch ? 1000 : 400;
+      
       if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
       wheelTimeoutRef.current = setTimeout(() => {
         isInteractingRef.current = false;
-      }, 400);
+      }, cooldown);
       
       try {
         (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
@@ -146,7 +180,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       if (dx === 0) return;
 
       isInteractingRef.current = true;
-      setRotation((prev) => prev + dx * 0.25);
+      targetRotationRef.current += dx * 0.25;
       e.preventDefault();
 
       // Resume auto-rotate after a short delay
@@ -179,10 +213,10 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
           perspective: "2600px",
           touchAction: "pan-y",
         }}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={onPointerUp}
-        onPointerCancel={onPointerCancel}
+        onPointerDownCapture={onPointerDown}
+        onPointerMoveCapture={onPointerMove}
+        onPointerUpCapture={onPointerUp}
+        onPointerCancelCapture={onPointerCancel}
         onWheel={onWheel}
         {...props}
       >

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Mountain } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, ArrowRight, Mountain } from "lucide-react";
 
 const quickLinks = [
   { name: "Home", path: "/" },
@@ -10,11 +10,11 @@ const quickLinks = [
 
 const serviceAreas = [
   "Denver",
-  "Aurora",
+  "Boulder",
   "Lakewood",
+  "Aurora",
   "Arvada",
   "Westminster",
-  "Thornton",
 ];
 
 const socialLinks = [
@@ -25,146 +25,119 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-mountain-charcoal text-snow-soft">
-      {/* Mountain Divider */}
-      <div className="h-16 md:h-24 bg-background relative overflow-hidden">
-        <svg
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-          className="absolute bottom-0 w-full h-full"
-        >
-          <path
-            d="M0,120 L200,60 L350,90 L500,40 L650,70 L800,30 L950,60 L1100,20 L1200,50 L1200,120 Z"
-            className="fill-mountain-charcoal"
-          />
-        </svg>
-      </div>
+    <footer className="relative bg-charcoal-dark text-white">
+      {/* Top separator line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-      <div className="container mx-auto px-4 lg:px-8 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+      <div className="container px-4 md:px-6 py-12 md:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand Column */}
-          <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <Mountain className="h-8 w-8 text-primary" />
-              <div className="flex flex-col">
-                <span className="font-heading font-extrabold text-lg tracking-tight text-snow-white">
-                  14ER
-                </span>
-                <span className="font-heading text-[10px] tracking-[0.2em] text-mountain-mist -mt-1">
-                  RENOVATIONS
-                </span>
-              </div>
+          <div className="sm:col-span-2 lg:col-span-1">
+            <Link to="/" className="inline-flex items-center gap-2 mb-4">
+              <Mountain className="h-7 w-7 text-primary" />
+              <span className="text-xl md:text-2xl font-bold">
+                <span className="text-primary">14er</span>
+                <span className="text-white"> Renovations</span>
+              </span>
             </Link>
-            <p className="text-mountain-mist text-sm leading-relaxed mb-6">
-              Building Colorado dreams with precision, quality, and mountain-inspired craftsmanship. 
-              Your trusted partner for renovations and construction across the Denver Metro area.
+            <p className="text-white/60 text-sm leading-relaxed mb-5">
+              Denver's premier home renovation contractor. We transform Colorado homes with quality
+              craftsmanship and exceptional service.
             </p>
-            <div className="flex items-center gap-3">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  aria-label={social.name}
-                  className="flex items-center justify-center w-10 h-10 rounded-full bg-mountain-stone/50 text-mountain-mist hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                >
-                  <social.icon className="h-5 w-5" />
-                </a>
-              ))}
+            
+            {/* Contact Info */}
+            <div className="space-y-3">
+              <a
+                href="tel:+13035551234"
+                className="flex items-center gap-3 text-sm text-white/70 hover:text-primary transition-colors"
+              >
+                <Phone className="w-4 h-4 text-primary" />
+                (303) 555-1234
+              </a>
+              <a
+                href="mailto:info@14errenovations.com"
+                className="flex items-center gap-3 text-sm text-white/70 hover:text-primary transition-colors"
+              >
+                <Mail className="w-4 h-4 text-primary" />
+                info@14errenovations.com
+              </a>
+              <div className="flex items-start gap-3 text-sm text-white/70">
+                <MapPin className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                <span>Denver, CO 80202</span>
+              </div>
             </div>
           </div>
 
-          {/* Contact Column */}
+          {/* Quick Links */}
           <div>
-            <h4 className="font-heading font-bold text-snow-white mb-4">
-              Contact Us
-            </h4>
-            <ul className="space-y-3">
-              <li>
-                <a
-                  href="tel:+17201234567"
-                  className="flex items-center gap-3 text-mountain-mist hover:text-primary transition-colors group"
-                >
-                  <Phone className="h-4 w-4 text-primary group-hover:scale-110 transition-transform" />
-                  <span>(720) XXX-XXXX</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:info@14errenovations.com"
-                  className="flex items-center gap-3 text-mountain-mist hover:text-primary transition-colors group"
-                >
-                  <Mail className="h-4 w-4 text-primary group-hover:scale-110 transition-transform" />
-                  <span>info@14errenovations.com</span>
-                </a>
-              </li>
-              <li>
-                <div className="flex items-start gap-3 text-mountain-mist">
-                  <MapPin className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                  <span>Denver, Colorado</span>
-                </div>
-              </li>
-            </ul>
-            <div className="mt-6 pt-4 border-t border-mountain-stone/30">
-              <p className="text-sm text-mountain-mist">
-                <span className="text-snow-white font-medium">Hours:</span>
-                <br />
-                Mon-Fri: 7am - 6pm
-                <br />
-                Sat: 8am - 4pm
-              </p>
-            </div>
-          </div>
-
-          {/* Quick Links Column */}
-          <div>
-            <h4 className="font-heading font-bold text-snow-white mb-4">
-              Quick Links
-            </h4>
-            <ul className="space-y-2">
+            <h3 className="text-base font-bold mb-4">Quick Links</h3>
+            <ul className="space-y-2.5">
               {quickLinks.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-mountain-mist hover:text-primary hover:translate-x-1 transition-all inline-block"
+                    className="group flex items-center gap-2 text-sm text-white/60 hover:text-primary transition-colors"
                   >
-                    {link.name}
+                    <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                    <span>{link.name}</span>
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Service Areas Column */}
+          {/* Service Areas */}
           <div>
-            <h4 className="font-heading font-bold text-snow-white mb-4">
-              Service Areas
-            </h4>
-            <ul className="space-y-2">
+            <h3 className="text-base font-bold mb-4">Service Areas</h3>
+            <ul className="grid grid-cols-2 gap-2">
               {serviceAreas.map((area) => (
-                <li key={area} className="text-mountain-mist">
+                <li key={area} className="text-sm text-white/60">
                   {area}
                 </li>
               ))}
             </ul>
-            <div className="mt-6 p-4 bg-mountain-stone/30 rounded-lg">
-              <p className="text-xs text-mountain-mist">
-                <span className="text-primary font-semibold">Licensed & Insured</span>
-                <br />
-                Proudly serving the entire Denver Metro area for 15+ years
-              </p>
+          </div>
+
+          {/* Social & CTA */}
+          <div>
+            <h3 className="text-base font-bold mb-4">Connect With Us</h3>
+            <div className="flex gap-3 mb-6">
+              {socialLinks.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    className="bg-white/10 hover:bg-primary p-2.5 rounded-lg transition-colors"
+                    aria-label={social.name}
+                  >
+                    <Icon className="w-4 h-4" />
+                  </a>
+                );
+              })}
             </div>
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors"
+            >
+              Get a Free Quote
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-mountain-stone/30">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-mountain-mist text-center md:text-left">
-              © {new Date().getFullYear()} 14er Renovations. All rights reserved.
-            </p>
-            <p className="text-xs text-mountain-slate text-center md:text-right">
-              Built for Colorado. Inspired by the peaks.
-            </p>
+        <div className="mt-10 md:mt-12 pt-6 border-t border-white/10">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-white/50">
+            <p>© {new Date().getFullYear()} 14er Renovations. All rights reserved.</p>
+            <div className="flex gap-6">
+              <Link to="/privacy" className="hover:text-white transition-colors">
+                Privacy Policy
+              </Link>
+              <Link to="/terms" className="hover:text-white transition-colors">
+                Terms of Service
+              </Link>
+            </div>
           </div>
         </div>
       </div>

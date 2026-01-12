@@ -21,9 +21,9 @@ export function GallerySection() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  // Responsive radius
+  // Responsive radius (smaller values for square cards)
   useEffect(() => {
-    const update = () => setRadius(window.innerWidth < 640 ? 320 : 600);
+    const update = () => setRadius(window.innerWidth < 640 ? 300 : 560);
     update();
     window.addEventListener("resize", update, { passive: true });
     return () => window.removeEventListener("resize", update);

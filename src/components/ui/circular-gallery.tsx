@@ -7,6 +7,7 @@ export interface GalleryItem {
   photo: {
     url: string;
     text: string;
+    pos?: string;
     by: string;
   };
 }
@@ -24,8 +25,8 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
     {
       items,
       className,
-      radius = 600,
-      autoRotateSpeed = -0.014, // Negative = rotate LEFT
+      radius = 560,
+      autoRotateSpeed = -0.014,
       onItemClick,
       isActive = true,
       ...props
@@ -37,7 +38,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
     const prefersReducedMotionRef = useRef(false);
     const rafRef = useRef<number | null>(null);
 
-    // Drag state
+    // Interaction state
     const pointerIdRef = useRef<number | null>(null);
     const startXRef = useRef(0);
     const startYRef = useRef(0);
@@ -45,6 +46,10 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
     const dragEngagedRef = useRef(false);
     const isInteractingRef = useRef(false);
     const wheelTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    // IMPORTANT: prevent tap while dragging
+    const dragDistanceRef = useRef(0);
+    const didDragRef = useRef(false);
 
     // Detect reduced motion preference
     useEffect(() => {
@@ -80,17 +85,19 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       lastXRef.current = e.clientX;
       dragEngagedRef.current = false;
       isInteractingRef.current = true;
+      dragDistanceRef.current = 0;
+      didDragRef.current = false;
     };
 
     const onPointerMove = (e: React.PointerEvent) => {
       if (pointerIdRef.current !== e.pointerId) return;
 
-      const dx = e.clientX - startXRef.current;
-      const dy = e.clientY - startYRef.current;
+      const dxTotal = e.clientX - startXRef.current;
+      const dyTotal = e.clientY - startYRef.current;
 
       // Only engage drag when horizontal intent is clear (keeps vertical scroll working)
       if (!dragEngagedRef.current) {
-        if (Math.abs(dx) > Math.abs(dy) + 8) {
+        if (Math.abs(dxTotal) > Math.abs(dyTotal) + 6) {
           dragEngagedRef.current = true;
           try {
             (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
@@ -100,11 +107,14 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
         }
       }
 
-      // Rotate based on horizontal delta
       const deltaX = e.clientX - lastXRef.current;
       lastXRef.current = e.clientX;
 
-      setRotation((prev) => prev + deltaX * 0.12);
+      dragDistanceRef.current += Math.abs(deltaX);
+      if (dragDistanceRef.current > 10) didDragRef.current = true;
+
+      // Rotate based on horizontal delta
+      setRotation((prev) => prev + deltaX * 0.14);
       e.preventDefault();
     };
 
@@ -137,7 +147,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
       wheelTimeoutRef.current = setTimeout(() => {
         isInteractingRef.current = false;
-      }, 180);
+      }, 160);
     };
 
     // Cleanup wheel timeout on unmount
@@ -152,8 +162,17 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
     return (
       <div
         ref={ref}
-        className={cn("relative w-full h-[400px] md:h-[500px] touch-pan-y", className)}
-        style={{ perspective: "1200px" }}
+        role="region"
+        aria-label="Our Work Gallery"
+        className={cn(
+          "relative w-full h-full flex items-center justify-center",
+          "cursor-grab active:cursor-grabbing",
+          className
+        )}
+        style={{
+          perspective: "2600px",
+          touchAction: "pan-y",
+        }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -162,61 +181,78 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
         {...props}
       >
         <div
-          className="absolute left-1/2 top-1/2 w-0 h-0"
+          className="relative w-full h-full"
           style={{
+            transform: `rotateY(${rotation}deg)`,
             transformStyle: "preserve-3d",
-            transform: `translateX(-50%) translateY(-50%) rotateY(${-rotation}deg)`,
-            transition: "transform 0.05s linear",
+            willChange: "transform",
           }}
         >
           {items.map((item, i) => {
             const itemAngle = i * anglePerItem;
 
-            // Depth cues via scale and brightness (NOT opacity - keeps images fully visible)
+            // Frontness determines stacking order so edges don't overlap incorrectly
             const totalRotation = rotation % 360;
             const relativeAngle = (itemAngle + totalRotation + 360) % 360;
-            const normalizedAngle = Math.abs(
-              relativeAngle > 180 ? 360 - relativeAngle : relativeAngle
-            );
+            const rad = (relativeAngle * Math.PI) / 180;
+            const frontness = Math.cos(rad); // 1 = front, -1 = back
 
-            const scale = 1 - Math.min(0.08, (normalizedAngle / 180) * 0.08);
-            const brightness = 1 - Math.min(0.14, (normalizedAngle / 180) * 0.14);
+            // Z-index ensures front card stacks above neighbors
+            const zIndex = Math.round((frontness + 1) * 1000);
+
+            // Subtle brightness for depth, keep images fully visible
+            const brightness = 0.92 + Math.max(0, frontness) * 0.10;
 
             return (
               <button
-                key={i}
-                onClick={() => onItemClick?.(i)}
+                key={`${item.photo.url}-${i}`}
+                type="button"
                 aria-label={`View ${item.common} in ${item.binomial}`}
-                className="absolute select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
+                className="absolute select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 style={{
-                  transform: `rotateY(${itemAngle}deg) translateZ(${radius}px) scale(${scale})`,
+                  transform: `rotateY(${itemAngle}deg) translateZ(${radius}px)`,
                   left: "50%",
                   top: "50%",
                   translate: "-50% -50%",
-                  // CRITICAL: Hide backside to prevent mirrored/backwards text
+                  zIndex,
                   backfaceVisibility: "hidden",
                   WebkitBackfaceVisibility: "hidden",
                   filter: `brightness(${brightness})`,
                 }}
+                onClick={(e) => {
+                  // DO NOT open lightbox if user dragged
+                  if (didDragRef.current) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                  }
+                  onItemClick?.(i);
+                }}
               >
-                <div className="relative w-[280px] h-[200px] md:w-[360px] md:h-[260px] rounded-2xl overflow-hidden shadow-2xl group">
+                <div
+                  className="relative w-[clamp(200px,26vw,320px)] h-[clamp(200px,26vw,320px)] rounded-2xl overflow-hidden border border-white/10 shadow-[0_22px_70px_rgba(0,0,0,0.45)] bg-black/10"
+                  style={{
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
+                  }}
+                >
                   <img
                     src={item.photo.url}
                     alt={item.photo.text}
                     loading="lazy"
                     decoding="async"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{ objectPosition: item.photo.pos || "center" }}
                   />
                   {/* Bottom gradient overlay with labels */}
-                  <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 text-left">
-                    <p className="text-white font-semibold text-sm md:text-base leading-tight">
+                  <div className="absolute bottom-0 left-0 w-full px-4 pt-8 pb-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent text-white">
+                    <h3 className="text-base sm:text-lg font-semibold leading-tight">
                       {item.common}
-                    </p>
-                    <p className="text-white/70 text-xs md:text-sm mt-0.5">
+                    </h3>
+                    <p className="text-xs sm:text-sm opacity-90 leading-tight">
                       {item.binomial}
                     </p>
-                    <p className="text-white/50 text-xs mt-1">
+                    <p className="hidden sm:block text-[11px] mt-1 opacity-70">
                       {item.photo.by}
                     </p>
                   </div>

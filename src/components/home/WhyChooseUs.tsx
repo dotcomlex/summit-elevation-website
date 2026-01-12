@@ -106,7 +106,7 @@ export function WhyChooseUs() {
                     <img
                       src={teamImage}
                       alt="Active Colorado jobsite with mountains in the background"
-                      className="w-full h-52 sm:h-60 md:h-72 lg:h-[380px] object-cover"
+                      className="w-full h-52 sm:h-60 md:h-72 lg:h-[440px] object-cover"
                     />
                     
                     {/* Experience Badge - Inside image top-right */}

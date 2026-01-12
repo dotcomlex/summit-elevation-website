@@ -11,21 +11,21 @@ const services = [
     title: "Kitchen & Bath Remodeling",
     description: "Transform your home with stunning kitchen and bathroom renovations designed for Colorado living. Custom cabinetry, modern fixtures, and mountain-inspired design.",
     image: kitchenImage,
-    link: "/services#remodeling",
+    link: "/services/kitchen-bath",
   },
   {
     icon: HardHat,
     title: "Concrete & Flatwork",
     description: "Durable driveways, patios, and foundations built to withstand Colorado's demanding weather. Decorative stamped concrete that elevates your outdoor space.",
     image: concreteImage,
-    link: "/services#concrete",
+    link: "/services/concrete",
   },
   {
     icon: Building2,
     title: "General Contracting",
     description: "Full-service construction and renovation projects from concept to completion. New builds, additions, and commercial projects with precision craftsmanship.",
     image: constructionImage,
-    link: "/services#general",
+    link: "/services/general-contracting",
   },
 ];
 

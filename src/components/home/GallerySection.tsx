@@ -73,7 +73,7 @@ export function GallerySection() {
   }, [emblaApi, onSelect]);
 
   return (
-    <section id="gallery" className="py-20 lg:py-28 bg-snow-soft relative overflow-hidden">
+    <section id="gallery" className="py-20 lg:py-28 bg-snow-soft relative overflow-hidden scroll-mt-20">
       {/* Subtle texture overlay */}
       <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxyZWN0IHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0iIzk5OTk5OSI+PC9yZWN0Pgo8Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxLjUiIGZpbGw9IiM2NjY2NjYiPjwvY2lyY2xlPgo8L3N2Zz4=')]" />
       
@@ -169,10 +169,10 @@ export function GallerySection() {
           </div>
           
           {/* Carousel Controls */}
-          <div className="flex justify-center gap-3 mt-6">
+          <div className="flex justify-center gap-4 mt-6">
             <button
               onClick={scrollPrev}
-              className="p-3 rounded-full bg-background border border-border shadow-soft hover:bg-muted transition-colors disabled:opacity-50"
+              className="p-4 rounded-full bg-background border border-border shadow-soft hover:bg-muted transition-colors disabled:opacity-50 active:scale-95"
               disabled={!canScrollPrev}
               aria-label="Previous"
             >
@@ -180,7 +180,7 @@ export function GallerySection() {
             </button>
             <button
               onClick={scrollNext}
-              className="p-3 rounded-full bg-background border border-border shadow-soft hover:bg-muted transition-colors disabled:opacity-50"
+              className="p-4 rounded-full bg-background border border-border shadow-soft hover:bg-muted transition-colors disabled:opacity-50 active:scale-95"
               disabled={!canScrollNext}
               aria-label="Next"
             >

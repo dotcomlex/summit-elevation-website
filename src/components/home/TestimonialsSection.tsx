@@ -94,7 +94,7 @@ export function TestimonialsSection() {
   }, [emblaApi, onSelect]);
 
   return (
-    <section className="py-20 lg:py-28 bg-background relative overflow-hidden">
+    <section className="py-20 lg:py-28 bg-background relative overflow-hidden scroll-mt-20">
       {/* Subtle background accent */}
       <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-snow-soft to-transparent" />
       
@@ -162,7 +162,7 @@ export function TestimonialsSection() {
           <div className="flex items-center justify-center gap-4 mt-8">
             <button
               onClick={scrollPrev}
-              className="p-3 rounded-full bg-card border border-border shadow-soft hover:bg-muted transition-colors disabled:opacity-50"
+              className="p-4 rounded-full bg-card border border-border shadow-soft hover:bg-muted transition-colors disabled:opacity-50 active:scale-95"
               disabled={!canScrollPrev}
               aria-label="Previous testimonial"
             >
@@ -176,10 +176,10 @@ export function TestimonialsSection() {
                   key={idx}
                   onClick={() => emblaApi?.scrollTo(idx)}
                   className={cn(
-                    "w-2.5 h-2.5 rounded-full transition-all duration-200",
+                    "h-3 rounded-full transition-all duration-200",
                     idx === selectedIndex
                       ? "bg-primary w-8"
-                      : "bg-muted hover:bg-muted-foreground/30"
+                      : "bg-muted hover:bg-muted-foreground/30 w-3"
                   )}
                   aria-label={`Go to testimonial ${idx + 1}`}
                 />
@@ -188,7 +188,7 @@ export function TestimonialsSection() {
             
             <button
               onClick={scrollNext}
-              className="p-3 rounded-full bg-card border border-border shadow-soft hover:bg-muted transition-colors disabled:opacity-50"
+              className="p-4 rounded-full bg-card border border-border shadow-soft hover:bg-muted transition-colors disabled:opacity-50 active:scale-95"
               disabled={!canScrollNext}
               aria-label="Next testimonial"
             >

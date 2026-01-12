@@ -38,6 +38,28 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
     const prefersReducedMotionRef = useRef(false);
     const rafRef = useRef<number | null>(null);
 
+    // Momentum / inertia for a more natural swipe feel
+    const inertiaRafRef = useRef<number | null>(null);
+    const velocityRef = useRef(0); // px per ms
+    const lastMoveTimeRef = useRef<number | null>(null);
+
+    // Pause auto-rotation for a bit after any user interaction
+    const pauseUntilRef = useRef(0);
+
+    // Any user interaction should pause auto-rotate long enough that it never
+    // "fights" manual dragging or trackpad scrolling.
+    const bumpPause = (ms = 1800) => {
+      if (typeof performance === "undefined") return;
+      pauseUntilRef.current = performance.now() + ms;
+    };
+
+    const cancelInertia = () => {
+      if (inertiaRafRef.current) {
+        cancelAnimationFrame(inertiaRafRef.current);
+        inertiaRafRef.current = null;
+      }
+    };
+
     // Interaction state
     const pointerIdRef = useRef<number | null>(null);
     const startXRef = useRef(0);
@@ -66,7 +88,15 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
     // Auto-rotate only when active and not interacting
     useEffect(() => {
       const tick = () => {
-        if (isActive && !prefersReducedMotionRef.current && !isInteractingRef.current) {
+        const now = typeof performance !== "undefined" ? performance.now() : 0;
+        const paused = now < pauseUntilRef.current;
+
+        if (
+          isActive &&
+          !paused &&
+          !prefersReducedMotionRef.current &&
+          !isInteractingRef.current
+        ) {
           setRotation((prev) => prev + autoRotateSpeed);
         }
         rafRef.current = requestAnimationFrame(tick);
@@ -79,6 +109,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
     }, [autoRotateSpeed, isActive]);
 
     const onPointerDown = (e: React.PointerEvent) => {
+      cancelInertia();
       pointerIdRef.current = e.pointerId;
       startXRef.current = e.clientX;
       startYRef.current = e.clientY;
@@ -87,6 +118,11 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       isInteractingRef.current = true;
       dragDistanceRef.current = 0;
       didDragRef.current = false;
+
+      velocityRef.current = 0;
+      lastMoveTimeRef.current = typeof performance !== "undefined" ? performance.now() : null;
+      // Immediately stop auto-rotate the moment the user touches the gallery.
+      bumpPause(2200);
     };
 
     const onPointerMove = (e: React.PointerEvent) => {
@@ -95,9 +131,11 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       const dxTotal = e.clientX - startXRef.current;
       const dyTotal = e.clientY - startYRef.current;
 
-      // Only engage drag when horizontal intent is clear (keeps vertical scroll working)
+      // Engage drag quickly, but only after clear horizontal intent.
+      // This removes the "locked" feel while still allowing normal page scrolling.
       if (!dragEngagedRef.current) {
-        if (Math.abs(dxTotal) > Math.abs(dyTotal) + 6) {
+        if (Math.abs(dxTotal) < 6) return;
+        if (Math.abs(dxTotal) > Math.abs(dyTotal) + 2) {
           dragEngagedRef.current = true;
           try {
             (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
@@ -113,8 +151,19 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       dragDistanceRef.current += Math.abs(deltaX);
       if (dragDistanceRef.current > 10) didDragRef.current = true;
 
-      // Rotate based on horizontal delta
-      setRotation((prev) => prev + deltaX * 0.5);
+      // Track velocity for momentum on release
+      const now = typeof performance !== "undefined" ? performance.now() : null;
+      if (now !== null && lastMoveTimeRef.current !== null) {
+        const dt = Math.max(1, now - lastMoveTimeRef.current);
+        const v = deltaX / dt; // px per ms
+        velocityRef.current = velocityRef.current * 0.75 + v * 0.25;
+        lastMoveTimeRef.current = now;
+      }
+
+      // Rotate based on horizontal delta (tuned for smooth feel)
+      // Slightly higher sensitivity so it feels natural and not stiff.
+      setRotation((prev) => prev + deltaX * 0.34);
+      bumpPause(2200);
       e.preventDefault();
     };
 
@@ -122,16 +171,54 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       if (pointerIdRef.current !== e.pointerId) return;
       pointerIdRef.current = null;
       dragEngagedRef.current = false;
-      
-      // Add delay before resuming auto-rotate (same as wheel)
-      if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
-      wheelTimeoutRef.current = setTimeout(() => {
-        isInteractingRef.current = false;
-      }, 400);
-      
+
+      bumpPause(2200);
+
       try {
         (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
       } catch {}
+
+      // If user dragged, add a little momentum so it feels natural
+      const v = velocityRef.current;
+      // Lower threshold so momentum triggers on real mobile swipes.
+      const hasMomentum = didDragRef.current && Math.abs(v) > 0.008;
+
+      if (hasMomentum) {
+        isInteractingRef.current = true;
+
+        const step = () => {
+          // friction
+          velocityRef.current *= 0.94;
+          const nowV = velocityRef.current;
+
+          // px per frame approx (16ms), then apply same rotation sensitivity as drag
+          const delta = nowV * 16;
+          setRotation((prev) => prev + delta * 0.34);
+
+          if (Math.abs(nowV) < 0.004) {
+            inertiaRafRef.current = null;
+
+            // resume auto-rotate after a short calm period
+            if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
+            wheelTimeoutRef.current = setTimeout(() => {
+              isInteractingRef.current = false;
+            }, 850);
+            return;
+          }
+
+          inertiaRafRef.current = requestAnimationFrame(step);
+        };
+
+        cancelInertia();
+        inertiaRafRef.current = requestAnimationFrame(step);
+        return;
+      }
+
+      // If it was just a tap, or tiny movement, resume auto after a short delay
+      if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
+      wheelTimeoutRef.current = setTimeout(() => {
+        isInteractingRef.current = false;
+      }, 850);
     };
 
     const onPointerCancel = (e: React.PointerEvent) => {
@@ -146,20 +233,23 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       if (dx === 0) return;
 
       isInteractingRef.current = true;
-      setRotation((prev) => prev + dx * 0.25);
+      cancelInertia();
+      bumpPause(2400);
+      setRotation((prev) => prev + dx * 0.18);
       e.preventDefault();
 
       // Resume auto-rotate after a short delay
       if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
       wheelTimeoutRef.current = setTimeout(() => {
         isInteractingRef.current = false;
-      }, 400);
+      }, 950);
     };
 
     // Cleanup wheel timeout on unmount
     useEffect(() => {
       return () => {
         if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
+        cancelInertia();
       };
     }, []);
 

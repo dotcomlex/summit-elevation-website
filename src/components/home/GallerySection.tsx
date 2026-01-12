@@ -50,35 +50,63 @@ export function GallerySection() {
           <p className="text-base md:text-lg text-white/70 max-w-2xl mx-auto">Explore our latest renovation work across the Denver metro area</p>
         </AnimatedSection>
 
-        {/* Premium Bento Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-10">
-          {/* Featured Before/After Tile */}
-          <div className="lg:col-span-7 aspect-[4/3] lg:aspect-auto lg:row-span-2 min-h-[300px] lg:min-h-[450px]">
-            <BeforeAfterSlider
-              beforeImage={galleryKitchen}
-              afterImage={galleryKitchen1}
-              beforeLabel="Before"
-              afterLabel="After"
-              className="w-full h-full shadow-xl"
-            />
+        {/* Premium Bento Grid - Mobile First */}
+        <div className="grid grid-cols-2 lg:grid-cols-12 gap-3 md:gap-4 mb-10">
+          {/* Featured Before/After - Full width mobile, left side desktop */}
+          <div className="col-span-2 lg:col-span-7 lg:row-span-2 relative rounded-xl overflow-hidden shadow-xl ring-1 ring-white/10">
+            <div className="aspect-[4/3] lg:aspect-[4/3]">
+              <BeforeAfterSlider
+                beforeImage={galleryKitchen}
+                afterImage={galleryKitchen1}
+                beforeLabel="Before"
+                afterLabel="After"
+                className="w-full h-full"
+              />
+            </div>
+            {/* Featured Title Overlay */}
+            <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none">
+              <span className="inline-block px-2.5 py-1 bg-primary/90 text-white text-xs font-medium rounded-full mb-1.5">
+                Featured Before & After
+              </span>
+              <h4 className="text-white font-semibold text-base md:text-lg">Modern Kitchen Transformation</h4>
+              <p className="text-white/70 text-sm hidden md:block">Denver, CO</p>
+            </div>
           </div>
 
-          {/* Side Bento Tiles */}
+          {/* Side Bento Tiles - Mobile optimized */}
           {bentoItems.map((item, index) => (
             <div
-              key={index}
-              className="lg:col-span-5 aspect-[16/9] lg:aspect-auto rounded-xl overflow-hidden shadow-lg group cursor-pointer relative"
+              key={item.id}
+              className={`
+                aspect-[4/3] rounded-xl overflow-hidden shadow-lg group cursor-pointer relative
+                ring-1 ring-white/10 hover:ring-primary/30 hover:shadow-xl
+                active:scale-[0.98] active:opacity-90 touch-manipulation
+                transition-all duration-300
+                ${index < 2 ? "col-span-1 lg:col-span-5" : "col-span-2 lg:col-span-5"}
+              `}
               onClick={() => setSelectedImage(item)}
             >
-              <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-              {/* Premium hover overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
-                <div className="absolute bottom-4 left-4 right-4">
-                  <span className="inline-block px-2.5 py-1 bg-primary/90 text-white text-xs font-medium rounded-full mb-2">{item.category}</span>
-                  <h4 className="text-white font-semibold text-lg">{item.title}</h4>
-                  <div className="flex items-center gap-1 text-white/70 text-sm mt-1"><MapPin className="h-3 w-3" /><span>{item.location}</span></div>
+              <img 
+                src={item.image} 
+                alt={item.title} 
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+              />
+              {/* Always visible on mobile, enhanced on hover for desktop */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent lg:from-black/70 lg:opacity-0 lg:group-hover:opacity-100 transition-all duration-300">
+                <div className="absolute bottom-3 left-3 right-3 lg:bottom-4 lg:left-4 lg:right-4">
+                  <span className="inline-block px-2 py-0.5 bg-primary/90 text-white text-xs font-medium rounded-full mb-1">
+                    {item.category}
+                  </span>
+                  <h4 className="text-white font-semibold text-sm lg:text-lg line-clamp-1">{item.title}</h4>
+                  <div className="hidden lg:flex items-center gap-1 text-white/70 text-sm mt-1">
+                    <MapPin className="h-3 w-3" />
+                    <span>{item.location}</span>
+                  </div>
                 </div>
-                <div className="absolute top-4 right-4 w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center"><Eye className="h-4 w-4 text-white" /></div>
+              </div>
+              {/* View icon - desktop hover only */}
+              <div className="absolute top-3 right-3 w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full hidden lg:flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <Eye className="h-4 w-4 text-white" />
               </div>
             </div>
           ))}

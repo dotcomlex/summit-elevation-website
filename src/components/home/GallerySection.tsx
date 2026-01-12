@@ -122,7 +122,7 @@ export function GallerySection() {
       {/* Content */}
       <div className="relative flex flex-col items-center pt-16 pb-12 px-4 md:h-screen md:justify-center md:py-12">
         {/* Header */}
-        <AnimatedSection className="text-center mb-2 md:mb-8 z-10">
+        <AnimatedSection className="text-center mb-2 md:mb-16 z-10">
           <span className="inline-block text-primary font-semibold text-xs md:text-sm tracking-widest uppercase mb-2">
             Our Work
           </span>
@@ -145,7 +145,7 @@ export function GallerySection() {
         />
 
         {/* Instruction */}
-        <AnimatedSection delay={0.2} className="text-center mt-2 md:mt-8 z-10">
+        <AnimatedSection delay={0.2} className="text-center mt-2 md:mt-16 z-10">
           <p className="text-white/40 text-xs md:text-sm tracking-wide">
             Auto-rotates • Swipe left or right to explore • Tap any photo to view
           </p>

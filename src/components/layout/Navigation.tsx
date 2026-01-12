@@ -29,13 +29,25 @@ export function Navigation() {
     setIsOpen(false);
   }, [location.pathname]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
           ? "bg-background/95 backdrop-blur-md shadow-soft border-b border-border"
-          : "bg-transparent"
+          : "bg-mountain-charcoal/50 backdrop-blur-sm"
       )}
     >
       <div className="container mx-auto px-4 lg:px-8">
@@ -46,14 +58,23 @@ export function Navigation() {
             className="flex items-center gap-2 group"
           >
             <div className="relative">
-              <Mountain className="h-8 w-8 md:h-10 md:w-10 text-primary transition-transform group-hover:scale-110" />
+              <Mountain className={cn(
+                "h-8 w-8 md:h-10 md:w-10 transition-all group-hover:scale-110",
+                isScrolled ? "text-primary" : "text-primary"
+              )} />
               <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
             <div className="flex flex-col">
-              <span className="font-heading font-extrabold text-lg md:text-xl tracking-tight text-foreground">
+              <span className={cn(
+                "font-heading font-extrabold text-lg md:text-xl tracking-tight transition-colors",
+                isScrolled ? "text-foreground" : "text-snow-white"
+              )}>
                 14ER
               </span>
-              <span className="font-heading text-[10px] md:text-xs tracking-[0.2em] text-muted-foreground -mt-1">
+              <span className={cn(
+                "font-heading text-[10px] md:text-xs tracking-[0.2em] -mt-1 transition-colors",
+                isScrolled ? "text-muted-foreground" : "text-snow-white/70"
+              )}>
                 RENOVATIONS
               </span>
             </div>
@@ -70,7 +91,9 @@ export function Navigation() {
                       "relative px-4 py-2 font-medium text-sm transition-colors rounded-md",
                       location.pathname === link.path
                         ? "text-primary"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                        : isScrolled 
+                          ? "text-muted-foreground hover:text-foreground hover:bg-muted"
+                          : "text-snow-white/90 hover:text-snow-white hover:bg-white/10"
                     )}
                   >
                     {link.name}
@@ -85,7 +108,12 @@ export function Navigation() {
             {/* Phone CTA */}
             <a
               href="tel:+17201234567"
-              className="flex items-center gap-2 text-sm font-semibold text-foreground hover:text-primary transition-colors"
+              className={cn(
+                "flex items-center gap-2 text-sm font-semibold transition-colors",
+                isScrolled 
+                  ? "text-foreground hover:text-primary" 
+                  : "text-snow-white hover:text-primary"
+              )}
             >
               <Phone className="h-4 w-4" />
               <span>(720) XXX-XXXX</span>
@@ -97,7 +125,7 @@ export function Navigation() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex items-center gap-4 lg:hidden">
+          <div className="flex items-center gap-3 lg:hidden">
             <a
               href="tel:+17201234567"
               className="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-primary-foreground"
@@ -106,7 +134,12 @@ export function Navigation() {
             </a>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="flex items-center justify-center w-10 h-10 rounded-md hover:bg-muted transition-colors"
+              className={cn(
+                "flex items-center justify-center w-10 h-10 rounded-md transition-colors",
+                isScrolled 
+                  ? "text-foreground hover:bg-muted" 
+                  : "text-snow-white hover:bg-white/10"
+              )}
               aria-label="Toggle menu"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -115,41 +148,74 @@ export function Navigation() {
         </nav>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Solid Dark Panel */}
       <div
         className={cn(
-          "lg:hidden fixed inset-x-0 top-16 md:top-20 bg-background/98 backdrop-blur-lg border-b border-border transition-all duration-300 ease-out",
+          "lg:hidden fixed inset-0 top-16 md:top-20 z-40 transition-all duration-300 ease-out",
           isOpen
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 -translate-y-4 pointer-events-none"
+            ? "opacity-100 visible"
+            : "opacity-0 invisible pointer-events-none"
         )}
       >
-        <div className="container mx-auto px-4 py-6">
-          <ul className="flex flex-col gap-2">
-            {navLinks.map((link, index) => (
-              <li
-                key={link.path}
-                style={{ animationDelay: `${index * 50}ms` }}
-                className={cn(isOpen && "animate-fade-up")}
-              >
-                <Link
-                  to={link.path}
-                  className={cn(
-                    "flex items-center px-4 py-3 rounded-lg font-medium transition-colors",
-                    location.pathname === link.path
-                      ? "bg-primary/10 text-primary"
-                      : "text-foreground hover:bg-muted"
-                  )}
+        {/* Backdrop */}
+        <div 
+          className="absolute inset-0 bg-mountain-charcoal/60 backdrop-blur-sm"
+          onClick={() => setIsOpen(false)}
+        />
+        
+        {/* Menu Panel */}
+        <div className={cn(
+          "relative bg-mountain-charcoal border-b border-white/10 transition-transform duration-300",
+          isOpen ? "translate-y-0" : "-translate-y-4"
+        )}>
+          <div className="container mx-auto px-4 py-8">
+            {/* Close Button */}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute top-4 right-4 flex items-center justify-center w-10 h-10 rounded-full bg-white/10 text-snow-white hover:bg-white/20 transition-colors"
+              aria-label="Close menu"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            <ul className="flex flex-col gap-2 mt-4">
+              {navLinks.map((link, index) => (
+                <li
+                  key={link.path}
+                  style={{ animationDelay: `${index * 50}ms` }}
+                  className={cn(isOpen && "animate-fade-up")}
                 >
-                  {link.name}
+                  <Link
+                    to={link.path}
+                    onClick={() => setIsOpen(false)}
+                    className={cn(
+                      "flex items-center px-5 py-4 rounded-xl font-medium text-lg transition-colors",
+                      location.pathname === link.path
+                        ? "bg-primary/20 text-primary"
+                        : "text-snow-white hover:bg-white/10"
+                    )}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <Button asChild className="w-full font-semibold h-14 text-base" size="lg">
+                <Link to="/contact" onClick={() => setIsOpen(false)}>
+                  Get Your Free Quote
                 </Link>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-6 pt-6 border-t border-border">
-            <Button asChild className="w-full font-semibold" size="lg">
-              <Link to="/contact">Get Your Free Quote</Link>
-            </Button>
+              </Button>
+              
+              <a
+                href="tel:+17201234567"
+                className="flex items-center justify-center gap-3 mt-4 py-4 text-snow-white hover:text-primary transition-colors"
+              >
+                <Phone className="h-5 w-5" />
+                <span className="font-semibold">(720) XXX-XXXX</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>

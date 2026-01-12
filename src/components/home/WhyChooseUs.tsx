@@ -26,10 +26,13 @@ const features = [
 
 export function WhyChooseUs() {
   return (
-    <section className="py-20 md:py-28 bg-cream relative overflow-hidden">
+    <section className="py-20 md:py-28 bg-cream relative overflow-hidden scroll-mt-20">
+      {/* Subtle Texture Background */}
+      <div className="absolute inset-0 texture-dots opacity-40" />
+      
       {/* Decorative Elements */}
-      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-radial from-primary/5 to-transparent" />
-      <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-radial from-sky-pale/50 to-transparent" />
+      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-radial from-alpine/5 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-radial from-sky-pale/30 to-transparent" />
 
       <div className="container mx-auto px-4 lg:px-8 relative">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -79,10 +82,10 @@ export function WhyChooseUs() {
               {features.map((feature, index) => (
                 <div
                   key={feature.title}
-                  className="flex gap-4 p-4 rounded-xl bg-background border border-border hover:border-primary/30 hover:shadow-soft transition-all duration-300"
+                  className="flex gap-4 p-4 rounded-xl bg-background border border-border hover:border-alpine/30 hover:shadow-soft transition-all duration-300"
                 >
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <feature.icon className="h-6 w-6 text-primary" />
+                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-alpine/10 flex items-center justify-center">
+                    <feature.icon className="h-6 w-6 text-alpine" />
                   </div>
                   <div>
                     <h4 className="font-heading font-bold text-foreground mb-1">

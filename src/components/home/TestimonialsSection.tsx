@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
 
@@ -100,18 +100,16 @@ export function TestimonialsSection() {
   }, [emblaApi]);
 
   return (
-    <section className="relative py-16 md:py-24 bg-charcoal overflow-hidden">
-      {/* Subtle decorative elements */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl" />
-      <div className="absolute bottom-20 right-10 w-40 h-40 bg-navy/10 rounded-full blur-2xl" />
+    <section className="relative py-16 md:py-24 bg-section-dark overflow-hidden">
+      {/* Subtle grain texture */}
+      <div className="absolute inset-0 texture-grain" />
 
       <div className="container relative z-10 px-4 md:px-6">
         {/* Section Header */}
         <AnimatedSection className="text-center mb-10 md:mb-14">
-          <div className="inline-flex items-center gap-2 bg-white/10 text-white px-4 py-2 rounded-full text-sm font-medium mb-5 border border-white/10">
-            <Star className="w-4 h-4 text-gold fill-gold" />
-            <span>Client Reviews</span>
-          </div>
+          <span className="inline-block text-primary font-semibold text-sm uppercase tracking-wider mb-3">
+            Client Reviews
+          </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
             What Our Clients Say
           </h2>
@@ -126,23 +124,25 @@ export function TestimonialsSection() {
             <div className="flex">
               {testimonials.map((testimonial, index) => (
                 <div key={index} className="flex-none w-full px-2 md:px-4">
-                  <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-5 md:p-8 border border-white/10">
-                    {/* Quote icon */}
-                    <div className="mb-4 md:mb-6">
-                      <Quote className="w-8 h-8 md:w-10 md:h-10 text-primary/40" />
-                    </div>
-
-                    {/* Rating */}
+                  {/* Premium Card with left accent border */}
+                  <div className="relative bg-white/[0.08] backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10 shadow-lg overflow-hidden">
+                    {/* Orange accent border on left */}
+                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
+                    
+                    {/* Stars Row */}
                     <div className="flex items-center gap-1 mb-4">
                       {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 md:w-5 md:h-5 text-gold fill-gold" />
+                        <Star key={i} className="w-5 h-5 text-gold fill-gold" />
                       ))}
                     </div>
 
-                    {/* Quote text - Mobile optimized sizes */}
-                    <blockquote className="text-base md:text-lg lg:text-xl text-white/90 leading-relaxed mb-6">
+                    {/* Quote text */}
+                    <blockquote className="text-base md:text-lg lg:text-xl text-white/90 leading-relaxed mb-6 font-light">
                       "{testimonial.text}"
                     </blockquote>
+
+                    {/* Divider */}
+                    <div className="h-px bg-white/10 mb-5" />
 
                     {/* Author info */}
                     <div className="flex items-center justify-between flex-wrap gap-4">
@@ -150,13 +150,13 @@ export function TestimonialsSection() {
                         <img
                           src={testimonial.avatar}
                           alt={testimonial.name}
-                          className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover ring-2 ring-white/20"
+                          className="w-12 h-12 rounded-full object-cover ring-2 ring-primary/30"
                         />
                         <div>
-                          <div className="text-sm md:text-base font-semibold text-white">
+                          <div className="text-base font-semibold text-white">
                             {testimonial.name}
                           </div>
-                          <div className="text-xs md:text-sm text-white/50">
+                          <div className="text-sm text-white/50">
                             {testimonial.location} • {testimonial.project}
                           </div>
                         </div>
@@ -177,14 +177,14 @@ export function TestimonialsSection() {
           {/* Navigation - Desktop */}
           <button
             onClick={scrollPrev}
-            className="hidden md:flex absolute -left-12 lg:-left-16 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors"
+            className="hidden md:flex absolute -left-12 lg:-left-16 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors border border-white/20"
             aria-label="Previous testimonial"
           >
             <ChevronLeft className="w-5 h-5 text-white" />
           </button>
           <button
             onClick={scrollNext}
-            className="hidden md:flex absolute -right-12 lg:-right-16 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors"
+            className="hidden md:flex absolute -right-12 lg:-right-16 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors border border-white/20"
             aria-label="Next testimonial"
           >
             <ChevronRight className="w-5 h-5 text-white" />
@@ -194,7 +194,7 @@ export function TestimonialsSection() {
           <div className="flex items-center justify-center gap-4 mt-6 md:hidden">
             <button
               onClick={scrollPrev}
-              className="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors"
+              className="bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors border border-white/20"
               aria-label="Previous"
             >
               <ChevronLeft className="w-5 h-5 text-white" />
@@ -204,9 +204,9 @@ export function TestimonialsSection() {
                 <button
                   key={index}
                   onClick={() => scrollTo(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                     selectedIndex === index
-                      ? "bg-primary w-6"
+                      ? "bg-primary w-8"
                       : "bg-white/30 hover:bg-white/50"
                   }`}
                   aria-label={`Go to testimonial ${index + 1}`}
@@ -215,7 +215,7 @@ export function TestimonialsSection() {
             </div>
             <button
               onClick={scrollNext}
-              className="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors"
+              className="bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors border border-white/20"
               aria-label="Next"
             >
               <ChevronRight className="w-5 h-5 text-white" />
@@ -228,9 +228,9 @@ export function TestimonialsSection() {
               <button
                 key={index}
                 onClick={() => scrollTo(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                   selectedIndex === index
-                    ? "bg-primary w-6"
+                    ? "bg-primary w-8"
                     : "bg-white/30 hover:bg-white/50"
                 }`}
                 aria-label={`Go to testimonial ${index + 1}`}

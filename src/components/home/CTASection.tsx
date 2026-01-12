@@ -20,8 +20,8 @@ export function CTASection() {
       <div className="absolute inset-0 texture-stone opacity-20" />
 
       {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-alpine/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-evergreen/10 rounded-full blur-3xl" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-navy/10 rounded-full blur-3xl" />
 
       <div className="container relative z-10 px-4 md:px-6">
         <div className="max-w-4xl mx-auto text-center">
@@ -73,11 +73,11 @@ export function CTASection() {
           <div className="mt-12 pt-10 border-t border-white/10">
             <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 text-white/60 text-sm">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-evergreen rounded-full" />
+                <div className="w-2 h-2 bg-primary rounded-full" />
                 <span>Licensed & Insured</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-alpine rounded-full" />
+                <div className="w-2 h-2 bg-primary rounded-full" />
                 <span>15+ Years Experience</span>
               </div>
               <div className="flex items-center gap-2">

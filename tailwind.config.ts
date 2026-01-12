@@ -106,6 +106,8 @@ export default {
           DEFAULT: "hsl(var(--charcoal))",
           dark: "hsl(var(--charcoal-dark))",
         },
+        // Unified dark section background (#1D2130)
+        "section-dark": "hsl(var(--section-dark))",
       },
       fontFamily: {
         heading: ['Montserrat', 'system-ui', 'sans-serif'],

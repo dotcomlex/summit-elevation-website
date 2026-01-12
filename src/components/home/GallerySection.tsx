@@ -15,26 +15,18 @@ import galleryPatio1 from "@/assets/gallery-patio-1.jpg";
 import galleryExterior1 from "@/assets/gallery-exterior-1.jpg";
 
 const galleryItems = [
-  { id: 1, image: galleryKitchen, title: "Modern Kitchen Transformation", category: "Kitchen", location: "Denver, CO" },
-  { id: 2, image: galleryBathroom, title: "Luxury Spa Bathroom", category: "Bathroom", location: "Boulder, CO" },
-  { id: 3, image: galleryPatio, title: "Stamped Concrete Patio", category: "Outdoor", location: "Lakewood, CO" },
-  { id: 4, image: galleryExterior, title: "Complete Home Renovation", category: "Exterior", location: "Aurora, CO" },
-  { id: 5, image: galleryKitchen1, title: "Contemporary Kitchen Design", category: "Kitchen", location: "Arvada, CO" },
-  { id: 6, image: galleryBathroom1, title: "Master Bath Remodel", category: "Bathroom", location: "Westminster, CO" },
-  { id: 7, image: galleryPatio1, title: "Outdoor Living Space", category: "Outdoor", location: "Centennial, CO" },
-  { id: 8, image: galleryExterior1, title: "Craftsman Home Exterior", category: "Exterior", location: "Highlands Ranch, CO" },
+  { id: 1, image: galleryKitchen, title: "Modern Kitchen Transformation", category: "Kitchen Remodel", location: "Denver, CO" },
+  { id: 2, image: galleryBathroom, title: "Luxury Spa Bathroom", category: "Bathroom Remodel", location: "Boulder, CO" },
+  { id: 3, image: galleryPatio, title: "Stamped Concrete Patio", category: "Concrete Flatwork", location: "Lakewood, CO" },
+  { id: 4, image: galleryExterior, title: "Complete Home Renovation", category: "General Contracting", location: "Aurora, CO" },
+  { id: 5, image: galleryKitchen1, title: "Contemporary Kitchen Design", category: "Kitchen Remodel", location: "Arvada, CO" },
+  { id: 6, image: galleryBathroom1, title: "Master Bath Remodel", category: "Bathroom Remodel", location: "Westminster, CO" },
+  { id: 7, image: galleryPatio1, title: "Outdoor Living Space", category: "Concrete Flatwork", location: "Centennial, CO" },
+  { id: 8, image: galleryExterior1, title: "Craftsman Home Exterior", category: "General Contracting", location: "Highlands Ranch, CO" },
 ];
 
-const categories = ["All", "Kitchen", "Bathroom", "Outdoor", "Exterior"];
-
 export function GallerySection() {
-  const [activeCategory, setActiveCategory] = useState("All");
   const [selectedImage, setSelectedImage] = useState<typeof galleryItems[0] | null>(null);
-
-  const filteredItems =
-    activeCategory === "All"
-      ? galleryItems
-      : galleryItems.filter((item) => item.category === activeCategory);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
@@ -61,25 +53,17 @@ export function GallerySection() {
     };
   }, [emblaApi, onSelect]);
 
-  useEffect(() => {
-    if (emblaApi) {
-      emblaApi.reInit();
-      setSelectedIndex(0);
-    }
-  }, [filteredItems, emblaApi]);
-
   return (
-    <section className="relative py-16 md:py-24 bg-navy overflow-hidden">
-      {/* Subtle texture */}
-      <div className="absolute inset-0 texture-dots opacity-20" />
+    <section className="relative py-16 md:py-24 bg-section-dark overflow-hidden">
+      {/* Subtle grain texture */}
+      <div className="absolute inset-0 texture-grain" />
 
       <div className="container relative z-10 px-4 md:px-6">
         {/* Section Header */}
         <AnimatedSection className="text-center mb-8 md:mb-12">
-          <div className="inline-flex items-center gap-2 bg-white/10 text-white px-4 py-2 rounded-full text-sm font-medium mb-5 border border-white/20">
-            <ZoomIn className="w-4 h-4" />
-            <span>Our Portfolio</span>
-          </div>
+          <span className="inline-block text-primary font-semibold text-sm uppercase tracking-wider mb-3">
+            Our Portfolio
+          </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
             Recent Projects
           </h2>
@@ -88,34 +72,17 @@ export function GallerySection() {
           </p>
         </AnimatedSection>
 
-        {/* Category Filters */}
-        <AnimatedSection delay={0.2} className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 md:mb-10">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeCategory === category
-                  ? "bg-white text-navy shadow-lg"
-                  : "bg-white/10 text-white hover:bg-white/20 border border-white/20"
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </AnimatedSection>
-
         {/* Carousel */}
         <div className="relative">
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex gap-4 md:gap-6">
-              {filteredItems.map((item) => (
+              {galleryItems.map((item) => (
                 <div
                   key={item.id}
-                  className="flex-none w-[85%] sm:w-[70%] md:w-[45%] lg:w-[30%]"
+                  className="flex-none w-[88%] sm:w-[70%] md:w-[45%] lg:w-[32%]"
                 >
                   <div
-                    className="group relative bg-white rounded-2xl overflow-hidden shadow-elevated cursor-pointer"
+                    className="group relative bg-white/5 rounded-xl overflow-hidden cursor-pointer border border-white/10 hover:border-primary/30 transition-all duration-300"
                     onClick={() => setSelectedImage(item)}
                   >
                     {/* Image */}
@@ -125,24 +92,29 @@ export function GallerySection() {
                         alt={item.title}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                    </div>
-
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-navy/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <div className="bg-white/20 backdrop-blur-sm p-3 rounded-full">
-                        <ZoomIn className="w-6 h-6 text-white" />
+                      {/* Hover Overlay with gradient vignette */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        {/* Zoom icon */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                          <div className="bg-white/20 backdrop-blur-sm p-3 rounded-full">
+                            <ZoomIn className="w-6 h-6 text-white" />
+                          </div>
+                        </div>
+                        {/* Project label on hover */}
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <span className="inline-block px-3 py-1 bg-primary/90 text-white text-xs font-medium rounded-full">
+                            {item.category}
+                          </span>
+                        </div>
                       </div>
                     </div>
 
                     {/* Content - Always Visible */}
-                    <div className="p-4 md:p-5">
-                      <span className="inline-block px-3 py-1 bg-navy/10 text-navy text-xs font-medium rounded-full mb-2">
-                        {item.category}
-                      </span>
-                      <h3 className="text-base md:text-lg font-bold text-mountain-charcoal mb-1">
+                    <div className="p-4">
+                      <h3 className="text-base md:text-lg font-bold text-white mb-1 group-hover:text-primary transition-colors">
                         {item.title}
                       </h3>
-                      <div className="flex items-center gap-1 text-mountain-slate text-sm">
+                      <div className="flex items-center gap-1 text-white/50 text-sm">
                         <MapPin className="w-3 h-3" />
                         <span>{item.location}</span>
                       </div>
@@ -156,29 +128,29 @@ export function GallerySection() {
           {/* Navigation Buttons */}
           <button
             onClick={scrollPrev}
-            className="absolute left-2 md:-left-4 top-1/2 -translate-y-1/2 bg-white shadow-elevated p-2 md:p-3 rounded-full hover:bg-gray-50 transition-colors z-10"
+            className="absolute left-2 md:-left-4 top-[35%] -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm p-2 md:p-3 rounded-full transition-colors z-10 border border-white/20"
             aria-label="Previous slide"
           >
-            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-mountain-charcoal" />
+            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </button>
           <button
             onClick={scrollNext}
-            className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 bg-white shadow-elevated p-2 md:p-3 rounded-full hover:bg-gray-50 transition-colors z-10"
+            className="absolute right-2 md:-right-4 top-[35%] -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm p-2 md:p-3 rounded-full transition-colors z-10 border border-white/20"
             aria-label="Next slide"
           >
-            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-mountain-charcoal" />
+            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </button>
 
           {/* Dots */}
           <div className="flex justify-center gap-2 mt-6 md:mt-8">
-            {filteredItems.map((_, index) => (
+            {galleryItems.map((_, index) => (
               <button
                 key={index}
                 onClick={() => emblaApi?.scrollTo(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                   selectedIndex === index
-                    ? "bg-white w-6"
-                    : "bg-white/40 hover:bg-white/60"
+                    ? "bg-primary w-8"
+                    : "bg-white/30 hover:bg-white/50"
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
@@ -186,16 +158,26 @@ export function GallerySection() {
           </div>
         </div>
 
-        {/* Bottom CTA */}
-        <AnimatedSection delay={0.3} className="text-center mt-10 md:mt-14">
+        {/* Dual CTAs */}
+        <AnimatedSection delay={0.3} className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 md:mt-14">
+          <Button
+            asChild
+            variant="outline"
+            size="lg"
+            className="bg-transparent text-white hover:bg-white/10 border-white/30 hover:border-white/50 px-6 md:px-8 py-5 md:py-6 text-base w-full sm:w-auto"
+          >
+            <Link to="/services">
+              View More Projects
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
           <Button
             asChild
             size="lg"
-            variant="outline"
-            className="bg-white text-navy hover:bg-white/90 border-white px-6 md:px-8 py-5 md:py-6 text-base md:text-lg w-full sm:w-auto"
+            className="bg-primary hover:bg-primary/90 text-white px-6 md:px-8 py-5 md:py-6 text-base shadow-warm w-full sm:w-auto"
           >
-            <Link to="/services">
-              View All Projects
+            <Link to="/contact">
+              Get a Free Estimate
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
@@ -221,6 +203,9 @@ export function GallerySection() {
               className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
             />
             <div className="text-center mt-4">
+              <span className="inline-block px-3 py-1 bg-primary/90 text-white text-xs font-medium rounded-full mb-2">
+                {selectedImage.category}
+              </span>
               <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
                 {selectedImage.title}
               </h3>
@@ -232,20 +217,6 @@ export function GallerySection() {
           </div>
         </div>
       )}
-
-      {/* Wave divider to next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-16">
-        <svg
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-          className="w-full h-full"
-        >
-          <path
-            d="M0,0 C300,100 900,20 1200,80 L1200,120 L0,120 Z"
-            fill="hsl(38 40% 95%)"
-          />
-        </svg>
-      </div>
     </section>
   );
 }

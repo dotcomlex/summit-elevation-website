@@ -1,51 +1,35 @@
 import { useState, useCallback, useEffect } from "react";
-import { ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { ChevronLeft, ChevronRight, ZoomIn, X, MapPin, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import useEmblaCarousel from "embla-carousel-react";
+import { Link } from "react-router-dom";
+import { AnimatedSection } from "@/components/ui/animated-section";
 
-// Import gallery images
+import galleryKitchen from "@/assets/gallery-kitchen.jpg";
+import galleryBathroom from "@/assets/gallery-bathroom.jpg";
+import galleryPatio from "@/assets/gallery-patio.jpg";
+import galleryExterior from "@/assets/gallery-exterior.jpg";
 import galleryKitchen1 from "@/assets/gallery-kitchen-1.jpg";
 import galleryBathroom1 from "@/assets/gallery-bathroom-1.jpg";
 import galleryPatio1 from "@/assets/gallery-patio-1.jpg";
 import galleryExterior1 from "@/assets/gallery-exterior-1.jpg";
 
 const galleryItems = [
-  {
-    id: 1,
-    image: galleryKitchen1,
-    title: "Modern Mountain Kitchen",
-    category: "Kitchen",
-    location: "Highlands Ranch, CO",
-  },
-  {
-    id: 2,
-    image: galleryBathroom1,
-    title: "Luxury Spa Bathroom",
-    category: "Bathroom",
-    location: "Denver, CO",
-  },
-  {
-    id: 3,
-    image: galleryPatio1,
-    title: "Colorado Stone Patio",
-    category: "Outdoor",
-    location: "Castle Rock, CO",
-  },
-  {
-    id: 4,
-    image: galleryExterior1,
-    title: "Craftsman Exterior",
-    category: "Exterior",
-    location: "Lakewood, CO",
-  },
+  { id: 1, image: galleryKitchen, title: "Modern Kitchen Transformation", category: "Kitchen", location: "Denver, CO" },
+  { id: 2, image: galleryBathroom, title: "Luxury Spa Bathroom", category: "Bathroom", location: "Boulder, CO" },
+  { id: 3, image: galleryPatio, title: "Stamped Concrete Patio", category: "Outdoor", location: "Lakewood, CO" },
+  { id: 4, image: galleryExterior, title: "Complete Home Renovation", category: "Exterior", location: "Aurora, CO" },
+  { id: 5, image: galleryKitchen1, title: "Contemporary Kitchen Design", category: "Kitchen", location: "Arvada, CO" },
+  { id: 6, image: galleryBathroom1, title: "Master Bath Remodel", category: "Bathroom", location: "Westminster, CO" },
+  { id: 7, image: galleryPatio1, title: "Outdoor Living Space", category: "Outdoor", location: "Centennial, CO" },
+  { id: 8, image: galleryExterior1, title: "Craftsman Home Exterior", category: "Exterior", location: "Highlands Ranch, CO" },
 ];
 
 const categories = ["All", "Kitchen", "Bathroom", "Outdoor", "Exterior"];
 
 export function GallerySection() {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<typeof galleryItems[0] | null>(null);
 
   const filteredItems =
     activeCategory === "All"
@@ -55,19 +39,13 @@ export function GallerySection() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "start",
-    skipSnaps: false,
-    dragFree: true,
+    slidesToScroll: 1,
   });
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -78,182 +56,196 @@ export function GallerySection() {
     if (!emblaApi) return;
     onSelect();
     emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onSelect);
     return () => {
       emblaApi.off("select", onSelect);
-      emblaApi.off("reInit", onSelect);
     };
   }, [emblaApi, onSelect]);
 
+  useEffect(() => {
+    if (emblaApi) {
+      emblaApi.reInit();
+      setSelectedIndex(0);
+    }
+  }, [filteredItems, emblaApi]);
+
   return (
-    <section
-      id="gallery"
-      className="relative py-20 md:py-28 bg-snow-soft overflow-hidden scroll-mt-20"
-    >
+    <section className="relative py-16 md:py-24 bg-navy overflow-hidden">
       {/* Subtle texture */}
-      <div className="absolute inset-0 texture-dots opacity-50" />
+      <div className="absolute inset-0 texture-dots opacity-20" />
 
       <div className="container relative z-10 px-4 md:px-6">
         {/* Section Header */}
-        <div className="text-center mb-10 md:mb-14">
-          <div className="inline-flex items-center gap-2 bg-alpine/10 text-alpine px-4 py-2 rounded-full text-sm font-medium mb-6">
+        <AnimatedSection className="text-center mb-8 md:mb-12">
+          <div className="inline-flex items-center gap-2 bg-white/10 text-white px-4 py-2 rounded-full text-sm font-medium mb-5 border border-white/20">
             <ZoomIn className="w-4 h-4" />
             <span>Our Portfolio</span>
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-mountain-charcoal mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
             Recent Projects
           </h2>
-          <p className="text-lg text-mountain-slate max-w-2xl mx-auto">
-            Browse our latest Colorado home renovations and see the quality craftsmanship that sets us apart
+          <p className="text-base md:text-lg text-white/70 max-w-2xl mx-auto">
+            Explore our latest renovation work across the Denver metro area
           </p>
-        </div>
+        </AnimatedSection>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-10">
+        {/* Category Filters */}
+        <AnimatedSection delay={0.2} className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 md:mb-10">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={cn(
-                "px-4 md:px-5 py-2 md:py-2.5 rounded-full text-sm font-medium transition-all duration-300",
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                 activeCategory === category
-                  ? "bg-alpine text-white shadow-md"
-                  : "bg-white text-mountain-stone hover:bg-alpine/10 hover:text-alpine border border-border"
-              )}
+                  ? "bg-white text-navy shadow-lg"
+                  : "bg-white/10 text-white hover:bg-white/20 border border-white/20"
+              }`}
             >
               {category}
             </button>
           ))}
-        </div>
+        </AnimatedSection>
 
-        {/* Gallery Carousel */}
+        {/* Carousel */}
         <div className="relative">
-          {/* Navigation Buttons */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute left-2 md:-left-6 top-1/2 -translate-y-1/2 z-20 
-              bg-white/90 hover:bg-white text-mountain-charcoal rounded-full w-10 h-10 md:w-12 md:h-12 
-              shadow-lg border border-border"
-            onClick={scrollPrev}
-          >
-            <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
-          </Button>
-
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute right-2 md:-right-6 top-1/2 -translate-y-1/2 z-20 
-              bg-white/90 hover:bg-white text-mountain-charcoal rounded-full w-10 h-10 md:w-12 md:h-12 
-              shadow-lg border border-border"
-            onClick={scrollNext}
-          >
-            <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
-          </Button>
-
-          {/* Carousel Container */}
-          <div className="overflow-hidden mx-4 md:mx-0" ref={emblaRef}>
-            <div className="flex touch-pan-y -ml-4">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex gap-4 md:gap-6">
               {filteredItems.map((item) => (
                 <div
                   key={item.id}
-                  className="flex-shrink-0 w-[90%] sm:w-[70%] md:w-1/2 lg:w-1/3 pl-4"
+                  className="flex-none w-[85%] sm:w-[70%] md:w-[45%] lg:w-[30%]"
                 >
                   <div
-                    className="group relative rounded-xl overflow-hidden bg-white shadow-soft cursor-pointer transition-all duration-300 hover:shadow-elevated hover:-translate-y-1"
-                    onClick={() => setSelectedImage(item.image)}
+                    className="group relative bg-white rounded-2xl overflow-hidden shadow-elevated cursor-pointer"
+                    onClick={() => setSelectedImage(item)}
                   >
                     {/* Image */}
                     <div className="aspect-[4/3] overflow-hidden">
                       <img
                         src={item.image}
                         alt={item.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
 
-                    {/* Overlay on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-mountain-charcoal/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                      <div className="p-6 w-full">
-                        <div className="inline-block bg-evergreen/90 text-white text-xs px-3 py-1 rounded-full mb-2">
-                          {item.category}
-                        </div>
-                        <h3 className="text-white font-semibold text-lg">
-                          {item.title}
-                        </h3>
-                        <p className="text-white/70 text-sm">{item.location}</p>
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 bg-navy/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <div className="bg-white/20 backdrop-blur-sm p-3 rounded-full">
+                        <ZoomIn className="w-6 h-6 text-white" />
                       </div>
                     </div>
 
-                    {/* Always visible info on mobile */}
-                    <div className="md:hidden p-4 bg-white">
-                      <div className="inline-block bg-evergreen/10 text-evergreen text-xs px-3 py-1 rounded-full mb-2">
+                    {/* Content - Always Visible */}
+                    <div className="p-4 md:p-5">
+                      <span className="inline-block px-3 py-1 bg-navy/10 text-navy text-xs font-medium rounded-full mb-2">
                         {item.category}
-                      </div>
-                      <h3 className="text-mountain-charcoal font-semibold">
+                      </span>
+                      <h3 className="text-base md:text-lg font-bold text-mountain-charcoal mb-1">
                         {item.title}
                       </h3>
-                      <p className="text-mountain-slate text-sm">{item.location}</p>
-                    </div>
-
-                    {/* Zoom icon */}
-                    <div className="absolute top-4 right-4 bg-white/90 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:block">
-                      <ZoomIn className="w-5 h-5 text-mountain-charcoal" />
+                      <div className="flex items-center gap-1 text-mountain-slate text-sm">
+                        <MapPin className="w-3 h-3" />
+                        <span>{item.location}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        </div>
 
-        {/* Dots Navigation */}
-        <div className="flex justify-center gap-2 mt-8">
-          {filteredItems.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => emblaApi?.scrollTo(index)}
-              className={cn(
-                "w-2 h-2 rounded-full transition-all duration-300",
-                index === selectedIndex
-                  ? "bg-alpine w-6"
-                  : "bg-mountain-mist hover:bg-mountain-slate"
-              )}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
-
-        {/* View All Link */}
-        <div className="text-center mt-10">
-          <Button
-            variant="outline"
-            className="border-alpine text-alpine hover:bg-alpine hover:text-white transition-colors"
+          {/* Navigation Buttons */}
+          <button
+            onClick={scrollPrev}
+            className="absolute left-2 md:-left-4 top-1/2 -translate-y-1/2 bg-white shadow-elevated p-2 md:p-3 rounded-full hover:bg-gray-50 transition-colors z-10"
+            aria-label="Previous slide"
           >
-            View All Projects
-          </Button>
+            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-mountain-charcoal" />
+          </button>
+          <button
+            onClick={scrollNext}
+            className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 bg-white shadow-elevated p-2 md:p-3 rounded-full hover:bg-gray-50 transition-colors z-10"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-mountain-charcoal" />
+          </button>
+
+          {/* Dots */}
+          <div className="flex justify-center gap-2 mt-6 md:mt-8">
+            {filteredItems.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => emblaApi?.scrollTo(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  selectedIndex === index
+                    ? "bg-white w-6"
+                    : "bg-white/40 hover:bg-white/60"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
+
+        {/* Bottom CTA */}
+        <AnimatedSection delay={0.3} className="text-center mt-10 md:mt-14">
+          <Button
+            asChild
+            size="lg"
+            variant="outline"
+            className="bg-white text-navy hover:bg-white/90 border-white px-6 md:px-8 py-5 md:py-6 text-base md:text-lg w-full sm:w-auto"
+          >
+            <Link to="/services">
+              View All Projects
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
+        </AnimatedSection>
       </div>
 
       {/* Lightbox Modal */}
       {selectedImage && (
         <div
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
           <button
-            className="absolute top-4 right-4 text-white/80 hover:text-white text-4xl"
+            className="absolute top-4 right-4 bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors"
             onClick={() => setSelectedImage(null)}
           >
-            ×
+            <X className="w-6 h-6 text-white" />
           </button>
-          <img
-            src={selectedImage}
-            alt="Full size"
-            className="max-w-full max-h-[90vh] object-contain rounded-lg"
-          />
+          <div className="max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={selectedImage.image}
+              alt={selectedImage.title}
+              className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
+            />
+            <div className="text-center mt-4">
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
+                {selectedImage.title}
+              </h3>
+              <p className="text-white/70 flex items-center justify-center gap-2">
+                <MapPin className="w-4 h-4" />
+                {selectedImage.location}
+              </p>
+            </div>
+          </div>
         </div>
       )}
+
+      {/* Wave divider to next section */}
+      <div className="absolute bottom-0 left-0 right-0 h-16">
+        <svg
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+          className="w-full h-full"
+        >
+          <path
+            d="M0,0 C300,100 900,20 1200,80 L1200,120 L0,120 Z"
+            fill="hsl(38 40% 95%)"
+          />
+        </svg>
+      </div>
     </section>
   );
 }

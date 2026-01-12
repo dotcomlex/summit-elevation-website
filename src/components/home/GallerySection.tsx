@@ -21,9 +21,26 @@ export function GallerySection() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  // Responsive radius (smaller values for square cards)
+  // Responsive radius to prevent cards from visually "cutting" into each other
+  // while keeping the front card large and premium.
   useEffect(() => {
-    const update = () => setRadius(window.innerWidth < 640 ? 320 : 520);
+    const update = () => {
+      const vw = window.innerWidth;
+
+      // Must match the card sizing used in CircularGallery (w/h clamp)
+      const card = Math.max(260, Math.min(420, vw * 0.38));
+
+      // With 8 items, the chord length between cards is ~0.765 * radius.
+      // Add padding so rounded corners and shadows don't collide.
+      const minRadius = card / 0.765 + 40;
+
+      const r = vw < 640
+        ? Math.min(540, Math.max(380, minRadius))
+        : Math.min(760, Math.max(560, minRadius));
+
+      setRadius(Math.round(r));
+    };
+
     update();
     window.addEventListener("resize", update, { passive: true });
     return () => window.removeEventListener("resize", update);
@@ -119,8 +136,8 @@ export function GallerySection() {
       {/* Vignette */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.6)_100%)]" />
 
-      {/* Content */}
-      <div className="relative h-screen flex flex-col items-center justify-center py-12 px-4">
+      {/* Content - tighter padding to reduce dead space */}
+      <div className="relative h-screen flex flex-col items-center justify-center py-10 md:py-14 px-4">
         {/* Header */}
         <AnimatedSection className="text-center mb-4 md:mb-6 z-10">
           <span className="inline-block text-primary font-semibold text-xs md:text-sm tracking-widest uppercase mb-2">

@@ -3,24 +3,22 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
-  Bath,
   HardHat,
   Building2,
   Phone,
-  ChefHat,
   Snowflake,
   Zap,
   Shield
 } from "lucide-react";
 
 import heroImage from "@/assets/services-hero-bg.jpg";
-import paperTexture from "@/assets/paper-texture-bg.jpg";
-import kitchenImage from "@/assets/kitchen-remodel.jpg";
-import bathroomImage from "@/assets/bathroom-remodel.jpg";
-import concreteImage from "@/assets/concrete-patio.jpg";
-import constructionImage from "@/assets/construction-site.jpg";
-import hvacImage from "@/assets/hvac-service.jpg";
-import electricalImage from "@/assets/electrical-service.jpg";
+import paperTexture from "@/assets/paper-texture-light.jpg";
+import kitchenImage from "@/assets/services-kitchen.jpg";
+import bathroomImage from "@/assets/services-bathroom.jpg";
+import concreteImage from "@/assets/services-concrete.jpg";
+import constructionImage from "@/assets/services-general-contracting.jpg";
+import hvacImage from "@/assets/services-hvac.jpg";
+import electricalImage from "@/assets/services-electrical.jpg";
 
 const Services = () => {
   const cards = [
@@ -74,57 +72,61 @@ const Services = () => {
 
   return (
     <Layout>
-      {/* HERO */}
-      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+      {/* HERO - Reduced height on mobile, responsive typography */}
+      <section className="relative min-h-[65vh] sm:min-h-[70vh] md:min-h-[80vh] flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
             src={heroImage}
             alt="Colorado mountain home at dusk"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-mountain-charcoal/70 via-mountain-charcoal/50 to-mountain-charcoal/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-mountain-charcoal/70 via-mountain-charcoal/50 to-mountain-charcoal/80" />
         </div>
 
         {/* Content */}
-        <div className="relative z-10 container mx-auto px-4 lg:px-8 py-20 text-center">
-          <span className="inline-block text-primary font-semibold text-sm tracking-widest uppercase mb-4">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 text-center">
+          <span className="inline-block text-primary font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3 sm:mb-4">
             — Our Services —
           </span>
 
-          <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-snow-white mb-6 max-w-4xl mx-auto leading-tight">
+          {/* Headline with clamp for responsive sizing - stays 2-3 lines on mobile */}
+          <h1 className="font-heading text-[clamp(1.75rem,5vw,3.5rem)] leading-[1.15] font-bold text-snow-white mb-4 sm:mb-6 max-w-4xl mx-auto text-shadow-hero">
             Professional Remodeling &<br className="hidden sm:block" /> Construction Services
           </h1>
 
-          <p className="text-mountain-mist text-lg md:text-xl max-w-2xl mx-auto mb-10">
+          <p className="text-mountain-mist text-sm sm:text-lg md:text-xl max-w-2xl mx-auto mb-6 sm:mb-8 md:mb-10 px-2">
             Serving Denver, the Front Range, and Colorado Springs with craftsmanship you can trust.
           </p>
 
-          <Button asChild size="lg" className="text-base mb-12">
-            <Link to="/contact">Get a Free Estimate <ArrowRight className="ml-2 h-5 w-5" /></Link>
+          {/* CTA Button - 48-56px tall on mobile */}
+          <Button asChild size="lg" className="text-sm sm:text-base h-12 sm:h-14 px-6 sm:px-8 rounded-full shadow-lg hover:shadow-[0_0_20px_rgba(234,88,12,0.4)] transition-all duration-300 mb-6 sm:mb-8 md:mb-12">
+            <Link to="/contact">
+              Get a Free Estimate <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+            </Link>
           </Button>
 
-          {/* Simplified Trust Row */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-snow-white/90 text-sm">
-            <div className="flex items-center gap-2">
-              <Shield className="h-5 w-5 text-primary" />
+          {/* Trust Row - smaller gap/font on mobile to prevent awkward wrapping */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 md:gap-6 text-snow-white/90 text-[11px] sm:text-sm">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <Shield className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-primary" />
               <span>Licensed & Insured</span>
             </div>
-            <div className="hidden sm:block w-px h-5 bg-snow-white/30" />
+            <div className="hidden xs:block w-px h-4 sm:h-5 bg-snow-white/30" />
             <a
               href="tel:+17208189678"
-              className="flex items-center gap-2 hover:text-primary transition-colors"
+              className="flex items-center gap-1.5 sm:gap-2 hover:text-primary transition-colors"
             >
-              <Phone className="h-5 w-5 text-primary" />
+              <Phone className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-primary" />
               <span>Call (720) 818-9678</span>
             </a>
           </div>
         </div>
       </section>
 
-      {/* WHAT WE DO GRID */}
-      <section className="py-20 md:py-28 relative overflow-hidden">
-        {/* Paper Texture Background */}
+      {/* WHAT WE DO GRID - Tighter spacing, scroll-mt for navbar clearance */}
+      <section className="py-12 sm:py-16 md:py-20 relative overflow-hidden scroll-mt-20">
+        {/* Cleaner Paper Texture Background */}
         <div className="absolute inset-0">
           <img
             src={paperTexture}
@@ -133,54 +135,57 @@ const Services = () => {
           />
         </div>
 
-        <div className="container mx-auto px-4 lg:px-8 relative">
-          {/* Section Header */}
-          <div className="text-center mb-12 md:mb-16">
-            <span className="inline-block text-primary font-semibold text-sm tracking-widest uppercase mb-3">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+          {/* Section Header - Tighter spacing */}
+          <div className="text-center mb-8 sm:mb-10 md:mb-12">
+            <span className="inline-block text-primary font-semibold text-xs sm:text-sm tracking-widest uppercase mb-2 sm:mb-3">
               — What We Do —
             </span>
-            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              Comprehensive Home Improvement Solutions
+            <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4">
+              Comprehensive Home Solutions
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            <p className="text-muted-foreground text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
               A quick look at the core services homeowners hire us for most.
             </p>
           </div>
 
-          {/* Service Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+          {/* Service Cards Grid - 1 col mobile, 2 col desktop */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto">
             {cards.map((c) => {
               const Icon = c.icon;
               return (
                 <Link
                   key={c.title}
                   to={c.href}
-                  className="group relative rounded-3xl overflow-hidden shadow-elevated hover:shadow-2xl transition-all duration-300"
+                  className="group relative rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl border border-black/5 transition-all duration-300 hover:scale-[1.02]"
                 >
-                  {/* Card Image */}
+                  {/* Card Image - Consistent aspect ratio and object-position */}
                   <div className="aspect-[4/3] relative">
                     <img
                       src={c.image}
                       alt={c.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-mountain-charcoal/95 via-mountain-charcoal/30 to-transparent" />
+                    {/* Enhanced gradient overlay - STRONGER on mobile for guaranteed readability */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent sm:from-black/90 sm:via-black/35" />
                   </div>
 
                   {/* Card Content */}
-                  <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
-                    <div className="flex items-center gap-3 mb-2">
+                  <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 md:p-6">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-1.5 sm:mb-2">
                       {/* Only show orange circle icon for cards 3-6 */}
                       {c.showIcon && Icon && (
-                        <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
-                          <Icon className="h-4 w-4 text-white" />
+                        <div className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0 shadow-md">
+                          <Icon className="h-3 h-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-white" />
                         </div>
                       )}
-                      <h3 className="font-heading text-xl md:text-2xl font-bold text-snow-white">
+                      {/* Title with drop shadow for guaranteed readability */}
+                      <h3 className="font-heading text-lg sm:text-xl md:text-2xl font-bold text-white drop-shadow-lg">
                         {c.title}
                       </h3>
                     </div>
-                    <p className="text-mountain-mist text-sm md:text-base line-clamp-2">
+                    {/* Description at 85% opacity with drop shadow */}
+                    <p className="text-white/85 text-sm sm:text-base drop-shadow-md leading-relaxed line-clamp-2">
                       {c.desc}
                     </p>
                   </div>
@@ -191,34 +196,36 @@ const Services = () => {
         </div>
       </section>
 
-      {/* BOTTOM CTA */}
-      <section className="relative py-20 md:py-24 overflow-hidden">
+      {/* BOTTOM CTA - Consistent with hero treatment */}
+      <section className="relative py-14 sm:py-20 md:py-24 overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
             src={heroImage}
             alt=""
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-mountain-charcoal/80 via-mountain-charcoal/70 to-mountain-charcoal/80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-mountain-charcoal/90 via-mountain-charcoal/70 to-mountain-charcoal/85" />
         </div>
 
-        <div className="container mx-auto px-4 lg:px-8 text-center relative z-10">
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-snow-white mb-4">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-snow-white mb-3 sm:mb-4 text-shadow-hero">
             Ready to Start Your Project?
           </h2>
-          <p className="text-mountain-mist text-lg mb-8 max-w-xl mx-auto">
+          <p className="text-mountain-mist text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-xl mx-auto">
             Get your free estimate today—we'll help you map out the next step clearly.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button asChild size="lg" className="text-base">
-              <Link to="/contact">Get Your Free Estimate <ArrowRight className="ml-2 h-5 w-5" /></Link>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+            <Button asChild size="lg" className="text-sm sm:text-base h-12 sm:h-14 px-6 sm:px-8 rounded-full shadow-lg hover:shadow-[0_0_20px_rgba(234,88,12,0.4)] transition-all duration-300">
+              <Link to="/contact">
+                Get Your Free Estimate <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+              </Link>
             </Button>
             <a
               href="tel:+17208189678"
-              className="inline-flex items-center gap-2 text-snow-white hover:text-primary transition-colors text-lg font-medium"
+              className="inline-flex items-center gap-2 text-snow-white hover:text-primary transition-colors text-sm sm:text-lg font-medium"
             >
-              <Phone className="h-5 w-5" />
+              <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
               (720) 818-9678
             </a>
           </div>

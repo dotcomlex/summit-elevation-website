@@ -23,7 +23,7 @@ export function GallerySection() {
 
   // Responsive radius (smaller values for square cards)
   useEffect(() => {
-    const update = () => setRadius(window.innerWidth < 640 ? 340 : 580);
+    const update = () => setRadius(window.innerWidth < 640 ? 320 : 520);
     update();
     window.addEventListener("resize", update, { passive: true });
     return () => window.removeEventListener("resize", update);
@@ -122,7 +122,7 @@ export function GallerySection() {
       {/* Content */}
       <div className="relative h-screen flex flex-col items-center justify-center py-12 px-4">
         {/* Header */}
-        <AnimatedSection className="text-center mb-6 md:mb-10 z-10">
+        <AnimatedSection className="text-center mb-4 md:mb-6 z-10">
           <span className="inline-block text-primary font-semibold text-xs md:text-sm tracking-widest uppercase mb-2">
             Our Work
           </span>
@@ -138,21 +138,21 @@ export function GallerySection() {
         <CircularGallery
           items={items}
           radius={radius}
-          autoRotateSpeed={-0.014}
+          autoRotateSpeed={-0.035}
           isActive={isActive}
           onItemClick={openLightbox}
           className="relative z-10"
         />
 
         {/* Instruction */}
-        <AnimatedSection delay={0.2} className="text-center mt-6 md:mt-10 z-10">
+        <AnimatedSection delay={0.2} className="text-center mt-4 md:mt-6 z-10">
           <p className="text-white/40 text-xs md:text-sm tracking-wide">
             Auto-rotates • Swipe left or right to explore • Tap any photo to view
           </p>
         </AnimatedSection>
 
         {/* CTA */}
-        <AnimatedSection delay={0.3} className="mt-8 z-10">
+        <AnimatedSection delay={0.3} className="mt-6 z-10">
           <Button 
             asChild 
             size="lg" 

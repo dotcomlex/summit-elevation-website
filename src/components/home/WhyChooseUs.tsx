@@ -40,7 +40,7 @@ const processSteps = [
 
 export function WhyChooseUs() {
   return (
-    <section className="relative py-12 md:py-20 lg:py-24 bg-sand overflow-hidden">
+    <section className="relative pt-12 pb-20 md:py-20 lg:py-24 bg-sand overflow-hidden">
       {/* Subtle texture */}
       <div className="absolute inset-0 texture-paper opacity-30" />
 

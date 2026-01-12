@@ -140,14 +140,14 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       if (dx === 0) return;
 
       isInteractingRef.current = true;
-      setRotation((prev) => prev + dx * 0.16);
+      setRotation((prev) => prev + dx * 0.25);
       e.preventDefault();
 
       // Resume auto-rotate after a short delay
       if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
       wheelTimeoutRef.current = setTimeout(() => {
         isInteractingRef.current = false;
-      }, 160);
+      }, 400);
     };
 
     // Cleanup wheel timeout on unmount

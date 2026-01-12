@@ -191,11 +191,11 @@ export function WhyChooseUs() {
       </div>
 
       {/* Wave divider to testimonials */}
-      <div className="absolute bottom-0 left-0 right-0 h-16">
+      <div className="absolute -bottom-px left-0 right-0 h-16">
         <svg
           viewBox="0 0 1200 120"
           preserveAspectRatio="none"
-          className="w-full h-full"
+          className="w-full h-full block"
         >
           <path
             d="M0,0 C300,100 900,20 1200,80 L1200,120 L0,120 Z"

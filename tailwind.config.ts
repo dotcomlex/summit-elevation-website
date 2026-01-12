@@ -86,6 +86,12 @@ export default {
           light: "hsl(var(--sky-light))",
           pale: "hsl(var(--sky-pale))",
         },
+        // Alpine Blue - Secondary Accent
+        alpine: {
+          DEFAULT: "hsl(var(--alpine-blue))",
+          blue: "hsl(var(--alpine-blue))",
+          light: "hsl(var(--alpine-light))",
+        },
       },
       fontFamily: {
         heading: ['Montserrat', 'system-ui', 'sans-serif'],

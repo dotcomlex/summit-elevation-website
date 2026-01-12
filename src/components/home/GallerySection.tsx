@@ -95,7 +95,7 @@ export function GallerySection() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen w-full overflow-hidden"
+      className="relative w-full overflow-hidden"
     >
       {/* Premium multi-layer background */}
       {/* Base gradient */}
@@ -120,7 +120,7 @@ export function GallerySection() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.6)_100%)]" />
 
       {/* Content */}
-      <div className="relative h-screen flex flex-col items-center justify-center py-12 px-4">
+      <div className="relative flex flex-col items-center pt-16 pb-12 px-4">
         {/* Header */}
         <AnimatedSection className="text-center mb-2 md:mb-3 z-10">
           <span className="inline-block text-primary font-semibold text-xs md:text-sm tracking-widest uppercase mb-2">

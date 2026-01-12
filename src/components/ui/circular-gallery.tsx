@@ -26,7 +26,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       items,
       className,
       radius = 560,
-      autoRotateSpeed = -0.014,
+      autoRotateSpeed = -0.035,
       onItemClick,
       isActive = true,
       ...props
@@ -114,7 +114,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       if (dragDistanceRef.current > 10) didDragRef.current = true;
 
       // Rotate based on horizontal delta
-      setRotation((prev) => prev + deltaX * 0.14);
+      setRotation((prev) => prev + deltaX * 0.28);
       e.preventDefault();
     };
 
@@ -140,7 +140,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       if (dx === 0) return;
 
       isInteractingRef.current = true;
-      setRotation((prev) => prev + dx * 0.08);
+      setRotation((prev) => prev + dx * 0.16);
       e.preventDefault();
 
       // Resume auto-rotate after a short delay
@@ -229,8 +229,8 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
                   onItemClick?.(i);
                 }}
               >
-                <div
-                  className="relative w-[clamp(220px,30vw,360px)] h-[clamp(220px,30vw,360px)] rounded-2xl overflow-hidden border border-white/10 shadow-[0_22px_70px_rgba(0,0,0,0.45)] bg-black/10"
+              <div
+                  className="relative w-[clamp(260px,38vw,420px)] h-[clamp(260px,38vw,420px)] rounded-2xl overflow-hidden border border-white/10 shadow-[0_22px_70px_rgba(0,0,0,0.45)] bg-black/10"
                   style={{
                     backfaceVisibility: "hidden",
                     WebkitBackfaceVisibility: "hidden",

@@ -8,6 +8,7 @@ import Services from "./pages/Services";
 import KitchenBath from "./pages/services/KitchenBath";
 import Concrete from "./pages/services/Concrete";
 import GeneralContracting from "./pages/services/GeneralContracting";
+import Gallery from "./pages/Gallery";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/services/kitchen-bath" element={<KitchenBath />} />
           <Route path="/services/concrete" element={<Concrete />} />
           <Route path="/services/general-contracting" element={<GeneralContracting />} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />

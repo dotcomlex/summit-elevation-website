@@ -6,28 +6,30 @@ import heroImage from "@/assets/hero-home-new.webp";
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image - No Overlay */}
+      {/* Background Image */}
       <div className="absolute inset-0">
         <img
           src={heroImage}
           alt="Luxury Colorado mountain home"
           className="w-full h-full object-cover"
         />
+        {/* Subtle overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/35 to-black/45" />
       </div>
 
       {/* Centered Content */}
       <div className="relative z-10 container mx-auto px-6 py-24 flex flex-col items-center text-center">
         {/* Headline - Mobile */}
-        <h1 className="font-heading text-shadow-hero animate-fade-up lg:hidden">
+        <h1 className="font-heading text-shadow-strong animate-fade-up lg:hidden">
           <span 
-            className="block text-snow-white font-extrabold tracking-tight leading-[1.05]"
-            style={{ fontSize: "clamp(2.2rem, 9vw, 3.5rem)" }}
+            className="block text-snow-white font-extrabold tracking-tight leading-[1.05] whitespace-nowrap"
+            style={{ fontSize: "clamp(1.8rem, 7.5vw, 2.8rem)" }}
           >
             Remodels Done <span className="text-primary">Right,</span>
           </span>
           <span 
-            className="block text-snow-white font-extrabold tracking-tight leading-[1.05]"
-            style={{ fontSize: "clamp(2.2rem, 9vw, 3.5rem)" }}
+            className="block text-snow-white font-extrabold tracking-tight leading-[1.05] whitespace-nowrap"
+            style={{ fontSize: "clamp(1.8rem, 7.5vw, 2.8rem)" }}
           >
             The First Time.
           </span>
@@ -35,7 +37,7 @@ export function HeroSection() {
 
         {/* Headline - Desktop (single line) */}
         <h1 
-          className="hidden lg:block font-heading text-shadow-hero animate-fade-up text-snow-white font-extrabold tracking-tight leading-[1.05] whitespace-nowrap"
+          className="hidden lg:block font-heading text-shadow-strong animate-fade-up text-snow-white font-extrabold tracking-tight leading-[1.05] whitespace-nowrap"
           style={{ fontSize: "clamp(2.5rem, 4.5vw, 4.5rem)" }}
         >
           Remodels Done <span className="text-primary">Right,</span> The First Time.
@@ -43,7 +45,7 @@ export function HeroSection() {
 
         {/* Subheadline */}
         <p 
-          className="text-snow-white/90 leading-relaxed mt-8 text-shadow-subtle animate-fade-up max-w-xl lg:max-w-none lg:whitespace-nowrap"
+          className="text-snow-white/90 leading-relaxed mt-8 text-shadow-strong animate-fade-up max-w-xl lg:max-w-none lg:whitespace-nowrap"
           style={{ fontSize: "clamp(1.1rem, 2vw, 1.5rem)", animationDelay: "100ms" }}
         >
           Clear scope, clean work, and a finished result you're proud to show off.

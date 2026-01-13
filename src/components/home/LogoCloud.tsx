@@ -14,7 +14,7 @@ type LogoCloudProps = React.ComponentProps<"div"> & {
 
 export function LogoCloud({ logos }: LogoCloudProps) {
   return (
-    <section className="relative py-16 sm:py-20 overflow-hidden">
+    <section className="relative pt-20 sm:pt-24 pb-16 sm:pb-20 overflow-hidden">
       {/* Match "Our Work" section background exactly */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628] via-[#0d1f3c] to-[#0a0f1a]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.08)_0%,transparent_70%)]" />

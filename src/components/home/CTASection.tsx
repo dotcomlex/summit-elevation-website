@@ -67,10 +67,6 @@ export function CTASection() {
                 <div className="w-2 h-2 bg-primary rounded-full" />
                 <span>15+ Years Experience</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-gold rounded-full" />
-                <span>5-Star Google Rating</span>
-              </div>
             </div>
           </div>
         </div>

@@ -159,15 +159,6 @@ const Contact = () => {
             ))}
           </div>
 
-          {/* Google Rating Badge */}
-          <div className="flex justify-center items-center gap-3">
-            <div className="flex gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-primary text-primary" />
-              ))}
-            </div>
-            <span className="text-white/70 text-sm">4.9 stars on Google • 50+ reviews</span>
-          </div>
         </div>
       </section>
     </Layout>

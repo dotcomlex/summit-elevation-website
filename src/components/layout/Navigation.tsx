@@ -15,6 +15,7 @@ const navLinks = [
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showFloatingCTA, setShowFloatingCTA] = useState(false);
   const location = useLocation();
 
   // Close menu on route change
@@ -34,55 +35,80 @@ export function Navigation() {
     };
   }, [isOpen]);
 
+  // Show floating CTA after scrolling
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowFloatingCTA(window.scrollY > 200);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
-      {/* Header - Transparent, not sticky */}
-      <header className="relative bg-transparent">
-        <div className="container mx-auto px-4 lg:px-8 py-6 md:py-8">
-          {/* Top row: hamburger left (mobile), logo center */}
-          <div className="flex items-center justify-center relative">
-            {/* Hamburger Menu Button - absolute left on mobile */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="absolute left-0 lg:hidden flex items-center justify-center w-11 h-11 rounded-lg bg-white/90 shadow-md text-mountain-charcoal hover:bg-white transition-colors"
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-
-            {/* Centered Logo - Large with subtle shadow */}
+      {/* Header - Absolute overlay, transparent */}
+      <header className="absolute top-0 left-0 right-0 z-50">
+        <div className="container mx-auto px-4 lg:px-8 py-4 lg:py-6">
+          
+          {/* Desktop Navigation - Logo left, nav right */}
+          <div className="hidden lg:flex items-center justify-between">
+            {/* Logo - Left */}
             <Link to="/" className="flex items-center">
               <img
                 src={logo14er}
                 alt="14ER Renovations"
-                className="h-20 sm:h-28 md:h-36 w-auto drop-shadow-lg"
+                className="h-16 xl:h-20 w-auto drop-shadow-xl"
               />
             </Link>
+
+            {/* Desktop Nav Links - Right */}
+            <nav className="flex items-center">
+              <ul className="flex items-center gap-1">
+                {navLinks.map((link) => (
+                  <li key={link.path}>
+                    <Link
+                      to={link.path}
+                      className={cn(
+                        "relative px-4 py-2 font-medium text-sm transition-colors rounded-md",
+                        location.pathname === link.path
+                          ? "text-primary"
+                          : "text-snow-white/90 hover:text-snow-white hover:bg-white/10"
+                      )}
+                    >
+                      {link.name}
+                      {location.pathname === link.path && (
+                        <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-primary rounded-full" />
+                      )}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </div>
 
-          {/* Desktop Navigation - Centered below logo */}
-          <nav className="hidden lg:flex justify-center mt-6">
-            <ul className="flex items-center gap-2">
-              {navLinks.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className={cn(
-                      "relative px-5 py-2.5 font-medium text-sm transition-colors rounded-md",
-                      location.pathname === link.path
-                        ? "text-primary"
-                        : "text-snow-white/90 hover:text-snow-white hover:bg-white/10"
-                    )}
-                  >
-                    {link.name}
-                    {location.pathname === link.path && (
-                      <span className="absolute bottom-0 left-5 right-5 h-0.5 bg-primary rounded-full" />
-                    )}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          {/* Mobile Header - Logo center, hamburger right */}
+          <div className="flex lg:hidden items-center justify-center relative">
+            {/* Spacer for centering */}
+            <div className="w-11" />
+
+            {/* Centered Logo - Larger on mobile */}
+            <Link to="/" className="flex items-center">
+              <img
+                src={logo14er}
+                alt="14ER Renovations"
+                className="h-16 sm:h-20 w-auto drop-shadow-xl"
+              />
+            </Link>
+
+            {/* Hamburger Menu Button - Right */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="absolute right-0 flex items-center justify-center w-11 h-11 rounded-lg bg-white/90 shadow-md text-mountain-charcoal hover:bg-white transition-colors"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -169,14 +195,19 @@ export function Navigation() {
         </div>
       </div>
 
-      {/* Floating Call CTA - Subtle dark design */}
+      {/* Floating Call CTA - Subtle, appears after scroll */}
       <a
         href="tel:+17208189678"
-        className="fixed bottom-6 right-6 z-40 group flex items-center gap-2.5 
-                   bg-mountain-charcoal/90 hover:bg-mountain-charcoal 
-                   text-white px-4 py-3 rounded-full 
-                   shadow-lg backdrop-blur-sm
-                   transition-all duration-300 hover:scale-105 hover:shadow-xl"
+        className={cn(
+          "fixed bottom-6 right-6 z-40 group flex items-center gap-2.5",
+          "bg-mountain-charcoal/80 hover:bg-mountain-charcoal",
+          "text-white px-4 py-3 rounded-full",
+          "shadow-md hover:shadow-lg backdrop-blur-sm",
+          "transition-all duration-300 hover:scale-105",
+          showFloatingCTA 
+            ? "opacity-100 translate-y-0" 
+            : "opacity-0 translate-y-4 pointer-events-none"
+        )}
       >
         <Phone className="h-5 w-5" />
         <span className="hidden sm:inline text-sm font-medium">

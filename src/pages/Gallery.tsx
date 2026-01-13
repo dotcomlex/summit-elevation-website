@@ -129,7 +129,7 @@ export default function Gallery() {
         </div>
 
         {/* Content - Reduced mobile padding */}
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 py-8 sm:py-16 md:py-20 text-center">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 pt-28 pb-8 sm:pt-16 sm:pb-16 md:pt-20 md:pb-20 text-center">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -159,7 +159,7 @@ export default function Gallery() {
       </section>
 
       {/* Category Tabs - Clean, minimal design */}
-      <section className="sticky top-16 md:top-20 z-30 bg-background/95 backdrop-blur-md border-b border-border">
+      <section className="bg-background border-b border-border">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center py-3 sm:py-4 gap-2 sm:gap-3 overflow-x-auto scrollbar-hide">
             {categories.map((category) => {

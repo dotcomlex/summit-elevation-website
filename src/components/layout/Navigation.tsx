@@ -15,16 +15,7 @@ const navLinks = [
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Close menu on route change
   useEffect(() => {
@@ -44,116 +35,79 @@ export function Navigation() {
   }, [isOpen]);
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled
-          ? "bg-background/95 backdrop-blur-md shadow-soft border-b border-border"
-          : "bg-black"
-      )}
-    >
-      <div className="container mx-auto px-4 lg:px-8">
-        <nav className="flex items-center justify-between h-20 md:h-24">
-          {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <img 
-              src={logo14er} 
-              alt="14ER Renovations" 
-              className={cn(
-                "h-14 sm:h-16 md:h-16 w-auto transition-all",
-                isScrolled && "brightness-0"
-              )}
-            />
-          </Link>
+    <>
+      {/* Header - Transparent, not sticky */}
+      <header className="relative bg-transparent">
+        <div className="container mx-auto px-4 lg:px-8 py-6 md:py-8">
+          {/* Top row: hamburger left (mobile), logo center */}
+          <div className="flex items-center justify-center relative">
+            {/* Hamburger Menu Button - absolute left on mobile */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="absolute left-0 lg:hidden flex items-center justify-center w-11 h-11 rounded-lg bg-white/90 shadow-md text-mountain-charcoal hover:bg-white transition-colors"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
-            <ul className="flex items-center gap-1">
+            {/* Centered Logo - Large with subtle shadow */}
+            <Link to="/" className="flex items-center">
+              <img
+                src={logo14er}
+                alt="14ER Renovations"
+                className="h-20 sm:h-28 md:h-36 w-auto drop-shadow-lg"
+              />
+            </Link>
+          </div>
+
+          {/* Desktop Navigation - Centered below logo */}
+          <nav className="hidden lg:flex justify-center mt-6">
+            <ul className="flex items-center gap-2">
               {navLinks.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
                     className={cn(
-                      "relative px-4 py-2 font-medium text-sm transition-colors rounded-md",
+                      "relative px-5 py-2.5 font-medium text-sm transition-colors rounded-md",
                       location.pathname === link.path
                         ? "text-primary"
-                        : isScrolled 
-                          ? "text-muted-foreground hover:text-foreground hover:bg-muted"
-                          : "text-snow-white/90 hover:text-snow-white hover:bg-white/10"
+                        : "text-snow-white/90 hover:text-snow-white hover:bg-white/10"
                     )}
                   >
                     {link.name}
                     {location.pathname === link.path && (
-                      <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-primary rounded-full" />
+                      <span className="absolute bottom-0 left-5 right-5 h-0.5 bg-primary rounded-full" />
                     )}
                   </Link>
                 </li>
               ))}
             </ul>
+          </nav>
+        </div>
+      </header>
 
-            {/* Phone CTA */}
-            <a
-              href="tel:+17208189678"
-              className={cn(
-                "flex items-center gap-2 text-sm font-semibold transition-colors",
-                isScrolled 
-                  ? "text-foreground hover:text-primary" 
-                  : "text-snow-white hover:text-primary"
-              )}
-            >
-              <Phone className="h-4 w-4" />
-              <span>(720) 818-9678</span>
-            </a>
-
-            <Button asChild className="font-semibold">
-              <a href="tel:+17208189678">Get Free Quote</a>
-            </Button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="flex items-center gap-3 lg:hidden">
-            <a
-              href="tel:+17208189678"
-              className="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-primary-foreground"
-            >
-              <Phone className="h-5 w-5" />
-            </a>
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className={cn(
-                "flex items-center justify-center w-10 h-10 rounded-md transition-colors",
-                isScrolled 
-                  ? "text-foreground hover:bg-muted" 
-                  : "text-snow-white hover:bg-white/10"
-              )}
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
-        </nav>
-      </div>
-
-      {/* Mobile Menu - Solid Dark Panel */}
+      {/* Mobile Menu - Slide down panel */}
       <div
         className={cn(
-          "lg:hidden fixed inset-0 top-20 md:top-24 z-40 transition-all duration-300 ease-out",
+          "lg:hidden fixed inset-0 top-0 z-50 transition-all duration-300 ease-out",
           isOpen
             ? "opacity-100 visible"
             : "opacity-0 invisible pointer-events-none"
         )}
       >
         {/* Backdrop */}
-        <div 
+        <div
           className="absolute inset-0 bg-mountain-charcoal/60 backdrop-blur-sm"
           onClick={() => setIsOpen(false)}
         />
-        
+
         {/* Menu Panel */}
-        <div className={cn(
-          "relative bg-mountain-charcoal border-b border-white/10 transition-transform duration-300",
-          isOpen ? "translate-y-0" : "-translate-y-4"
-        )}>
+        <div
+          className={cn(
+            "relative bg-mountain-charcoal transition-transform duration-300",
+            isOpen ? "translate-y-0" : "-translate-y-4"
+          )}
+        >
           <div className="container mx-auto px-4 py-8">
             {/* Close Button */}
             <button
@@ -164,7 +118,16 @@ export function Navigation() {
               <X className="h-5 w-5" />
             </button>
 
-            <ul className="flex flex-col gap-2 mt-4">
+            {/* Logo in mobile menu */}
+            <div className="flex justify-center mb-6">
+              <img
+                src={logo14er}
+                alt="14ER Renovations"
+                className="h-16 w-auto"
+              />
+            </div>
+
+            <ul className="flex flex-col gap-2">
               {navLinks.map((link, index) => (
                 <li
                   key={link.path}
@@ -186,14 +149,14 @@ export function Navigation() {
                 </li>
               ))}
             </ul>
-            
+
             <div className="mt-8 pt-6 border-t border-white/10">
               <Button asChild className="w-full font-semibold h-14 text-base" size="lg">
                 <a href="tel:+17208189678" onClick={() => setIsOpen(false)}>
                   Get Your Free Quote
                 </a>
               </Button>
-              
+
               <a
                 href="tel:+17208189678"
                 className="flex items-center justify-center gap-3 mt-4 py-4 text-snow-white hover:text-primary transition-colors"
@@ -205,6 +168,21 @@ export function Navigation() {
           </div>
         </div>
       </div>
-    </header>
+
+      {/* Floating Call CTA - Subtle dark design */}
+      <a
+        href="tel:+17208189678"
+        className="fixed bottom-6 right-6 z-40 group flex items-center gap-2.5 
+                   bg-mountain-charcoal/90 hover:bg-mountain-charcoal 
+                   text-white px-4 py-3 rounded-full 
+                   shadow-lg backdrop-blur-sm
+                   transition-all duration-300 hover:scale-105 hover:shadow-xl"
+      >
+        <Phone className="h-5 w-5" />
+        <span className="hidden sm:inline text-sm font-medium">
+          (720) 818-9678
+        </span>
+      </a>
+    </>
   );
 }

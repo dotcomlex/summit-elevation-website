@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Bath, ChefHat, Grid3X3, ArrowRight } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Bath, ChefHat, Grid3X3, ArrowRight, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
@@ -32,7 +32,11 @@ import kitchen3 from "@/assets/gallery/kitchen-3.jpg";
 import kitchen4 from "@/assets/gallery/kitchen-4.jpg";
 import kitchenFinished from "@/assets/gallery/kitchen-finished.jpg";
 import workersTile from "@/assets/gallery/workers-tile.jpg";
-import workersKitchen from "@/assets/gallery/workers-kitchen.jpg";
+
+// Work in Progress images
+import wipTileInstall from "@/assets/gallery/wip-tile-install.jpg";
+import wipCabinetInstall from "@/assets/gallery/wip-cabinet-install.jpg";
+import wipCountertopMeasure from "@/assets/gallery/wip-countertop-measure.jpg";
 
 interface GalleryImage {
   id: string;
@@ -40,6 +44,14 @@ interface GalleryImage {
   src: string;
   alt: string;
   title: string;
+}
+
+interface WIPImage {
+  id: string;
+  src: string;
+  alt: string;
+  title: string;
+  description: string;
 }
 
 const galleryImages: GalleryImage[] = [
@@ -68,7 +80,30 @@ const galleryImages: GalleryImage[] = [
   { id: "kitchen-3", category: "kitchen", src: kitchen3, alt: "White cabinet kitchen transformation before and after", title: "White Cabinet Remodel" },
   { id: "kitchen-4", category: "kitchen", src: kitchen4, alt: "Sage green kitchen renovation before and after", title: "Sage Green Kitchen" },
   { id: "kitchen-finished", category: "kitchen", src: kitchenFinished, alt: "Beautiful finished modern kitchen with white cabinets and island", title: "Modern Kitchen Complete" },
-  { id: "kitchen-install", category: "kitchen", src: workersKitchen, alt: "Workers installing kitchen cabinets", title: "Cabinet Installation" },
+];
+
+const workInProgressImages: WIPImage[] = [
+  { 
+    id: "wip-tile", 
+    src: wipTileInstall, 
+    alt: "Professional worker installing subway tiles in bathroom", 
+    title: "Precision Tile Work",
+    description: "Every tile placed with care"
+  },
+  { 
+    id: "wip-cabinet", 
+    src: wipCabinetInstall, 
+    alt: "Two contractors installing kitchen cabinets", 
+    title: "Cabinet Installation",
+    description: "Expert teamwork in action"
+  },
+  { 
+    id: "wip-countertop", 
+    src: wipCountertopMeasure, 
+    alt: "Craftsman measuring countertop for precision fit", 
+    title: "Precision Measurements",
+    description: "Measure twice, cut once"
+  },
 ];
 
 type CategoryFilter = "all" | "bathroom" | "kitchen";
@@ -252,6 +287,58 @@ export default function Gallery() {
         </div>
       </section>
 
+      {/* Work in Progress Section */}
+      <section className="py-10 sm:py-14 md:py-20 bg-muted/30 border-t border-border/50">
+        <div className="container mx-auto px-4 sm:px-6">
+          {/* Header */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-8 sm:mb-10"
+          >
+            <div className="inline-flex items-center gap-2 text-primary font-semibold text-xs sm:text-sm tracking-widest uppercase mb-2">
+              <Wrench className="w-4 h-4" />
+              <span>Behind The Scenes</span>
+              <Wrench className="w-4 h-4" />
+            </div>
+            <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3">
+              Work in Progress
+            </h2>
+            <p className="text-muted-foreground text-sm sm:text-base max-w-xl mx-auto">
+              Our skilled craftsmen bringing your vision to life, one detail at a time.
+            </p>
+          </motion.div>
+          
+          {/* Images Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
+            {workInProgressImages.map((image, index) => (
+              <motion.div 
+                key={image.id} 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="relative aspect-[4/3] overflow-hidden rounded-xl group"
+              >
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  loading="lazy"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                {/* Caption overlay - always visible */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                  <p className="text-snow-white font-semibold text-sm sm:text-base">{image.title}</p>
+                  <p className="text-snow-white/70 text-xs sm:text-sm">{image.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section - With background image matching Services page */}
       <section className="relative py-14 sm:py-20 md:py-24 overflow-hidden">
         {/* Background Image */}
@@ -354,18 +441,22 @@ export default function Gallery() {
               <img
                 src={filteredImages[currentImageIndex]?.src}
                 alt={filteredImages[currentImageIndex]?.alt}
-                className="w-full h-full object-cover rounded-xl"
+                className="w-full h-full object-cover rounded-lg"
               />
-              {/* Caption Overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 bg-gradient-to-t from-black/80 to-transparent rounded-b-xl">
-                <p className="text-white font-semibold text-base sm:text-lg">{filteredImages[currentImageIndex]?.title}</p>
-                <p className="text-white/70 text-sm capitalize">{filteredImages[currentImageIndex]?.category} Remodel</p>
+              {/* Image Info */}
+              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 bg-gradient-to-t from-black/80 to-transparent rounded-b-lg">
+                <h3 className="text-snow-white font-semibold text-base sm:text-lg md:text-xl">
+                  {filteredImages[currentImageIndex]?.title}
+                </h3>
+                <p className="text-snow-white/70 text-xs sm:text-sm capitalize">
+                  {filteredImages[currentImageIndex]?.category} Remodel
+                </p>
               </div>
             </motion.div>
 
             {/* Image Counter */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-white/10 rounded-full text-white text-sm">
-              {currentImageIndex + 1} of {filteredImages.length}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/70 text-xs sm:text-sm">
+              {currentImageIndex + 1} / {filteredImages.length}
             </div>
           </motion.div>
         )}

@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone, Mountain } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import logo14er from "@/assets/logo-14er.png";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -54,31 +55,15 @@ export function Navigation() {
       <div className="container mx-auto px-4 lg:px-8">
         <nav className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link
-            to="/"
-            className="flex items-center gap-2 group"
-          >
-            <div className="relative">
-              <Mountain className={cn(
-                "h-8 w-8 md:h-10 md:w-10 transition-all group-hover:scale-110",
-                isScrolled ? "text-primary" : "text-primary"
-              )} />
-              <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-            <div className="flex flex-col">
-              <span className={cn(
-                "font-heading font-extrabold text-lg md:text-xl tracking-tight transition-colors",
-                isScrolled ? "text-foreground" : "text-snow-white"
-              )}>
-                14ER
-              </span>
-              <span className={cn(
-                "font-heading text-[10px] md:text-xs tracking-[0.2em] -mt-1 transition-colors",
-                isScrolled ? "text-muted-foreground" : "text-snow-white/70"
-              )}>
-                RENOVATIONS
-              </span>
-            </div>
+          <Link to="/" className="flex items-center">
+            <img 
+              src={logo14er} 
+              alt="14ER Renovations" 
+              className={cn(
+                "h-10 md:h-12 w-auto transition-all",
+                isScrolled && "brightness-0"
+              )}
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -108,7 +93,7 @@ export function Navigation() {
 
             {/* Phone CTA */}
             <a
-              href="tel:+17201234567"
+              href="tel:+17208189678"
               className={cn(
                 "flex items-center gap-2 text-sm font-semibold transition-colors",
                 isScrolled 
@@ -117,18 +102,18 @@ export function Navigation() {
               )}
             >
               <Phone className="h-4 w-4" />
-              <span>(720) XXX-XXXX</span>
+              <span>(720) 818-9678</span>
             </a>
 
             <Button asChild className="font-semibold">
-              <Link to="/contact">Get Free Quote</Link>
+              <a href="tel:+17208189678">Get Free Quote</a>
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="flex items-center gap-3 lg:hidden">
             <a
-              href="tel:+17201234567"
+              href="tel:+17208189678"
               className="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-primary-foreground"
             >
               <Phone className="h-5 w-5" />
@@ -204,17 +189,17 @@ export function Navigation() {
             
             <div className="mt-8 pt-6 border-t border-white/10">
               <Button asChild className="w-full font-semibold h-14 text-base" size="lg">
-                <Link to="/contact" onClick={() => setIsOpen(false)}>
+                <a href="tel:+17208189678" onClick={() => setIsOpen(false)}>
                   Get Your Free Quote
-                </Link>
+                </a>
               </Button>
               
               <a
-                href="tel:+17201234567"
+                href="tel:+17208189678"
                 className="flex items-center justify-center gap-3 mt-4 py-4 text-snow-white hover:text-primary transition-colors"
               >
                 <Phone className="h-5 w-5" />
-                <span className="font-semibold">(720) XXX-XXXX</span>
+                <span className="font-semibold">(720) 818-9678</span>
               </a>
             </div>
           </div>

@@ -17,26 +17,28 @@ export function HeroSection() {
 
       {/* Centered Content */}
       <div className="relative z-10 container mx-auto px-6 py-24 flex flex-col items-center text-center">
-        {/* Headline */}
-        <h1 className="font-heading text-shadow-hero animate-fade-up">
+        {/* Headline - Mobile */}
+        <h1 className="font-heading text-shadow-hero animate-fade-up lg:hidden">
           <span 
-            className="block text-snow-white font-extrabold tracking-tight leading-[1.05] whitespace-nowrap"
-            style={{ fontSize: "clamp(2.5rem, 7vw, 5.5rem)" }}
+            className="block text-snow-white font-extrabold tracking-tight leading-[1.05]"
+            style={{ fontSize: "clamp(2.2rem, 9vw, 3.5rem)" }}
           >
-            Remodels Done
+            Remodels Done <span className="text-primary">Right,</span>
           </span>
           <span 
-            className="block text-primary font-extrabold tracking-tight leading-[1.05] whitespace-nowrap"
-            style={{ fontSize: "clamp(2.5rem, 7vw, 5.5rem)" }}
-          >
-            Right,
-          </span>
-          <span 
-            className="block text-snow-white font-extrabold tracking-tight leading-[1.05] whitespace-nowrap"
-            style={{ fontSize: "clamp(2.5rem, 7vw, 5.5rem)" }}
+            className="block text-snow-white font-extrabold tracking-tight leading-[1.05]"
+            style={{ fontSize: "clamp(2.2rem, 9vw, 3.5rem)" }}
           >
             The First Time.
           </span>
+        </h1>
+
+        {/* Headline - Desktop (single line) */}
+        <h1 
+          className="hidden lg:block font-heading text-shadow-hero animate-fade-up text-snow-white font-extrabold tracking-tight leading-[1.05] whitespace-nowrap"
+          style={{ fontSize: "clamp(2.5rem, 4.5vw, 4.5rem)" }}
+        >
+          Remodels Done <span className="text-primary">Right,</span> The First Time.
         </h1>
 
         {/* Subheadline */}

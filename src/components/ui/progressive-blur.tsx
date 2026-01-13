@@ -28,7 +28,7 @@ export function ProgressiveBlur({
     <div
       className={cn(
         "pointer-events-none absolute z-20",
-        isHorizontal ? "inset-y-0 w-24 sm:w-32" : "inset-x-0 h-24",
+        isHorizontal ? "inset-y-0 w-16 sm:w-24" : "inset-x-0 h-16",
         direction === "left" && "left-0",
         direction === "right" && "right-0",
         direction === "top" && "top-0",

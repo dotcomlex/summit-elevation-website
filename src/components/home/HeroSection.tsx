@@ -56,7 +56,7 @@ export function HeroSection() {
 
             {/* CTA Area */}
             <div 
-              className="mt-8 lg:mt-10 flex flex-col sm:flex-row items-center lg:items-start gap-4 animate-fade-up"
+              className="mt-8 lg:mt-10 animate-fade-up"
               style={{ animationDelay: "200ms" }}
             >
               <Button 
@@ -69,13 +69,6 @@ export function HeroSection() {
                   <ArrowRight className="ml-2 h-5 w-5 lg:h-6 lg:w-6 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-              
-              <Link 
-                to="/services"
-                className="text-snow-white/80 hover:text-snow-white font-medium text-base lg:text-lg underline underline-offset-4 decoration-snow-white/30 hover:decoration-snow-white/60 transition-colors"
-              >
-                View Our Work
-              </Link>
             </div>
 
             {/* Trust Chips */}

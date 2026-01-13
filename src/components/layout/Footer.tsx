@@ -62,14 +62,6 @@ export function Footer() {
               </div>
             </div>
 
-            {/* CTA Button */}
-            <a
-              href="tel:+17208189678"
-              className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors mt-6"
-            >
-              Get a Free Quote
-              <ArrowRight className="w-4 h-4" />
-            </a>
           </div>
 
           {/* Quick Links */}

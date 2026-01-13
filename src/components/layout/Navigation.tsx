@@ -53,14 +53,14 @@ export function Navigation() {
       )}
     >
       <div className="container mx-auto px-4 lg:px-8">
-        <nav className="flex items-center justify-between h-16 md:h-20">
+        <nav className="flex items-center justify-between h-20 md:h-24">
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img 
               src={logo14er} 
               alt="14ER Renovations" 
               className={cn(
-                "h-10 md:h-12 w-auto transition-all",
+                "h-14 sm:h-16 md:h-16 w-auto transition-all",
                 isScrolled && "brightness-0"
               )}
             />
@@ -137,7 +137,7 @@ export function Navigation() {
       {/* Mobile Menu - Solid Dark Panel */}
       <div
         className={cn(
-          "lg:hidden fixed inset-0 top-16 md:top-20 z-40 transition-all duration-300 ease-out",
+          "lg:hidden fixed inset-0 top-20 md:top-24 z-40 transition-all duration-300 ease-out",
           isOpen
             ? "opacity-100 visible"
             : "opacity-0 invisible pointer-events-none"

@@ -36,7 +36,7 @@ export function ProgressiveBlur({
         className
       )}
       style={{
-        background: `linear-gradient(${gradientDirection}, transparent, ${bgColor})`,
+        background: `linear-gradient(${gradientDirection}, ${bgColor}, transparent)`,
       }}
     />
   );

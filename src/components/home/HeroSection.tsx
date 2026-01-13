@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Star, Clock, Award, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Star, Clock, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { BeforeAfterSlider } from "./BeforeAfterSlider";
 import heroImage from "@/assets/hero-home-new.webp";
-import kitchenBefore from "@/assets/gallery-kitchen.jpg";
-import kitchenAfter from "@/assets/gallery-kitchen-1.jpg";
 
 export function HeroSection() {
   return (
@@ -21,12 +18,12 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-t from-mountain-charcoal/50 via-transparent to-mountain-charcoal/20" />
       </div>
 
-      {/* Main Content Grid */}
+      {/* Main Content */}
       <div className="relative z-10 container mx-auto px-6 lg:px-12 xl:px-16 py-24 lg:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="max-w-3xl">
           
-          {/* Left Column - Text Content */}
-          <div className="lg:col-span-7 text-center lg:text-left">
+          {/* Text Content */}
+          <div className="text-center lg:text-left">
             {/* Headline - Controlled line breaks */}
             <h1 className="font-heading text-shadow-hero animate-fade-up">
               <span 
@@ -115,41 +112,6 @@ export function HeroSection() {
             </p>
           </div>
 
-          {/* Right Column - Featured Project Card */}
-          <div 
-            className="lg:col-span-5 animate-fade-up"
-            style={{ animationDelay: "300ms" }}
-          >
-            <div className="bg-snow-white/5 backdrop-blur-sm border border-snow-white/10 rounded-2xl p-4 lg:p-5 shadow-2xl">
-              {/* Card Header */}
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <p className="text-snow-white/60 text-xs uppercase tracking-wider font-medium">Featured Remodel</p>
-                  <p className="text-snow-white font-semibold text-lg">Kitchen Transformation</p>
-                </div>
-                <div className="flex items-center gap-1 text-primary">
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span className="text-xs font-medium">Completed</span>
-                </div>
-              </div>
-              
-              {/* Before/After Slider */}
-              <BeforeAfterSlider
-                beforeImage={kitchenBefore}
-                afterImage={kitchenAfter}
-                beforeLabel="Before"
-                afterLabel="After"
-                className="aspect-[4/3] w-full"
-              />
-              
-              {/* Card Footer */}
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className="px-2.5 py-1 bg-snow-white/10 rounded-full text-snow-white/80 text-xs font-medium">Design-Build</span>
-                <span className="px-2.5 py-1 bg-snow-white/10 rounded-full text-snow-white/80 text-xs font-medium">Permitted</span>
-                <span className="px-2.5 py-1 bg-snow-white/10 rounded-full text-snow-white/80 text-xs font-medium">Denver Metro</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>

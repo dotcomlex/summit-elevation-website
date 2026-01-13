@@ -68,15 +68,6 @@ const About = () => {
           </div>
         </div>
       </section>
-
-      {/* CTA */}
-      <section className="py-20 gradient-stone">
-        <div className="container mx-auto px-4 lg:px-8 text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-snow-white mb-6">Let's Build Something Together</h2>
-          <p className="text-mountain-mist text-lg mb-8 max-w-xl mx-auto">Ready to bring your vision to life? We'd love to hear about your project.</p>
-          <Button asChild size="lg"><Link to="/contact">Get in Touch <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
-        </div>
-      </section>
     </Layout>
   );
 };

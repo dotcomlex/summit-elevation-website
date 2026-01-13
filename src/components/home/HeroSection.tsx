@@ -13,12 +13,12 @@ export function HeroSection() {
           alt="Luxury Colorado mountain home"
           className="w-full h-full object-cover"
         />
-        {/* Subtle overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/35 to-black/45" />
+        {/* Overlay for text readability - stronger at top for header */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/35 to-black/45" />
       </div>
 
-      {/* Centered Content */}
-      <div className="relative z-10 container mx-auto px-6 py-24 flex flex-col items-center text-center">
+      {/* Centered Content - Extra top padding for transparent header */}
+      <div className="relative z-10 container mx-auto px-6 pt-32 pb-24 flex flex-col items-center text-center">
         {/* Headline - Mobile */}
         <h1 className="font-heading text-shadow-strong animate-fade-up lg:hidden">
           <span 

@@ -82,11 +82,12 @@ const Services = () => {
             className="w-full h-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-mountain-charcoal/70 via-mountain-charcoal/50 to-mountain-charcoal/80" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/35 to-black/45" />
+          {/* Stronger overlay at top for transparent header readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/35 to-black/45" />
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 text-center">
+        {/* Content - Extra top padding for transparent header */}
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 pb-16 sm:pb-20 text-center">
           <span className="inline-block text-primary font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3 sm:mb-4">
             — Our Services —
           </span>

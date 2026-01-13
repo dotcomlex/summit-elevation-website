@@ -14,12 +14,13 @@ type LogoCloudProps = React.ComponentProps<"div"> & {
 
 export function LogoCloud({ logos }: LogoCloudProps) {
   return (
-    <section className="relative bg-[hsl(var(--section-dark))] py-12 sm:py-16 overflow-hidden">
-      {/* Subtle texture overlay for elegance */}
-      <div className="absolute inset-0 texture-grain opacity-20" />
+    <section className="relative py-16 sm:py-20 overflow-hidden">
+      {/* Match "Our Work" section background exactly */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628] via-[#0d1f3c] to-[#0a0f1a]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.08)_0%,transparent_70%)]" />
       
       {/* Headline Section */}
-      <div className="relative z-10 text-center pb-8">
+      <div className="relative z-10 text-center pb-10">
         <p className="text-sm text-white/60 italic">
           Trusted by Industry Leaders
         </p>
@@ -29,27 +30,27 @@ export function LogoCloud({ logos }: LogoCloudProps) {
       </div>
 
       {/* Logo Slider */}
-      <div className="relative">
-        <ProgressiveBlur direction="left" className="z-20" />
+      <div className="relative z-10">
+        <ProgressiveBlur direction="left" bgColor="#0a1628" className="z-20" />
 
-        <InfiniteSlider duration={25} gap={48} className="py-4">
+        <InfiniteSlider duration={30} gap={40} className="py-4">
           {logos.map((logo) => (
             <div
               key={logo.alt}
-              className="flex items-center justify-center px-5 py-3 rounded-lg bg-white/10 backdrop-blur-sm ring-1 ring-white/10 hover:bg-white/15 transition-all duration-300"
+              className="flex items-center justify-center px-6 py-4 rounded-xl bg-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
             >
               <img
                 src={logo.src}
                 alt={logo.alt}
                 width={logo.width}
                 height={logo.height}
-                className="h-8 w-auto sm:h-10 object-contain"
+                className="h-10 w-auto sm:h-12 object-contain"
               />
             </div>
           ))}
         </InfiniteSlider>
 
-        <ProgressiveBlur direction="right" className="z-20" />
+        <ProgressiveBlur direction="right" bgColor="#0a0f1a" className="z-20" />
       </div>
     </section>
   );

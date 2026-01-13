@@ -14,43 +14,39 @@ type LogoCloudProps = React.ComponentProps<"div"> & {
 
 export function LogoCloud({ logos }: LogoCloudProps) {
   return (
-    <section className="relative pt-20 sm:pt-24 pb-16 sm:pb-20 overflow-hidden">
-      {/* Match "Our Work" section background exactly */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628] via-[#0d1f3c] to-[#0a0f1a]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.08)_0%,transparent_70%)]" />
+    <section className="relative py-8 sm:py-10 overflow-hidden bg-muted/30">
+      {/* Subtle texture */}
+      <div className="absolute inset-0 texture-paper opacity-20" />
       
-      {/* Headline Section */}
-      <div className="relative z-10 text-center pb-10">
-        <p className="text-sm text-white/60 italic">
-          Trusted by Industry Leaders
+      {/* Minimal label */}
+      <div className="relative z-10 text-center mb-4">
+        <p className="text-xs uppercase tracking-wider text-mountain-slate/60 font-medium">
+          Trusted Partners
         </p>
-        <h2 className="text-2xl sm:text-3xl font-bold text-white mt-2">
-          Colorado's Premier Partners
-        </h2>
       </div>
 
       {/* Logo Slider */}
       <div className="relative z-10">
-        <ProgressiveBlur direction="left" bgColor="#0a1628" className="z-20" />
+        <ProgressiveBlur direction="left" bgColor="rgb(244, 244, 245)" className="z-20" />
 
-        <InfiniteSlider duration={30} gap={40} className="py-4">
+        <InfiniteSlider duration={35} durationOnHover={80} gap={48} className="py-2">
           {logos.map((logo) => (
             <div
               key={logo.alt}
-              className="flex items-center justify-center px-6 py-4 rounded-xl bg-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+              className="flex items-center justify-center px-4"
             >
               <img
                 src={logo.src}
                 alt={logo.alt}
                 width={logo.width}
                 height={logo.height}
-                className="h-10 w-auto sm:h-12 object-contain"
+                className="h-8 sm:h-10 w-auto object-contain opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300"
               />
             </div>
           ))}
         </InfiniteSlider>
 
-        <ProgressiveBlur direction="right" bgColor="#0a0f1a" className="z-20" />
+        <ProgressiveBlur direction="right" bgColor="rgb(244, 244, 245)" className="z-20" />
       </div>
     </section>
   );

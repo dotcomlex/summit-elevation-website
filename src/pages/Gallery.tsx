@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Bath, ChefHat, Grid3X3 } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Bath, ChefHat, Grid3X3, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+
+// Import hero/CTA background
+import heroImage from "@/assets/services-hero-bg.jpg";
 
 // Import all gallery images
 import bathroom1 from "@/assets/gallery/bathroom-1.jpg";
@@ -34,6 +37,7 @@ interface GalleryImage {
 }
 
 const galleryImages: GalleryImage[] = [
+  // Bathroom images
   { id: "bath-1", category: "bathroom", src: bathroom1, alt: "Modern bathroom with marble shower", title: "Marble Master Bath" },
   { id: "bath-2", category: "bathroom", src: bathroom2, alt: "Elegant bathroom vanity design", title: "Elegant Vanity Suite" },
   { id: "bath-3", category: "bathroom", src: bathroom3, alt: "Contemporary bathroom remodel", title: "Contemporary Bath" },
@@ -50,8 +54,9 @@ const galleryImages: GalleryImage[] = [
   { id: "bath-14", category: "bathroom", src: bathroom14, alt: "Shower with built-in seating", title: "Shower with Seating" },
   { id: "bath-15", category: "bathroom", src: bathroom15, alt: "Double vanity hallway", title: "Double Vanity Hall" },
   { id: "bath-16", category: "bathroom", src: bathroom16, alt: "Full master bath overview", title: "Master Bath Overview" },
-  { id: "kitchen-1", category: "kitchen", src: kitchen1, alt: "Modern kitchen with white cabinets", title: "White Cabinet Kitchen" },
-  { id: "kitchen-2", category: "kitchen", src: kitchen2, alt: "Kitchen island with pendant lights", title: "Kitchen Island Design" },
+  // Kitchen images
+  { id: "kitchen-1", category: "kitchen", src: kitchen1, alt: "Before and after kitchen transformation with white cabinets", title: "White Cabinet Transformation" },
+  { id: "kitchen-2", category: "kitchen", src: kitchen2, alt: "Kitchen island with wood cabinetry and pendant lights", title: "Rustic Kitchen Island" },
 ];
 
 type CategoryFilter = "all" | "bathroom" | "kitchen";
@@ -103,23 +108,34 @@ export default function Gallery() {
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative pt-24 pb-16 md:pt-32 md:pb-20 bg-gradient-to-b from-mountain-charcoal to-mountain-charcoal/95">
-        <div className="absolute inset-0 bg-[url('/paper-texture-bg.jpg')] opacity-5" />
-        <div className="container mx-auto px-4 text-center relative z-10">
+      {/* Hero Section - Matches Services page style */}
+      <section className="relative min-h-[50vh] sm:min-h-[55vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <img
+            src={heroImage}
+            alt="Gallery of completed renovation projects"
+            className="w-full h-full object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-mountain-charcoal/70 via-mountain-charcoal/50 to-mountain-charcoal/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/35 to-black/45" />
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-semibold mb-6"
+            className="inline-block text-primary font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3 sm:mb-4"
           >
-            Our Portfolio
+            — Our Portfolio —
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-snow-white mb-6"
+            className="font-heading text-[clamp(1.75rem,5vw,3.5rem)] leading-[1.15] font-bold text-snow-white mb-4 sm:mb-6 max-w-4xl mx-auto text-shadow-strong"
           >
             Crafted with Precision
           </motion.h1>
@@ -127,7 +143,7 @@ export default function Gallery() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-snow-white/70 text-lg md:text-xl max-w-2xl mx-auto"
+            className="text-snow-white/80 text-sm sm:text-lg md:text-xl max-w-2xl mx-auto text-shadow-strong"
           >
             Browse our collection of completed projects and see the quality craftsmanship 
             that sets 14ER Renovations apart.
@@ -135,10 +151,10 @@ export default function Gallery() {
         </div>
       </section>
 
-      {/* Category Tabs */}
+      {/* Category Tabs - Mobile optimized with larger touch targets */}
       <section className="sticky top-16 md:top-20 z-30 bg-background/95 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-center py-4 gap-2 overflow-x-auto scrollbar-hide">
+          <div className="flex items-center justify-center py-3 sm:py-4 gap-2 sm:gap-3 overflow-x-auto scrollbar-hide">
             {categories.map((category) => {
               const Icon = category.icon;
               const isActive = activeCategory === category.id;
@@ -147,8 +163,8 @@ export default function Gallery() {
                   key={category.id}
                   onClick={() => setActiveCategory(category.id)}
                   className={`
-                    flex items-center gap-2 px-5 py-2.5 rounded-full font-medium text-sm
-                    transition-all duration-300 whitespace-nowrap
+                    flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full font-medium text-xs sm:text-sm
+                    transition-all duration-300 whitespace-nowrap min-h-[44px]
                     ${isActive 
                       ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25" 
                       : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
@@ -156,7 +172,8 @@ export default function Gallery() {
                   `}
                 >
                   <Icon className="w-4 h-4" />
-                  {category.label}
+                  <span className="hidden xs:inline">{category.label}</span>
+                  <span className="xs:hidden">{category.id === "all" ? "All" : category.label}</span>
                   {isActive && (
                     <span className="ml-1 px-2 py-0.5 bg-primary-foreground/20 rounded-full text-xs">
                       {filteredImages.length}
@@ -169,12 +186,12 @@ export default function Gallery() {
         </div>
       </section>
 
-      {/* Gallery Grid */}
-      <section className="py-12 md:py-16 bg-background">
-        <div className="container mx-auto px-4">
+      {/* Gallery Grid - Mobile optimized */}
+      <section className="py-8 sm:py-12 md:py-16 bg-background">
+        <div className="container mx-auto px-3 sm:px-4">
           <motion.div 
             layout
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4"
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4"
           >
             <AnimatePresence mode="popLayout">
               {filteredImages.map((image, index) => (
@@ -184,11 +201,11 @@ export default function Gallery() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  transition={{ duration: 0.3, delay: index * 0.03 }}
                   className="group cursor-pointer"
                   onClick={() => openLightbox(index)}
                 >
-                  <div className="relative aspect-square overflow-hidden rounded-xl bg-muted">
+                  <div className="relative aspect-square overflow-hidden rounded-lg sm:rounded-xl bg-muted">
                     <img
                       src={image.src}
                       alt={image.alt}
@@ -196,10 +213,10 @@ export default function Gallery() {
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3 sm:p-4">
                       <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                        <p className="text-snow-white font-semibold text-sm md:text-base">{image.title}</p>
-                        <p className="text-snow-white/70 text-xs md:text-sm capitalize">{image.category} Remodel</p>
+                        <p className="text-snow-white font-semibold text-xs sm:text-sm md:text-base">{image.title}</p>
+                        <p className="text-snow-white/70 text-xs capitalize">{image.category} Remodel</p>
                       </div>
                     </div>
                   </div>
@@ -210,37 +227,45 @@ export default function Gallery() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-primary/10 via-background to-accent/10">
-        <div className="container mx-auto px-4 text-center">
+      {/* CTA Section - With background image matching Services page */}
+      <section className="relative py-14 sm:py-20 md:py-24 overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <img
+            src={heroImage}
+            alt=""
+            className="w-full h-full object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-mountain-charcoal/90 via-mountain-charcoal/70 to-mountain-charcoal/85" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/35 to-black/45" />
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+            <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-snow-white mb-3 sm:mb-4 text-shadow-strong">
               Ready to Transform Your Space?
             </h2>
-            <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-8">
+            <p className="text-snow-white/80 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-xl mx-auto text-shadow-strong">
               Let's bring your vision to life. Get a free consultation and estimate from our expert team.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button asChild size="lg" className="font-semibold px-8 h-14 text-base">
-                <Link to="/contact">Get Your Free Estimate</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="font-semibold px-8 h-14 text-base">
-                <a href="tel:+17201234567">Call (720) XXX-XXXX</a>
-              </Button>
-            </div>
-            <div className="flex items-center justify-center gap-6 mt-10 text-sm text-muted-foreground">
+            <Button asChild size="lg" className="text-sm sm:text-base h-12 sm:h-14 px-6 sm:px-8 rounded-full shadow-lg hover:shadow-[0_0_20px_rgba(234,88,12,0.4)] transition-all duration-300">
+              <Link to="/contact">
+                Get Your Free Estimate <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+              </Link>
+            </Button>
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mt-8 sm:mt-10 text-xs sm:text-sm text-snow-white/80">
               <span className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-green-500 rounded-full" />
                 Licensed & Insured
               </span>
               <span className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-green-500 rounded-full" />
-                20+ Years Experience
+                15+ Years Experience
               </span>
               <span className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-green-500 rounded-full" />
@@ -251,7 +276,7 @@ export default function Gallery() {
         </div>
       </section>
 
-      {/* Lightbox Modal */}
+      {/* Lightbox Modal - 1:1 aspect ratio images */}
       <AnimatePresence>
         {lightboxOpen && (
           <motion.div
@@ -263,21 +288,21 @@ export default function Gallery() {
             onKeyDown={handleKeyDown}
             tabIndex={0}
           >
-            {/* Close Button */}
+            {/* Close Button - Larger touch target on mobile */}
             <button
               onClick={closeLightbox}
-              className="absolute top-4 right-4 z-50 p-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+              className="absolute top-4 right-4 z-50 p-3 sm:p-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors min-h-[48px] min-w-[48px] flex items-center justify-center"
             >
               <X className="w-6 h-6" />
             </button>
 
-            {/* Navigation Buttons */}
+            {/* Navigation Buttons - Larger on mobile */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 navigateLightbox("prev");
               }}
-              className="absolute left-4 z-50 p-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+              className="absolute left-2 sm:left-4 z-50 p-3 sm:p-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors min-h-[48px] min-w-[48px] flex items-center justify-center"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
@@ -286,29 +311,30 @@ export default function Gallery() {
                 e.stopPropagation();
                 navigateLightbox("next");
               }}
-              className="absolute right-4 z-50 p-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+              className="absolute right-2 sm:right-4 z-50 p-3 sm:p-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors min-h-[48px] min-w-[48px] flex items-center justify-center"
             >
               <ChevronRight className="w-6 h-6" />
             </button>
 
-            {/* Image */}
+            {/* Image Container - 1:1 Aspect Ratio */}
             <motion.div
               key={currentImageIndex}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.2 }}
-              className="max-w-[90vw] max-h-[80vh] relative"
+              className="w-[85vw] max-w-[400px] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[700px] aspect-square relative"
               onClick={(e) => e.stopPropagation()}
             >
               <img
                 src={filteredImages[currentImageIndex]?.src}
                 alt={filteredImages[currentImageIndex]?.alt}
-                className="max-w-full max-h-[80vh] object-contain rounded-lg"
+                className="w-full h-full object-cover rounded-xl"
               />
-              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent rounded-b-lg">
-                <p className="text-white font-semibold text-lg">{filteredImages[currentImageIndex]?.title}</p>
-                <p className="text-white/70 capitalize">{filteredImages[currentImageIndex]?.category} Remodel</p>
+              {/* Caption Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 bg-gradient-to-t from-black/80 to-transparent rounded-b-xl">
+                <p className="text-white font-semibold text-base sm:text-lg">{filteredImages[currentImageIndex]?.title}</p>
+                <p className="text-white/70 text-sm capitalize">{filteredImages[currentImageIndex]?.category} Remodel</p>
               </div>
             </motion.div>
 

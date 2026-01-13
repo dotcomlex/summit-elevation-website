@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import logo14er from "@/assets/logo-14er.png";
@@ -57,7 +57,7 @@ export function Navigation() {
               <img
                 src={logo14er}
                 alt="14ER Renovations"
-                className="h-16 xl:h-20 w-auto drop-shadow-xl"
+                className="h-20 xl:h-24 w-auto drop-shadow-xl"
               />
             </Link>
 
@@ -96,7 +96,7 @@ export function Navigation() {
               <img
                 src={logo14er}
                 alt="14ER Renovations"
-                className="h-16 sm:h-20 w-auto drop-shadow-xl"
+                className="h-20 sm:h-24 w-auto drop-shadow-xl"
               />
             </Link>
 
@@ -123,14 +123,14 @@ export function Navigation() {
       >
         {/* Backdrop */}
         <div
-          className="absolute inset-0 bg-mountain-charcoal/60 backdrop-blur-sm"
+          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
           onClick={() => setIsOpen(false)}
         />
 
         {/* Menu Panel */}
         <div
           className={cn(
-            "relative bg-mountain-charcoal transition-transform duration-300",
+            "relative bg-black transition-transform duration-300",
             isOpen ? "translate-y-0" : "-translate-y-4"
           )}
         >
@@ -187,7 +187,6 @@ export function Navigation() {
                 href="tel:+17208189678"
                 className="flex items-center justify-center gap-3 mt-4 py-4 text-snow-white hover:text-primary transition-colors"
               >
-                <Phone className="h-5 w-5" />
                 <span className="font-semibold">(720) 818-9678</span>
               </a>
             </div>
@@ -195,24 +194,22 @@ export function Navigation() {
         </div>
       </div>
 
-      {/* Floating Call CTA - Subtle, appears after scroll */}
+      {/* Floating CTA Bar - visible but not intrusive */}
       <a
         href="tel:+17208189678"
         className={cn(
-          "fixed bottom-6 right-6 z-40 group flex items-center gap-2.5",
-          "bg-mountain-charcoal/80 hover:bg-mountain-charcoal",
-          "text-white px-4 py-3 rounded-full",
-          "shadow-md hover:shadow-lg backdrop-blur-sm",
+          "fixed bottom-6 right-6 z-40",
+          "bg-primary hover:bg-primary/90",
+          "text-primary-foreground font-semibold text-sm",
+          "px-6 py-3 rounded-full",
+          "shadow-lg hover:shadow-xl",
           "transition-all duration-300 hover:scale-105",
           showFloatingCTA 
             ? "opacity-100 translate-y-0" 
             : "opacity-0 translate-y-4 pointer-events-none"
         )}
       >
-        <Phone className="h-5 w-5" />
-        <span className="hidden sm:inline text-sm font-medium">
-          (720) 818-9678
-        </span>
+        Get a Free Quote
       </a>
     </>
   );

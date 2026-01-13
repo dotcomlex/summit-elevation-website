@@ -41,7 +41,7 @@ export function HeroSection() {
 
         {/* Subheadline */}
         <p 
-          className="text-snow-white/90 leading-relaxed mt-8 text-shadow-subtle animate-fade-up whitespace-nowrap"
+          className="text-snow-white/90 leading-relaxed mt-8 text-shadow-subtle animate-fade-up max-w-xl lg:max-w-none lg:whitespace-nowrap"
           style={{ fontSize: "clamp(1.1rem, 2vw, 1.5rem)", animationDelay: "100ms" }}
         >
           Clear scope, clean work, and a finished result you're proud to show off.
@@ -91,7 +91,7 @@ export function HeroSection() {
 
         {/* Licensed text */}
         <p 
-          className="mt-6 text-snow-white/70 text-sm lg:text-base animate-fade-up whitespace-nowrap"
+          className="mt-6 text-snow-white/70 text-sm lg:text-base animate-fade-up lg:whitespace-nowrap"
           style={{ animationDelay: "400ms" }}
         >
           Licensed & insured · Serving Colorado homeowners

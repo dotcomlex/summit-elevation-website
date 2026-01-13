@@ -25,8 +25,14 @@ import bathroom13 from "@/assets/gallery/bathroom-13.jpg";
 import bathroom14 from "@/assets/gallery/bathroom-14.jpg";
 import bathroom15 from "@/assets/gallery/bathroom-15.jpg";
 import bathroom16 from "@/assets/gallery/bathroom-16.jpg";
+import bathroomFinished from "@/assets/gallery/bathroom-finished.jpg";
 import kitchen1 from "@/assets/gallery/kitchen-1.jpg";
 import kitchen2 from "@/assets/gallery/kitchen-2.jpg";
+import kitchen3 from "@/assets/gallery/kitchen-3.jpg";
+import kitchen4 from "@/assets/gallery/kitchen-4.jpg";
+import kitchenFinished from "@/assets/gallery/kitchen-finished.jpg";
+import workersTile from "@/assets/gallery/workers-tile.jpg";
+import workersKitchen from "@/assets/gallery/workers-kitchen.jpg";
 
 interface GalleryImage {
   id: string;
@@ -54,9 +60,15 @@ const galleryImages: GalleryImage[] = [
   { id: "bath-14", category: "bathroom", src: bathroom14, alt: "Shower with built-in seating", title: "Shower with Seating" },
   { id: "bath-15", category: "bathroom", src: bathroom15, alt: "Double vanity hallway", title: "Double Vanity Hall" },
   { id: "bath-16", category: "bathroom", src: bathroom16, alt: "Full master bath overview", title: "Master Bath Overview" },
+  { id: "bath-finished", category: "bathroom", src: bathroomFinished, alt: "Luxury finished bathroom with marble and freestanding tub", title: "Luxury Spa Bathroom" },
+  { id: "bath-tile-work", category: "bathroom", src: workersTile, alt: "Workers installing ceramic tile in bathroom", title: "Tile Installation" },
   // Kitchen images
   { id: "kitchen-1", category: "kitchen", src: kitchen1, alt: "Before and after kitchen transformation with white cabinets", title: "White Cabinet Transformation" },
   { id: "kitchen-2", category: "kitchen", src: kitchen2, alt: "Kitchen island with wood cabinetry and pendant lights", title: "Rustic Kitchen Island" },
+  { id: "kitchen-3", category: "kitchen", src: kitchen3, alt: "White cabinet kitchen transformation before and after", title: "White Cabinet Remodel" },
+  { id: "kitchen-4", category: "kitchen", src: kitchen4, alt: "Sage green kitchen renovation before and after", title: "Sage Green Kitchen" },
+  { id: "kitchen-finished", category: "kitchen", src: kitchenFinished, alt: "Beautiful finished modern kitchen with white cabinets and island", title: "Modern Kitchen Complete" },
+  { id: "kitchen-install", category: "kitchen", src: workersKitchen, alt: "Workers installing kitchen cabinets", title: "Cabinet Installation" },
 ];
 
 type CategoryFilter = "all" | "bathroom" | "kitchen";
@@ -108,8 +120,8 @@ export default function Gallery() {
 
   return (
     <Layout>
-      {/* Hero Section - Matches Services page style */}
-      <section className="relative min-h-[50vh] sm:min-h-[55vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden">
+      {/* Hero Section - Reduced padding on mobile only */}
+      <section className="relative min-h-[35vh] sm:min-h-[55vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
@@ -121,13 +133,13 @@ export default function Gallery() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/35 to-black/45" />
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
+        {/* Content - Reduced mobile padding */}
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 py-8 sm:py-16 md:py-20 text-center">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-block text-primary font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3 sm:mb-4"
+            className="inline-block text-primary font-semibold text-xs sm:text-sm tracking-widest uppercase mb-2 sm:mb-4"
           >
             — Our Portfolio —
           </motion.span>
@@ -135,7 +147,7 @@ export default function Gallery() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-heading text-[clamp(1.75rem,5vw,3.5rem)] leading-[1.15] font-bold text-snow-white mb-4 sm:mb-6 max-w-4xl mx-auto text-shadow-strong"
+            className="font-heading text-[clamp(1.5rem,5vw,3.5rem)] leading-[1.15] font-bold text-snow-white mb-3 sm:mb-6 max-w-4xl mx-auto text-shadow-strong"
           >
             Crafted with Precision
           </motion.h1>
@@ -143,7 +155,7 @@ export default function Gallery() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-snow-white/80 text-sm sm:text-lg md:text-xl max-w-2xl mx-auto text-shadow-strong"
+            className="text-snow-white/80 text-xs sm:text-lg md:text-xl max-w-2xl mx-auto text-shadow-strong"
           >
             Browse our collection of completed projects and see the quality craftsmanship 
             that sets 14ER Renovations apart.
@@ -151,33 +163,46 @@ export default function Gallery() {
         </div>
       </section>
 
-      {/* Category Tabs - Mobile optimized with larger touch targets */}
+      {/* Category Tabs - Clean, minimal design */}
       <section className="sticky top-16 md:top-20 z-30 bg-background/95 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center py-3 sm:py-4 gap-2 sm:gap-3 overflow-x-auto scrollbar-hide">
             {categories.map((category) => {
               const Icon = category.icon;
               const isActive = activeCategory === category.id;
+              const count = category.id === "all" 
+                ? galleryImages.length 
+                : galleryImages.filter(img => img.category === category.id).length;
+              
               return (
                 <button
                   key={category.id}
                   onClick={() => setActiveCategory(category.id)}
                   className={`
-                    flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full font-medium text-xs sm:text-sm
+                    relative flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2.5 sm:py-3 
+                    rounded-full font-medium text-xs sm:text-sm
                     transition-all duration-300 whitespace-nowrap min-h-[44px]
                     ${isActive 
-                      ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25" 
-                      : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
+                      ? "bg-foreground/5 text-foreground border border-foreground/15" 
+                      : "bg-muted/40 text-muted-foreground hover:bg-muted hover:text-foreground border border-transparent"
                     }
                   `}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className={`w-4 h-4 ${isActive ? "text-primary" : ""}`} />
                   <span className="hidden xs:inline">{category.label}</span>
                   <span className="xs:hidden">{category.id === "all" ? "All" : category.label}</span>
                   {isActive && (
-                    <span className="ml-1 px-2 py-0.5 bg-primary-foreground/20 rounded-full text-xs">
-                      {filteredImages.length}
+                    <span className="ml-1 px-1.5 py-0.5 bg-foreground/10 rounded-full text-[10px] sm:text-xs font-normal">
+                      {count}
                     </span>
+                  )}
+                  {/* Subtle underline indicator */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeTabIndicator"
+                      className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-primary rounded-full"
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    />
                   )}
                 </button>
               );

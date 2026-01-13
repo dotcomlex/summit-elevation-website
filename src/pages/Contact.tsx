@@ -4,9 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Phone, Mail, MapPin, Clock, CheckCircle2 } from "lucide-react";
+import { Phone, Mail, CheckCircle2, Star } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import denverImage from "@/assets/denver-skyline.jpg";
+import avatarSarah from "@/assets/avatar-sarah.jpg";
+import avatarMike from "@/assets/avatar-mike.jpg";
+import avatarMaria from "@/assets/avatar-maria.jpg";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -23,29 +26,71 @@ const Contact = () => {
     toast({ title: "Message sent!", description: "We'll get back to you within 24 hours." });
   };
 
+  const reviews = [
+    {
+      name: "Sarah M.",
+      project: "Kitchen Remodel",
+      quote: "They transformed our outdated kitchen into something straight out of a magazine. Professional, clean, and on budget!",
+      avatar: avatarSarah
+    },
+    {
+      name: "Mike R.",
+      project: "Concrete Patio",
+      quote: "Best concrete work in Denver. Our new patio is beautiful and has held up perfectly through Colorado winters.",
+      avatar: avatarMike
+    },
+    {
+      name: "Maria L.",
+      project: "Bathroom Renovation",
+      quote: "From design to completion, the team was incredible. They made the whole process stress-free.",
+      avatar: avatarMaria
+    }
+  ];
+
   return (
     <Layout>
       {/* Hero */}
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0">
           <img src={denverImage} alt="Denver skyline" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-mountain-charcoal/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-mountain-charcoal/90 via-mountain-charcoal/80 to-mountain-charcoal/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/35 to-black/45" />
         </div>
         <div className="container mx-auto px-4 lg:px-8 relative text-center">
-          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-snow-white mb-6">
+          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-snow-white mb-6 text-shadow-strong">
             Let's Start <span className="text-primary">Your Project</span>
           </h1>
-          <p className="text-mountain-mist text-lg max-w-2xl mx-auto">Get in touch for a free consultation. We respond to all inquiries within 24 hours.</p>
+          <p className="text-mountain-mist text-lg max-w-2xl mx-auto text-shadow-strong">Get in touch for a free consultation. We respond to all inquiries within 24 hours.</p>
         </div>
       </section>
 
       {/* Contact Section */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Form */}
-            <div className="bg-card p-8 rounded-2xl border border-border shadow-soft">
-              <h2 className="font-heading text-2xl font-bold mb-6">Send Us a Message</h2>
+          <div className="max-w-2xl mx-auto">
+            {/* Quick Contact Row */}
+            <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm">
+              <a 
+                href="tel:+17208189678" 
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Phone className="h-4 w-4" />
+                (720) 818-9678
+              </a>
+              <a 
+                href="mailto:info@14errenovations.com" 
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Mail className="h-4 w-4" />
+                info@14errenovations.com
+              </a>
+            </div>
+
+            {/* Form Card */}
+            <div className="bg-card p-8 md:p-10 rounded-2xl border border-border shadow-soft">
+              <h2 className="font-heading text-2xl md:text-3xl font-bold mb-2 text-center">Tell Us About Your Project</h2>
+              <p className="text-muted-foreground text-center mb-8">We'll get back to you within 24 hours</p>
+              
               {submitted ? (
                 <div className="text-center py-12">
                   <CheckCircle2 className="h-16 w-16 text-primary mx-auto mb-4" />
@@ -53,7 +98,7 @@ const Contact = () => {
                   <p className="text-muted-foreground">We'll be in touch soon.</p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid sm:grid-cols-2 gap-4">
                     <Input name="name" placeholder="Your Name *" required className="h-12" />
                     <Input name="email" type="email" placeholder="Email Address *" required className="h-12" />
@@ -65,45 +110,70 @@ const Contact = () => {
                       <SelectItem value="remodeling">Kitchen/Bath Remodeling</SelectItem>
                       <SelectItem value="concrete">Concrete Work</SelectItem>
                       <SelectItem value="general">General Contracting</SelectItem>
+                      <SelectItem value="hvac">HVAC Services</SelectItem>
+                      <SelectItem value="electrical">Electrical Services</SelectItem>
                       <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
                   <Textarea name="message" placeholder="Tell us about your project..." rows={5} />
-                  <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
-                    {isSubmitting ? "Sending..." : "Send Message"}
+                  <Button type="submit" size="lg" className="w-full h-14 text-base" disabled={isSubmitting}>
+                    {isSubmitting ? "Sending..." : "Get Your Free Quote"}
                   </Button>
                 </form>
               )}
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Info */}
-            <div className="space-y-8">
-              <div>
-                <h2 className="font-heading text-2xl font-bold mb-6">Contact Information</h2>
-                <div className="space-y-4">
-                  <a href="tel:+17201234567" className="flex items-center gap-4 p-4 bg-card rounded-xl border border-border hover:border-primary/30 transition-colors">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center"><Phone className="h-6 w-6 text-primary" /></div>
-                    <div><p className="text-sm text-muted-foreground">Phone</p><p className="font-semibold">(720) XXX-XXXX</p></div>
-                  </a>
-                  <a href="mailto:info@14errenovations.com" className="flex items-center gap-4 p-4 bg-card rounded-xl border border-border hover:border-primary/30 transition-colors">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center"><Mail className="h-6 w-6 text-primary" /></div>
-                    <div><p className="text-sm text-muted-foreground">Email</p><p className="font-semibold">info@14errenovations.com</p></div>
-                  </a>
-                  <div className="flex items-center gap-4 p-4 bg-card rounded-xl border border-border">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center"><MapPin className="h-6 w-6 text-primary" /></div>
-                    <div><p className="text-sm text-muted-foreground">Location</p><p className="font-semibold">Denver, Colorado</p></div>
-                  </div>
-                  <div className="flex items-center gap-4 p-4 bg-card rounded-xl border border-border">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center"><Clock className="h-6 w-6 text-primary" /></div>
-                    <div><p className="text-sm text-muted-foreground">Hours</p><p className="font-semibold">Mon-Fri 7am-6pm, Sat 8am-4pm</p></div>
+      {/* Reviews Section */}
+      <section className="py-16 bg-section-dark">
+        <div className="container mx-auto px-4 lg:px-8 text-center">
+          <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-3 block">
+            Trusted by Homeowners
+          </span>
+          <h2 className="font-heading text-2xl md:text-3xl font-bold text-white mb-10">
+            Join 500+ Happy Denver Families
+          </h2>
+
+          {/* Review Cards */}
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-10">
+            {reviews.map((review, index) => (
+              <div 
+                key={index}
+                className="bg-white/[0.08] backdrop-blur-sm rounded-xl p-6 border border-white/10 text-left"
+              >
+                <div className="flex gap-1 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-white/80 text-sm mb-4 leading-relaxed">
+                  "{review.quote}"
+                </p>
+                <div className="flex items-center gap-3">
+                  <img 
+                    src={review.avatar} 
+                    alt={review.name}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <div>
+                    <div className="text-white text-sm font-medium">{review.name}</div>
+                    <div className="text-white/50 text-xs">{review.project}</div>
                   </div>
                 </div>
               </div>
-              <div className="p-6 bg-primary/10 rounded-xl">
-                <h3 className="font-heading font-bold mb-2">Serving the Denver Metro Area</h3>
-                <p className="text-sm text-muted-foreground">Denver • Aurora • Lakewood • Arvada • Westminster • Thornton</p>
-              </div>
+            ))}
+          </div>
+
+          {/* Google Rating Badge */}
+          <div className="flex justify-center items-center gap-3">
+            <div className="flex gap-0.5">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+              ))}
             </div>
+            <span className="text-white/70 text-sm">4.9 stars on Google • 50+ reviews</span>
           </div>
         </div>
       </section>

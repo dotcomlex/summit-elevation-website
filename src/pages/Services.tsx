@@ -82,6 +82,7 @@ const Services = () => {
             className="w-full h-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-mountain-charcoal/70 via-mountain-charcoal/50 to-mountain-charcoal/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/35 to-black/45" />
         </div>
 
         {/* Content */}
@@ -91,11 +92,11 @@ const Services = () => {
           </span>
 
           {/* Headline with clamp for responsive sizing - stays 2-3 lines on mobile */}
-          <h1 className="font-heading text-[clamp(1.75rem,5vw,3.5rem)] leading-[1.15] font-bold text-snow-white mb-4 sm:mb-6 max-w-4xl mx-auto text-shadow-hero">
+          <h1 className="font-heading text-[clamp(1.75rem,5vw,3.5rem)] leading-[1.15] font-bold text-snow-white mb-4 sm:mb-6 max-w-4xl mx-auto text-shadow-strong">
             Professional Remodeling &<br className="hidden sm:block" /> Construction Services
           </h1>
 
-          <p className="text-mountain-mist text-sm sm:text-lg md:text-xl max-w-2xl mx-auto mb-6 sm:mb-8 md:mb-10 px-2">
+          <p className="text-mountain-mist text-sm sm:text-lg md:text-xl max-w-2xl mx-auto mb-6 sm:mb-8 md:mb-10 px-2 text-shadow-strong">
             Serving Denver, the Front Range, and Colorado Springs with craftsmanship you can trust.
           </p>
 
@@ -206,13 +207,14 @@ const Services = () => {
             className="w-full h-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-mountain-charcoal/90 via-mountain-charcoal/70 to-mountain-charcoal/85" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/35 to-black/45" />
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-snow-white mb-3 sm:mb-4 text-shadow-hero">
+          <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-snow-white mb-3 sm:mb-4 text-shadow-strong">
             Ready to Start Your Project?
           </h2>
-          <p className="text-mountain-mist text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-xl mx-auto">
+          <p className="text-mountain-mist text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-xl mx-auto text-shadow-strong">
             Get your free estimate today—we'll help you map out the next step clearly.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">

@@ -57,7 +57,7 @@ export function Navigation() {
               <img
                 src={logo14er}
                 alt="14ER Renovations"
-                className="h-20 xl:h-24 w-auto drop-shadow-xl"
+                className="h-24 xl:h-28 w-auto drop-shadow-xl"
               />
             </Link>
 
@@ -87,23 +87,23 @@ export function Navigation() {
           </div>
 
           {/* Mobile Header - Logo center, hamburger right */}
-          <div className="flex lg:hidden items-center justify-center relative">
-            {/* Spacer for centering */}
-            <div className="w-11" />
+          <div className="lg:hidden grid grid-cols-3 items-center">
+            {/* Empty left column for balance */}
+            <div />
 
-            {/* Centered Logo - Larger on mobile */}
-            <Link to="/" className="flex items-center">
+            {/* Centered Logo */}
+            <Link to="/" className="flex items-center justify-self-center">
               <img
                 src={logo14er}
                 alt="14ER Renovations"
-                className="h-20 sm:h-24 w-auto drop-shadow-xl"
+                className="h-24 sm:h-28 w-auto drop-shadow-xl"
               />
             </Link>
 
             {/* Hamburger Menu Button - Right */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="absolute right-0 flex items-center justify-center w-11 h-11 rounded-lg bg-white/90 shadow-md text-mountain-charcoal hover:bg-white transition-colors"
+              className="justify-self-end flex items-center justify-center w-11 h-11 rounded-lg bg-white/90 shadow-md text-mountain-charcoal hover:bg-white transition-colors"
               aria-label="Toggle menu"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

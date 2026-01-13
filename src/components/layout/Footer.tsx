@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, ArrowRight, Mountain } from "lucide-react";
+import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
+import logo14er from "@/assets/logo-14er.png";
 
 const quickLinks = [
   { name: "Home", path: "/" },
@@ -17,12 +18,6 @@ const serviceAreas = [
   "Westminster",
 ];
 
-const socialLinks = [
-  { name: "Facebook", icon: Facebook, url: "#" },
-  { name: "Instagram", icon: Instagram, url: "#" },
-  { name: "LinkedIn", icon: Linkedin, url: "#" },
-];
-
 export function Footer() {
   return (
     <footer className="relative bg-charcoal-dark text-white">
@@ -30,15 +25,15 @@ export function Footer() {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
       <div className="container px-4 md:px-6 py-12 md:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Brand Column */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Link to="/" className="inline-flex items-center gap-2 mb-4">
-              <Mountain className="h-7 w-7 text-primary" />
-              <span className="text-xl md:text-2xl font-bold">
-                <span className="text-primary">14er</span>
-                <span className="text-white"> Renovations</span>
-              </span>
+            <Link to="/" className="inline-block mb-4">
+              <img 
+                src={logo14er} 
+                alt="14ER Renovations" 
+                className="h-12 w-auto"
+              />
             </Link>
             <p className="text-white/60 text-sm leading-relaxed mb-5">
               Denver's premier home renovation contractor. We transform Colorado homes with quality
@@ -48,11 +43,11 @@ export function Footer() {
             {/* Contact Info */}
             <div className="space-y-3">
               <a
-                href="tel:+13035551234"
+                href="tel:+17208189678"
                 className="flex items-center gap-3 text-sm text-white/70 hover:text-primary transition-colors"
               >
                 <Phone className="w-4 h-4 text-primary" />
-                (303) 555-1234
+                (720) 818-9678
               </a>
               <a
                 href="mailto:info@14errenovations.com"
@@ -66,6 +61,15 @@ export function Footer() {
                 <span>Denver, CO 80202</span>
               </div>
             </div>
+
+            {/* CTA Button */}
+            <a
+              href="tel:+17208189678"
+              className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors mt-6"
+            >
+              Get a Free Quote
+              <ArrowRight className="w-4 h-4" />
+            </a>
           </div>
 
           {/* Quick Links */}
@@ -96,33 +100,6 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
-
-          {/* Social & CTA */}
-          <div>
-            <h3 className="text-base font-bold mb-4">Connect With Us</h3>
-            <div className="flex gap-3 mb-6">
-              {socialLinks.map((social) => {
-                const Icon = social.icon;
-                return (
-                  <a
-                    key={social.name}
-                    href={social.url}
-                    className="bg-white/10 hover:bg-primary p-2.5 rounded-lg transition-colors"
-                    aria-label={social.name}
-                  >
-                    <Icon className="w-4 h-4" />
-                  </a>
-                );
-              })}
-            </div>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors"
-            >
-              Get a Free Quote
-              <ArrowRight className="w-4 h-4" />
-            </Link>
           </div>
         </div>
 

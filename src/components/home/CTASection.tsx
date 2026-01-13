@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { ArrowRight, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import denverImage from "@/assets/denver-skyline.jpg";
@@ -51,10 +50,10 @@ export function CTASection() {
             size="lg"
             className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg shadow-warm"
           >
-            <Link to="/contact">
+            <a href="tel:+17208189678">
               Get Free Quote
               <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
+            </a>
           </Button>
 
           {/* Trust indicators */}

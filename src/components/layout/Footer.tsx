@@ -32,7 +32,7 @@ export function Footer() {
               <img 
                 src={logo14er} 
                 alt="14ER Renovations" 
-                className="h-12 w-auto"
+                className="h-16 sm:h-20 w-auto"
               />
             </Link>
             <p className="text-white/60 text-sm leading-relaxed mb-5">

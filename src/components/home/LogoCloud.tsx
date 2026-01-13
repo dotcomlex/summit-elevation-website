@@ -40,7 +40,7 @@ export function LogoCloud({ logos }: LogoCloudProps) {
                 alt={logo.alt}
                 width={logo.width}
                 height={logo.height}
-                className="h-8 sm:h-10 w-auto object-contain opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300"
+                className="h-8 sm:h-10 w-auto object-contain opacity-80 hover:opacity-100 transition-all duration-300"
               />
             </div>
           ))}

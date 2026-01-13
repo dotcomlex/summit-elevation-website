@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Phone, Mail, CheckCircle2, Star } from "lucide-react";
+import { Mail, CheckCircle2, Star } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import denverImage from "@/assets/denver-skyline.jpg";
 import avatarSarah from "@/assets/avatar-sarah.jpg";
@@ -60,7 +60,7 @@ const Contact = () => {
           <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-snow-white mb-6 text-shadow-strong">
             Let's Start <span className="text-primary">Your Project</span>
           </h1>
-          <p className="text-mountain-mist text-lg max-w-2xl mx-auto text-shadow-strong">Get in touch for a free consultation. We respond to all inquiries within 24 hours.</p>
+          <p className="text-snow-white/80 text-lg max-w-2xl mx-auto text-shadow-strong">Get in touch for a free consultation. We respond to all inquiries within 24 hours.</p>
         </div>
       </section>
 
@@ -69,14 +69,7 @@ const Contact = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-2xl mx-auto">
             {/* Quick Contact Row */}
-            <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm">
-              <a 
-                href="tel:+17208189678" 
-                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-              >
-                <Phone className="h-4 w-4" />
-                (720) 818-9678
-              </a>
+            <div className="flex justify-center mb-8 text-sm">
               <a 
                 href="mailto:info@14errenovations.com" 
                 className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"

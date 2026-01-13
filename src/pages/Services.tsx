@@ -96,7 +96,7 @@ const Services = () => {
             Professional Remodeling &<br className="hidden sm:block" /> Construction Services
           </h1>
 
-          <p className="text-mountain-mist text-sm sm:text-lg md:text-xl max-w-2xl mx-auto mb-6 sm:mb-8 md:mb-10 px-2 text-shadow-strong">
+          <p className="text-snow-white/80 text-sm sm:text-lg md:text-xl max-w-2xl mx-auto mb-6 sm:mb-8 md:mb-10 px-2 text-shadow-strong">
             Serving Denver, the Front Range, and Colorado Springs with craftsmanship you can trust.
           </p>
 
@@ -107,20 +107,12 @@ const Services = () => {
             </Link>
           </Button>
 
-          {/* Trust Row - smaller gap/font on mobile to prevent awkward wrapping */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 md:gap-6 text-snow-white/90 text-[11px] sm:text-sm">
+          {/* Trust Row */}
+          <div className="flex items-center justify-center text-snow-white/90 text-[11px] sm:text-sm">
             <div className="flex items-center gap-1.5 sm:gap-2">
               <Shield className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-primary" />
               <span>Licensed & Insured</span>
             </div>
-            <div className="hidden xs:block w-px h-4 sm:h-5 bg-snow-white/30" />
-            <a
-              href="tel:+17208189678"
-              className="flex items-center gap-1.5 sm:gap-2 hover:text-primary transition-colors"
-            >
-              <Phone className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-primary" />
-              <span>Call (720) 818-9678</span>
-            </a>
           </div>
         </div>
       </section>
@@ -214,23 +206,14 @@ const Services = () => {
           <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-snow-white mb-3 sm:mb-4 text-shadow-strong">
             Ready to Start Your Project?
           </h2>
-          <p className="text-mountain-mist text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-xl mx-auto text-shadow-strong">
+          <p className="text-snow-white/80 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-xl mx-auto text-shadow-strong">
             Get your free estimate today—we'll help you map out the next step clearly.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
-            <Button asChild size="lg" className="text-sm sm:text-base h-12 sm:h-14 px-6 sm:px-8 rounded-full shadow-lg hover:shadow-[0_0_20px_rgba(234,88,12,0.4)] transition-all duration-300">
-              <Link to="/contact">
-                Get Your Free Estimate <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-              </Link>
-            </Button>
-            <a
-              href="tel:+17208189678"
-              className="inline-flex items-center gap-2 text-snow-white hover:text-primary transition-colors text-sm sm:text-lg font-medium"
-            >
-              <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
-              (720) 818-9678
-            </a>
-          </div>
+          <Button asChild size="lg" className="text-sm sm:text-base h-12 sm:h-14 px-6 sm:px-8 rounded-full shadow-lg hover:shadow-[0_0_20px_rgba(234,88,12,0.4)] transition-all duration-300">
+            <Link to="/contact">
+              Get Your Free Estimate <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+            </Link>
+          </Button>
         </div>
       </section>
     </Layout>

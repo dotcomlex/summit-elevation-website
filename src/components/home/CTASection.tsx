@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Phone, ArrowRight, MessageSquare } from "lucide-react";
+import { ArrowRight, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import denverImage from "@/assets/denver-skyline.jpg";
 
@@ -14,6 +14,8 @@ export function CTASection() {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-mountain-charcoal/95 via-mountain-charcoal/85 to-mountain-charcoal/70" />
+        {/* Subtle overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/35 to-black/45" />
       </div>
 
       {/* Subtle texture overlay */}
@@ -32,42 +34,28 @@ export function CTASection() {
           </div>
 
           {/* Heading */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-6 leading-tight">
-            Ready to Transform
+          <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-6 leading-tight text-shadow-strong">
+            Let's Build
             <br />
-            <span className="text-primary">Your Colorado Home?</span>
+            <span className="text-primary">Something Beautiful</span>
           </h2>
 
           {/* Description */}
-          <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed text-shadow-strong">
             Schedule your free consultation today and discover how we can bring your vision to life with expert craftsmanship and attention to detail.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button
-              asChild
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg shadow-warm w-full sm:w-auto"
-            >
-              <Link to="/contact">
-                Get Free Quote
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="border-white/30 text-white hover:bg-white/10 px-8 py-6 text-lg backdrop-blur-sm w-full sm:w-auto"
-            >
-              <a href="tel:+13035551234">
-                <Phone className="mr-2 h-5 w-5" />
-                (303) 555-1234
-              </a>
-            </Button>
-          </div>
+          {/* CTA Button */}
+          <Button
+            asChild
+            size="lg"
+            className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg shadow-warm"
+          >
+            <Link to="/contact">
+              Get Free Quote
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
 
           {/* Trust indicators */}
           <div className="mt-12 pt-10 border-t border-white/10">

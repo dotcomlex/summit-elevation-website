@@ -84,6 +84,13 @@ export function Navigation() {
                 ))}
               </ul>
             </nav>
+
+            <Button asChild size="sm" className="ml-6 font-semibold px-5">
+              <a href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20renovation%20services.%20How%20can%20you%20help%20me%3F">
+                Text Us Now
+                <MessageSquare className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
           </div>
 
           {/* Mobile Header - Logo center, hamburger right */}

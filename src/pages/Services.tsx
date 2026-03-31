@@ -211,9 +211,9 @@ const Services = () => {
             Get your free estimate today—we'll help you map out the next step clearly.
           </p>
           <Button asChild size="lg" className="text-sm sm:text-base h-12 sm:h-14 px-6 sm:px-8 rounded-full shadow-lg hover:shadow-[0_0_20px_rgba(234,88,12,0.4)] transition-all duration-300">
-            <Link to="/contact">
+            <a href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20renovation%20services.%20How%20can%20you%20help%20me%3F">
               Get Your Free Estimate <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-            </Link>
+            </a>
           </Button>
         </div>
       </section>

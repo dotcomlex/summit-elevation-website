@@ -112,7 +112,7 @@ export function ServicesPreview() {
               size="lg" 
               className="text-base font-semibold h-12 px-8 border-mountain-charcoal bg-mountain-charcoal text-snow-white hover:bg-mountain-charcoal/90 hover:text-snow-white hover:-translate-y-0.5 transition-all duration-300"
             >
-              <Link to="/contact">Get a Free Estimate</Link>
+              <a href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20renovation%20services.%20How%20can%20you%20help%20me%3F">Get a Free Estimate</a>
             </Button>
           </div>
         </AnimatedSection>

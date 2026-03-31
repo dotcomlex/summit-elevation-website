@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import logo14er from "@/assets/logo-14er.png";
@@ -84,6 +84,13 @@ export function Navigation() {
                 ))}
               </ul>
             </nav>
+
+            <Button asChild size="sm" className="ml-6 font-semibold px-5">
+              <a href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20renovation%20services.%20How%20can%20you%20help%20me%3F">
+                Text Us Now
+                <MessageSquare className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
           </div>
 
           {/* Mobile Header - Logo center, hamburger right */}
@@ -178,13 +185,13 @@ export function Navigation() {
 
             <div className="mt-8 pt-6 border-t border-white/10">
               <Button asChild className="w-full font-semibold h-14 text-base" size="lg">
-                <a href="tel:+17208189678" onClick={() => setIsOpen(false)}>
-                  Get Your Free Quote
+                <a href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20renovation%20services.%20How%20can%20you%20help%20me%3F" onClick={() => setIsOpen(false)}>
+                  Text Us Now
                 </a>
               </Button>
 
               <a
-                href="tel:+17208189678"
+                href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20renovation%20services.%20How%20can%20you%20help%20me%3F"
                 className="flex items-center justify-center gap-3 mt-4 py-4 text-snow-white hover:text-primary transition-colors"
               >
                 <span className="font-semibold">(720) 818-9678</span>
@@ -196,7 +203,7 @@ export function Navigation() {
 
       {/* Floating CTA Bar - visible but not intrusive */}
       <a
-        href="tel:+17208189678"
+        href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20renovation%20services.%20How%20can%20you%20help%20me%3F"
         className={cn(
           "fixed bottom-6 right-6 z-40",
           "bg-primary hover:bg-primary/90",

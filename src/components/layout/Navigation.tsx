@@ -86,7 +86,7 @@ export function Navigation() {
             </nav>
 
             <Button asChild size="sm" className="ml-6 font-semibold px-5">
-              <a href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20renovation%20services.%20How%20can%20you%20help%20me%3F">
+              <a href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20services.%20Can%20I%20get%20a%20free%20estimate%3F">
                 Text Us Now
                 <MessageSquare className="ml-2 h-4 w-4" />
               </a>
@@ -185,13 +185,13 @@ export function Navigation() {
 
             <div className="mt-8 pt-6 border-t border-white/10">
               <Button asChild className="w-full font-semibold h-14 text-base" size="lg">
-                <a href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20renovation%20services.%20How%20can%20you%20help%20me%3F" onClick={() => setIsOpen(false)}>
+                <a href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20services.%20Can%20I%20get%20a%20free%20estimate%3F" onClick={() => setIsOpen(false)}>
                   Text Us Now
                 </a>
               </Button>
 
               <a
-                href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20renovation%20services.%20How%20can%20you%20help%20me%3F"
+                href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20services.%20Can%20I%20get%20a%20free%20estimate%3F"
                 className="flex items-center justify-center gap-3 mt-4 py-4 text-snow-white hover:text-primary transition-colors"
               >
                 <span className="font-semibold">(720) 818-9678</span>
@@ -203,7 +203,7 @@ export function Navigation() {
 
       {/* Floating CTA Bar - visible but not intrusive */}
       <a
-        href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20renovation%20services.%20How%20can%20you%20help%20me%3F"
+        href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20services.%20Can%20I%20get%20a%20free%20estimate%3F"
         className={cn(
           "fixed bottom-6 right-6 z-40",
           "bg-primary hover:bg-primary/90",

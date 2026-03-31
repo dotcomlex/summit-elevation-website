@@ -61,7 +61,7 @@ export function HeroSection() {
             size="lg" 
             className="text-base lg:text-lg font-semibold h-14 lg:h-16 px-10 lg:px-12 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
           >
-            <a href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20renovation%20services.%20How%20can%20you%20help%20me%3F">
+            <a href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20services.%20Can%20I%20get%20a%20free%20estimate%3F">
               Get a Free Estimate
               <ArrowRight className="ml-2 h-5 w-5 lg:h-6 lg:w-6" />
             </a>

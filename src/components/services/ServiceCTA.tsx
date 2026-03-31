@@ -38,7 +38,7 @@ export function ServiceCTA({
           </Button>
           
           <a 
-            href="tel:+17208189678" 
+            href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20renovation%20services.%20How%20can%20you%20help%20me%3F" 
             className="inline-flex items-center justify-center gap-2 px-6 py-3 text-snow-white hover:text-primary transition-colors font-semibold"
           >
             <Phone className="h-5 w-5" />

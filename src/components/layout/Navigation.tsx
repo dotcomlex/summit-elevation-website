@@ -203,7 +203,7 @@ export function Navigation() {
 
       {/* Floating CTA Bar - visible but not intrusive */}
       <a
-        href="tel:+17208189678"
+        href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20renovation%20services.%20How%20can%20you%20help%20me%3F"
         className={cn(
           "fixed bottom-6 right-6 z-40",
           "bg-primary hover:bg-primary/90",

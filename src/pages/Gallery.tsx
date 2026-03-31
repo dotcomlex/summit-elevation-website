@@ -274,7 +274,7 @@ export default function Gallery() {
               Let's bring your vision to life. Get a free consultation and estimate from our expert team.
             </p>
             <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6 shadow-warm">
-              <a href="tel:+17208189678">
+              <a href="sms:+17208189678?body=Hi!%20I'm%20interested%20in%20your%20renovation%20services.%20How%20can%20you%20help%20me%3F">
                 Get Your Free Estimate <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </a>
             </Button>
